@@ -1,5 +1,4 @@
 import { Card, Col, Row, Typography } from "antd";
-import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGameStore } from "../store/game";
 
