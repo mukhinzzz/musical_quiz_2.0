@@ -21,21 +21,79 @@ export const ContestGrid = () => {
               <Card
                 hoverable={!disabled}
                 onClick={() => !disabled && navigate(`/contest/${c.id}`)}
-                className="glass cardHover"
+                className={`contestCard ${disabled ? "disabled" : ""}`}
                 style={{
-                  opacity: disabled ? 0.6 : 1,
+                  opacity: disabled ? 0.7 : 1,
                   height: "100%",
                   position: "relative",
+                  cursor: disabled ? "not-allowed" : "pointer",
+                }}
+                styles={{
+                  header: {
+                    backgroundColor: "transparent",
+                    borderBottom: "1px solid rgba(124, 58, 237, 0.15)",
+                    color: "#EAEAFF",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                  },
+                  body: {
+                    backgroundColor: "transparent",
+                    padding: "16px",
+                  },
                 }}
                 title={c.title}
               >
-                <Text>{c.description.slice(0, 200)}</Text>
-                <div style={{ marginTop: 8 }}>
-                  <Text type="secondary">
-                    Осталось {remaining} из {total}
+                <div style={{ marginBottom: 12 }}>
+                  <Text
+                    style={{
+                      color: "#B4B4CC",
+                      fontSize: "14px",
+                      lineHeight: 1.5,
+                      display: "block",
+                    }}
+                  >
+                    {c.description.slice(0, 150)}
+                    {c.description.length > 150 ? "..." : ""}
                   </Text>
                 </div>
-                <div className="badge">{c.points} баллов</div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: 16,
+                  }}
+                >
+                  <Text
+                    type={disabled ? undefined : "secondary"}
+                    style={{
+                      fontSize: "13px",
+                      color: disabled ? "#9CA3AF" : "#8B8BA3",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Осталось {remaining} из {total}
+                  </Text>
+                  <div
+                    className="badge"
+                    style={{
+                      position: "static",
+                      background: disabled
+                        ? "rgba(156, 163, 175, 0.15)"
+                        : "linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(99, 102, 241, 0.15))",
+                      border: disabled
+                        ? "1px solid rgba(156, 163, 175, 0.25)"
+                        : "1px solid rgba(124, 58, 237, 0.3)",
+                      color: disabled ? "#9CA3AF" : "#C7C7E8",
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      padding: "4px 10px",
+                      borderRadius: "12px",
+                    }}
+                  >
+                    {c.points} баллов
+                  </div>
+                </div>
               </Card>
             </Col>
           );
