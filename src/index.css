@@ -34,7 +34,6 @@ a:hover {
 body {
   margin: 0;
   min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -89,7 +88,7 @@ button:focus-visible {
 
 .contestCard {
   transition: all 300ms ease;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   background: linear-gradient(
     135deg,
@@ -97,10 +96,10 @@ button:focus-visible {
     rgba(99, 102, 241, 0.05) 100%
   );
   border: 1px solid rgba(124, 58, 237, 0.2);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(16px);
-  min-width: 154px;
-  min-height: 154px;
+  min-width: 220px;
+  min-height: 220px;
   aspect-ratio: 1;
 }
 
@@ -296,50 +295,52 @@ button:focus-visible {
 /* Адаптивность для карточек конкурсов */
 @media (max-width: 576px) {
   .contestCard {
-    min-width: 105px;
-    min-height: 105px;
+    min-width: 150px;
+    min-height: 150px;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
   .contestCard {
-    min-width: 126px;
-    min-height: 126px;
+    min-width: 180px;
+    min-height: 180px;
   }
 }
 
 @media (min-width: 1200px) {
   .contestCard {
-    min-width: 154px;
-    min-height: 154px;
+    min-width: 220px;
+    min-height: 220px;
   }
 }
 
 /* Адаптивные сетки */
 @media (max-width: 576px) {
   .grid-container {
-    grid-template-columns: repeat(auto-fit, 105px) !important;
-    gap: 12px !important;
+    grid-template-columns: repeat(auto-fit, 150px) !important;
+    gap: 16px !important;
   }
   .grid-item {
     width: 105px !important;
     height: 98px !important;
   }
   .grid-item.contest {
-    height: 105px !important;
+    width: 150px !important;
+    height: 150px !important;
   }
 }
 
 @media (min-width: 577px) and (max-width: 768px) {
   .grid-container {
-    grid-template-columns: repeat(auto-fit, 126px) !important;
-    gap: 14px !important;
+    grid-template-columns: repeat(auto-fit, 180px) !important;
+    gap: 20px !important;
   }
   .grid-item {
     width: 126px !important;
     height: 105px !important;
   }
   .grid-item.contest {
-    height: 126px !important;
+    width: 180px !important;
+    height: 180px !important;
   }
 }

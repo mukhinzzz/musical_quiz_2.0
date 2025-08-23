@@ -19,8 +19,8 @@ export const ContestGrid = () => {
         className="grid-container"
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, 154px)",
-          gap: "16px",
+          gridTemplateColumns: "repeat(auto-fit, 220px)",
+          gap: "24px",
           justifyContent: "center",
           maxWidth: "1000px",
           width: "100%",
@@ -43,8 +43,8 @@ export const ContestGrid = () => {
                   opacity: isCompleted ? 0.7 : 1,
                   position: "relative",
                   cursor: "pointer",
-                  width: "154px",
-                  height: "154px",
+                  width: "220px",
+                  height: "220px",
                 }}
                 styles={{
                   header: {
@@ -56,7 +56,7 @@ export const ContestGrid = () => {
                   },
                   body: {
                     backgroundColor: "transparent",
-                    padding: "14px",
+                    padding: "20px",
                   },
                 }}
                 title={c.title}

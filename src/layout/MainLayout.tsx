@@ -8,7 +8,6 @@ export const MainLayout = () => {
   return (
     <div
       style={{
-        minHeight: "100vh",
         display: "flex",
         flexDirection: playersBarVertical ? "row" : "column",
       }}
