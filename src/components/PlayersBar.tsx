@@ -229,55 +229,108 @@ export const PlayersBar = () => {
         justify={
           playersBarCollapsed && playersBarVertical ? "center" : "space-between"
         }
-        align="center"
+        align="flex-start"
         style={{ marginBottom: playersBarCollapsed ? 0 : 8 }}
       >
-        <Flex gap={4}>
-          {/* Кнопка сворачивания/разворачивания */}
-          <Tooltip title={playersBarCollapsed ? "Развернуть" : "Свернуть"}>
-            <Button
-              size="small"
-              icon={
-                playersBarCollapsed ? (
-                  playersBarVertical ? (
-                    <RightOutlined />
-                  ) : (
-                    <UpOutlined />
-                  )
-                ) : playersBarVertical ? (
-                  <LeftOutlined />
-                ) : (
-                  <DownOutlined />
-                )
-              }
-              onClick={() => setPlayersBarCollapsed(!playersBarCollapsed)}
-            />
-          </Tooltip>
-
-          {/* Кнопка переключения режима */}
-          {!playersBarCollapsed && (
-            <Tooltip
-              title={
-                playersBarVertical
-                  ? "Горизонтальный режим"
-                  : "Вертикальный режим"
-              }
-            >
+        <Flex gap={4} vertical={!playersBarCollapsed && !playersBarVertical}>
+          {/* Кнопки управления - всегда горизонтально */}
+          <Flex gap={4}>
+            {/* Кнопка сворачивания/разворачивания */}
+            <Tooltip title={playersBarCollapsed ? "Развернуть" : "Свернуть"}>
               <Button
                 size="small"
                 icon={
-                  playersBarVertical ? <AppstoreOutlined /> : <MenuOutlined />
+                  playersBarCollapsed ? (
+                    playersBarVertical ? (
+                      <RightOutlined />
+                    ) : (
+                      <UpOutlined />
+                    )
+                  ) : playersBarVertical ? (
+                    <LeftOutlined />
+                  ) : (
+                    <DownOutlined />
+                  )
                 }
-                onClick={() => setPlayersBarVertical(!playersBarVertical)}
+                onClick={() => setPlayersBarCollapsed(!playersBarCollapsed)}
               />
             </Tooltip>
+
+            {/* Кнопка переключения режима */}
+            {!playersBarCollapsed && (
+              <Tooltip
+                title={
+                  playersBarVertical
+                    ? "Горизонтальный режим"
+                    : "Вертикальный режим"
+                }
+              >
+                <Button
+                  size="small"
+                  icon={
+                    playersBarVertical ? <AppstoreOutlined /> : <MenuOutlined />
+                  }
+                  onClick={() => setPlayersBarVertical(!playersBarVertical)}
+                />
+              </Tooltip>
+            )}
+          </Flex>
+
+          {/* Инпут шага для горизонтального режима - под кнопками */}
+          {!playersBarCollapsed && !playersBarVertical && (
+            <div style={{ textAlign: "left", marginTop: 4 }}>
+              <Text
+                style={{
+                  fontSize: 12,
+                  lineHeight: 1,
+                  color: "rgba(234, 234, 255, 0.7)",
+                  display: "block",
+                  marginBottom: 4,
+                }}
+              >
+                Шаг
+              </Text>
+              <InputNumber
+                value={change}
+                onChange={(v) => setChange(Number(v) || 0)}
+                step={50}
+                min={-10000}
+                max={10000}
+                size="small"
+                style={{
+                  width: 80,
+                  fontSize: 12,
+                }}
+              />
+            </div>
           )}
         </Flex>
 
+        {/* Элементы управления для горизонтального режима */}
         {!playersBarCollapsed && !playersBarVertical && (
-          <Text strong style={{ fontSize: 14, color: "#EAEAFF" }}>
-            Панель игроков
-          </Text>
+          <Space direction="horizontal" size={8}>
+            <Button
+              type="primary"
+              icon={<UserAddOutlined />}
+              onClick={() => setAddOpen(true)}
+            >
+              Добавить игрока
+            </Button>
+            <Tooltip
+              title={
+                deleteMode ? "Выберите карточку для удаления" : "Удалить игрока"
+              }
+            >
+              <Button
+                danger
+                icon={<DeleteOutlined />}
+                type={deleteMode ? "primary" : "default"}
+                onClick={() => setDeleteMode(!deleteMode)}
+              >
+                Удалить игрока
+              </Button>
+            </Tooltip>
+          </Space>
         )}
 
         {/* Инпут шага для вертикального режима - перемещаем на место заголовка */}
@@ -310,86 +363,40 @@ export const PlayersBar = () => {
         )}
       </Flex>
 
-      {/* Основные кнопки управления - показываем только если не свернуто */}
-      {!playersBarCollapsed && (
+      {/* Кнопки управления для вертикального режима */}
+      {!playersBarCollapsed && playersBarVertical && (
         <Flex
-          justify={playersBarVertical ? "center" : "space-between"}
-          align={playersBarVertical ? "center" : "flex-end"}
-          vertical={playersBarVertical ? false : false}
-          style={{ marginBottom: 8, gap: playersBarVertical ? 4 : 0 }}
+          justify="center"
+          align="center"
+          style={{ marginBottom: 8, gap: 4 }}
         >
-          {playersBarVertical ? (
-            // Кнопки в один ряд для вертикального режима
-            <Space direction="horizontal" size={4}>
+          <Space direction="horizontal" size={4}>
+            <Button
+              type="primary"
+              icon={<UserAddOutlined />}
+              onClick={() => setAddOpen(true)}
+              size="small"
+              style={{ fontSize: 11, height: 28, minWidth: 80 }}
+            >
+              Добавить
+            </Button>
+            <Tooltip
+              title={
+                deleteMode ? "Выберите карточку для удаления" : "Удалить игрока"
+              }
+            >
               <Button
-                type="primary"
-                icon={<UserAddOutlined />}
-                onClick={() => setAddOpen(true)}
+                danger
+                icon={<DeleteOutlined />}
+                type={deleteMode ? "primary" : "default"}
+                onClick={() => setDeleteMode(!deleteMode)}
                 size="small"
                 style={{ fontSize: 11, height: 28, minWidth: 80 }}
               >
-                Добавить
+                Удалить
               </Button>
-              <Tooltip
-                title={
-                  deleteMode
-                    ? "Выберите карточку для удаления"
-                    : "Удалить игрока"
-                }
-              >
-                <Button
-                  danger
-                  icon={<DeleteOutlined />}
-                  type={deleteMode ? "primary" : "default"}
-                  onClick={() => setDeleteMode(!deleteMode)}
-                  size="small"
-                  style={{ fontSize: 11, height: 28, minWidth: 80 }}
-                >
-                  Удалить
-                </Button>
-              </Tooltip>
-            </Space>
-          ) : (
-            // Обычный layout для горизонтального режима
-            <>
-              <Space direction="horizontal" size={8}>
-                <Button
-                  type="primary"
-                  icon={<UserAddOutlined />}
-                  onClick={() => setAddOpen(true)}
-                >
-                  Добавить игрока
-                </Button>
-                <Tooltip
-                  title={
-                    deleteMode
-                      ? "Выберите карточку для удаления"
-                      : "Удалить игрока"
-                  }
-                >
-                  <Button
-                    danger
-                    icon={<DeleteOutlined />}
-                    type={deleteMode ? "primary" : "default"}
-                    onClick={() => setDeleteMode(!deleteMode)}
-                  >
-                    Удалить игрока
-                  </Button>
-                </Tooltip>
-              </Space>
-              <Space direction="vertical" size={4} align="center">
-                <Text style={{ fontSize: 12, lineHeight: 1 }}>Шаг</Text>
-                <InputNumber
-                  value={change}
-                  onChange={(v) => setChange(Number(v) || 0)}
-                  step={50}
-                  min={-10000}
-                  max={10000}
-                  size="small"
-                />
-              </Space>
-            </>
-          )}
+            </Tooltip>
+          </Space>
         </Flex>
       )}
       {/* Карточки игроков - показываем только если не свернуто */}
