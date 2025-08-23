@@ -5,13 +5,9 @@
 
   color-scheme: dark;
   color: #eaeaff;
-  background: radial-gradient(
-      1200px 800px at 20% -10%,
-      #1b0b3a 0%,
-      transparent 60%
-    ),
-    radial-gradient(1000px 600px at 120% 30%, #0b3a34 0%, transparent 60%),
-    linear-gradient(180deg, #0b0b14 0%, #0b0b14 100%);
+  background: linear-gradient(-45deg, #0b0b14, #1b0b3a, #0b3a34, #2a1810, #0b1a3a);
+  background-size: 400% 400%;
+  animation: gradientShift 45s ease infinite;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -104,5 +100,17 @@ button:focus-visible {
 .staticBar {
   position: static;
   z-index: 5;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 .

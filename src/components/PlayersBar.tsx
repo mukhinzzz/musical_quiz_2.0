@@ -1,4 +1,4 @@
-import { useMemo, useState, useRef, useEffect } from "react";
+import { useMemo, useState, useRef, useEffect, useCallback } from "react";
 import {
   Button,
   Card,
@@ -32,6 +32,7 @@ export const PlayersBar = () => {
   const deleteMode = useGameStore((s) => s.deleteMode);
   const setDeleteMode = useGameStore((s) => s.setDeleteMode);
   const removePlayerById = useGameStore((s) => s.removePlayerById);
+  const reorderPlayersByScore = useGameStore((s) => s.reorderPlayersByScore);
 
   const players = useMemo(() => {
     if (playersOrder.length === 0) return playersState;
@@ -57,6 +58,7 @@ export const PlayersBar = () => {
   const [newName, setNewName] = useState("");
   const [change, setChange] = useState<number>(100);
   const inputRef = useRef<HTMLInputElement>(null);
+  const debounceTimerRef = useRef<number | null>(null);
 
   const maxLen = 20;
   const leaderId = players[0]?.id;
@@ -71,6 +73,25 @@ export const PlayersBar = () => {
     setAddOpen(false);
   };
 
+  // Debounce функция для пересортировки игроков
+  const debouncedReorder = useCallback(() => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+    debounceTimerRef.current = window.setTimeout(() => {
+      reorderPlayersByScore();
+    }, 1500);
+  }, [reorderPlayersByScore]);
+
+  // Функция изменения счета с debounce пересортировкой
+  const handleScoreChange = useCallback(
+    (playerId: string, delta: number) => {
+      adjustScore(playerId, delta);
+      debouncedReorder();
+    },
+    [adjustScore, debouncedReorder]
+  );
+
   useEffect(() => {
     if (addOpen && inputRef.current) {
       setTimeout(() => {
@@ -78,6 +99,15 @@ export const PlayersBar = () => {
       }, 100);
     }
   }, [addOpen]);
+
+  // Очистка таймера при размонтировании
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <Flex
@@ -149,7 +179,11 @@ export const PlayersBar = () => {
                 key={p.id}
                 layout
                 transition={{ type: "spring", stiffness: 500, damping: 40 }}
-                style={{ minWidth: 220 }}
+                style={{
+                  flex: "1 1 220px",
+                  minWidth: 220,
+                  maxWidth: 300,
+                }}
               >
                 <Card
                   hoverable
@@ -221,23 +255,13 @@ export const PlayersBar = () => {
                       {p.score}
                     </Text>
 
-                    {/* Отображение шага изменения */}
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: "rgba(234, 234, 255, 0.7)",
-                      }}
-                    >
-                      ±{change}
-                    </Text>
-
                     {/* Кнопки управления */}
-                    <Flex gap={8} style={{ marginTop: 4 }}>
+                    <Flex gap={8} align="center" style={{ marginTop: 4 }}>
                       <Button
                         icon={<MinusOutlined />}
                         onClick={(e) => {
                           e.stopPropagation();
-                          adjustScore(p.id, -Math.abs(change));
+                          handleScoreChange(p.id, -Math.abs(change));
                         }}
                         style={{
                           borderRadius: 8,
@@ -246,12 +270,24 @@ export const PlayersBar = () => {
                           color: "#ff6b6b",
                         }}
                       />
+                      {/* Отображение шага изменения между кнопками */}
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: 600,
+                          color: "#EAEAFF",
+                          minWidth: 40,
+                          textAlign: "center",
+                        }}
+                      >
+                        {change}
+                      </Text>
                       <Button
                         type="primary"
                         icon={<PlusOutlined />}
                         onClick={(e) => {
                           e.stopPropagation();
-                          adjustScore(p.id, Math.abs(change));
+                          handleScoreChange(p.id, Math.abs(change));
                         }}
                         style={{
                           borderRadius: 8,
