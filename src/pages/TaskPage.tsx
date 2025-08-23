@@ -20,6 +20,7 @@ export const TaskPage = () => {
     s.contests.find((c) => c.id === contestId)
   );
   const markPlayed = useGameStore((s) => s.markTaskPlayed);
+  const reorderPlayersByScore = useGameStore((s) => s.reorderPlayersByScore);
 
   const [timeSec, setTimeSec] = useState<number>(() => contest?.timeSec ?? 0);
   const [running, setRunning] = useState(false);
@@ -67,13 +68,18 @@ export const TaskPage = () => {
   const handleShowAnswer = () => setShowAnswer(true);
 
   const onBack = () => {
-    // При выходе отметим карточку как сыгранную
+    // Возврат к конкурсам без отметки сыгранности
+    navigate(`/`);
+  };
+
+  const onTaskDone = () => {
     markPlayed(contest.id, task.id);
+    reorderPlayersByScore();
     navigate(`/`);
   };
 
   return (
-    <div style={{ padding: 12 }}>
+    <div className="page-section">
       <Space style={{ marginBottom: 12 }}>
         <Button onClick={() => navigate(`/contest/${contest.id}`)}>
           К заданиям
@@ -81,6 +87,7 @@ export const TaskPage = () => {
         <Button onClick={onBack} type="primary">
           К конкурсам
         </Button>
+        <Button onClick={onTaskDone}>Задание выполнено</Button>
       </Space>
       <Title level={3} style={{ marginTop: 0 }}>
         {contest.title}
@@ -93,7 +100,10 @@ export const TaskPage = () => {
       <div style={{ marginTop: 16 }}>
         {q.text && <Paragraph style={{ fontSize: 16 }}>{q.text}</Paragraph>}
         {q.photo && (
-          <div style={{ margin: "12px 0" }}>
+          <div
+            className="glass"
+            style={{ margin: "12px 0", padding: 8, display: "inline-block" }}
+          >
             <img
               src={q.photo}
               alt="question"
@@ -102,7 +112,7 @@ export const TaskPage = () => {
           </div>
         )}
         {q.music && (
-          <Card size="small" style={{ maxWidth: 720 }}>
+          <Card className="glass" size="small" style={{ maxWidth: 720 }}>
             <audio
               ref={audioRef}
               controls
@@ -135,10 +145,13 @@ export const TaskPage = () => {
       </Space>
 
       {showAnswer && a && (
-        <Card style={{ marginTop: 16 }} title="Ответ">
+        <Card className="glass" style={{ marginTop: 16 }} title="Ответ">
           {a.text && <Paragraph style={{ fontSize: 16 }}>{a.text}</Paragraph>}
           {a.photo && (
-            <div style={{ margin: "12px 0" }}>
+            <div
+              className="glass"
+              style={{ margin: "12px 0", padding: 8, display: "inline-block" }}
+            >
               <img
                 src={a.photo}
                 alt="answer"
@@ -147,7 +160,7 @@ export const TaskPage = () => {
             </div>
           )}
           {a.music && (
-            <Card size="small" style={{ maxWidth: 720 }}>
+            <Card className="glass" size="small" style={{ maxWidth: 720 }}>
               <audio controls src={a.music.link} style={{ width: "100%" }} />
             </Card>
           )}

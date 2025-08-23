@@ -3,9 +3,15 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: dark;
+  color: #eaeaff;
+  background: radial-gradient(
+      1200px 800px at 20% -10%,
+      #1b0b3a 0%,
+      transparent 60%
+    ),
+    radial-gradient(1000px 600px at 120% 30%, #0b3a34 0%, transparent 60%),
+    linear-gradient(180deg, #0b0b14 0%, #0b0b14 100%);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -52,15 +58,40 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Светлая тема отключена */
+
+.glass {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
+
+.neon {
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3),
+    0 10px 30px rgba(124, 58, 237, 0.25) !important;
+}
+
+.page-section {
+  padding: 12px;
+}
+ 
+.cardHover {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.cardHover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
+
+.badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 12px;
+  background: rgba(124,58,237,0.25);
+  border: 1px solid rgba(124,58,237,0.35);
+}
+.

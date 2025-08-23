@@ -10,7 +10,7 @@ export const ContestGrid = () => {
   const contests = useGameStore((s) => s.contests);
 
   return (
-    <div style={{ padding: 12 }}>
+    <div className="page-section">
       <Title level={3} style={{ marginTop: 0 }}>
         Выбор конкурса
       </Title>
@@ -25,7 +25,12 @@ export const ContestGrid = () => {
               <Card
                 hoverable={!disabled}
                 onClick={() => !disabled && navigate(`/contest/${c.id}`)}
-                style={{ opacity: disabled ? 0.6 : 1, height: "100%" }}
+                className="glass cardHover"
+                style={{
+                  opacity: disabled ? 0.6 : 1,
+                  height: "100%",
+                  position: "relative",
+                }}
                 title={c.title}
               >
                 <Text>{c.description.slice(0, 200)}</Text>
@@ -34,6 +39,7 @@ export const ContestGrid = () => {
                     Осталось {remaining} из {total}
                   </Text>
                 </div>
+                <div className="badge">{c.points} баллов</div>
               </Card>
             </Col>
           );

@@ -25,6 +25,7 @@ const { Text } = Typography;
 export const PlayersBar = () => {
   const location = useLocation();
   const playersState = useGameStore((s) => s.players);
+  const playersOrder = useGameStore((s) => s.playersOrder);
   const contests = useGameStore((s) => s.contests);
   const addPlayer = useGameStore((s) => s.addPlayer);
   const adjustScore = useGameStore((s) => s.adjustScore);
@@ -33,10 +34,15 @@ export const PlayersBar = () => {
   const removePlayerById = useGameStore((s) => s.removePlayerById);
 
   const players = useMemo(() => {
-    return [...playersState].sort(
-      (a, b) => b.score - a.score || a.name.localeCompare(b.name)
-    );
-  }, [playersState]);
+    if (playersOrder.length === 0) return playersState;
+    const map = new Map(playersState.map((p) => [p.id, p] as const));
+    const ordered = playersOrder
+      .map((id) => map.get(id))
+      .filter(Boolean) as typeof playersState;
+    // добаляем внезапно появившихся (на всякий случай)
+    const rest = playersState.filter((p) => !playersOrder.includes(p.id));
+    return [...ordered, ...rest];
+  }, [playersState, playersOrder]);
 
   // Вычисляем quickPoints из URL: /contest/:id или /contest/:id/task/:taskId
   const quickPoints = useMemo(() => {
@@ -65,7 +71,10 @@ export const PlayersBar = () => {
   };
 
   return (
-    <div style={{ width: "100%", overflowX: "auto", padding: 8 }}>
+    <div
+      className="glass"
+      style={{ width: "100%", overflowX: "auto", padding: 12 }}
+    >
       <Space style={{ marginBottom: 8 }}>
         <Button
           type="primary"
@@ -115,7 +124,7 @@ export const PlayersBar = () => {
                 key={p.id}
                 layout
                 transition={{ type: "spring", stiffness: 500, damping: 40 }}
-                style={{ minWidth: 200 }}
+                style={{ minWidth: 220 }}
               >
                 <Card
                   hoverable
@@ -127,6 +136,7 @@ export const PlayersBar = () => {
                       adjustScore(p.id, quickPoints);
                     }
                   }}
+                  className="glass"
                   style={{
                     borderColor: isLeader
                       ? "#52c41a"
@@ -134,9 +144,9 @@ export const PlayersBar = () => {
                       ? "#ff4d4f"
                       : undefined,
                     boxShadow: isLeader
-                      ? "0 0 0 2px rgba(82,196,26,0.3)"
+                      ? "0 0 0 2px rgba(82,196,26,0.3), 0 10px 30px rgba(34,197,94,0.2)"
                       : isLast
-                      ? "0 0 0 2px rgba(255,77,79,0.3)"
+                      ? "0 0 0 2px rgba(255,77,79,0.3), 0 10px 30px rgba(239,68,68,0.2)"
                       : undefined,
                     cursor: deleteMode ? "pointer" : "default",
                   }}

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button, Card, Col, Row, Space, Typography } from "antd";
+import { RedoOutlined } from "@ant-design/icons";
 import { useGameStore } from "../store/game";
 import { PlayersBar } from "../components/PlayersBar";
 
@@ -10,6 +11,7 @@ export const ContestPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const contest = useGameStore((s) => s.contests.find((c) => c.id === id));
+  const setTaskPlayed = useGameStore((s) => s.setTaskPlayed);
 
   if (!contest) return <div style={{ padding: 12 }}>Конкурс не найден</div>;
 
@@ -48,6 +50,27 @@ export const ContestPage = () => {
               }
               style={{ textAlign: "center", opacity: t.played ? 0.6 : 1 }}
             >
+              {t.played && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setTaskPlayed(contest.id, t.id, false);
+                  }}
+                  style={{
+                    position: "absolute",
+                    top: 6,
+                    right: 6,
+                    border: "none",
+                    background: "transparent",
+                    cursor: "pointer",
+                    color: "#1677ff",
+                  }}
+                  aria-label="Сделать доступным"
+                  title="Сделать доступным"
+                >
+                  <RedoOutlined />
+                </button>
+              )}
               <Title level={4} style={{ margin: 0 }}>
                 {t.order}
               </Title>
