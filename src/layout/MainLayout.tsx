@@ -22,7 +22,12 @@ export const MainLayout = () => {
           <div style={{ flex: 1, overflow: "hidden" }}>
             <div
               className="container"
-              style={{ height: "100vh", overflowY: "auto" }}
+              style={{
+                height: "100vh",
+                overflowY: "auto",
+                padding: 0,
+                maxWidth: "none",
+              }}
             >
               <Outlet />
             </div>

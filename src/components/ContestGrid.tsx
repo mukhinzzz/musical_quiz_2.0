@@ -2,17 +2,14 @@ import { Card, Col, Row, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useGameStore } from "../store/game";
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 export const ContestGrid = () => {
   const navigate = useNavigate();
   const contests = useGameStore((s) => s.contests);
 
   return (
-    <div className="page-section">
-      <Title level={3} style={{ marginTop: 0 }}>
-        Выбор конкурса
-      </Title>
+    <div style={{ padding: "0 12px" }}>
       <Row gutter={[12, 12]}>
         {contests.map((c) => {
           const total = c.tasks.length;
