@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { contestsData } from "../data/contests";
 
 export type MusicInfo = {
   link: string;
@@ -64,9 +65,50 @@ type GameState = {
   setTimerRunning: (running: boolean) => void;
   resetTimer: () => void;
   initTimer: (seconds: number) => void;
+  // Методы localStorage
+  saveGameState: () => void;
+  loadGameState: () => void;
+  resetGameState: () => void;
 };
 
 const generateId = () => Math.random().toString(36).slice(2, 10);
+
+// Константы для localStorage
+const STORAGE_KEY = "musical_quiz_game_state";
+
+// Типы для сохранения состояния
+type SavedGameState = {
+  players: Player[];
+  playersOrder: string[];
+  contests: Contest[];
+};
+
+// Вспомогательные функции для работы с localStorage
+const saveToStorage = (data: SavedGameState) => {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (error) {
+    console.error("Ошибка сохранения состояния игры:", error);
+  }
+};
+
+const loadFromStorage = (): SavedGameState | null => {
+  try {
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : null;
+  } catch (error) {
+    console.error("Ошибка загрузки состояния игры:", error);
+    return null;
+  }
+};
+
+const clearStorage = () => {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    console.error("Ошибка очистки состояния игры:", error);
+  }
+};
 
 export const useGameStore = create<GameState>((set, get) => ({
   players: [],
@@ -80,25 +122,34 @@ export const useGameStore = create<GameState>((set, get) => ({
   timerSeconds: 60,
   timerRunning: false,
   timerInitialSeconds: 60,
-  addPlayer: (name) =>
+  addPlayer: (name) => {
     set((state) => {
       const id = generateId();
       const nextPlayers = [...state.players, { id, name, score: 0 }];
       const nextOrder = [...state.playersOrder, id];
       return { players: nextPlayers, playersOrder: nextOrder };
-    }),
-  removePlayerById: (id) =>
+    });
+    // Автосохранение
+    setTimeout(() => get().saveGameState(), 0);
+  },
+  removePlayerById: (id) => {
     set((state) => ({
       players: state.players.filter((p) => p.id !== id),
       playersOrder: state.playersOrder.filter((pid) => pid !== id),
-    })),
+    }));
+    // Автосохранение
+    setTimeout(() => get().saveGameState(), 0);
+  },
   setDeleteMode: (on) => set({ deleteMode: on }),
-  adjustScore: (id, delta) =>
+  adjustScore: (id, delta) => {
     set((state) => ({
       players: state.players.map((p) =>
         p.id === id ? { ...p, score: p.score + delta } : p
       ),
-    })),
+    }));
+    // Автосохранение
+    setTimeout(() => get().saveGameState(), 0);
+  },
   getSortedPlayers: () => {
     const { players } = get();
     // Desc by score, stable by name
@@ -107,7 +158,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     );
   },
   setContests: (contests) => set({ contests }),
-  markTaskPlayed: (contestId, taskId) =>
+  markTaskPlayed: (contestId, taskId) => {
     set((state) => ({
       contests: state.contests.map((c) =>
         c.id === contestId
@@ -119,8 +170,11 @@ export const useGameStore = create<GameState>((set, get) => ({
             }
           : c
       ),
-    })),
-  setTaskPlayed: (contestId, taskId, played) =>
+    }));
+    // Автосохранение
+    setTimeout(() => get().saveGameState(), 0);
+  },
+  setTaskPlayed: (contestId, taskId, played) => {
     set((state) => ({
       contests: state.contests.map((c) =>
         c.id === contestId
@@ -132,8 +186,15 @@ export const useGameStore = create<GameState>((set, get) => ({
             }
           : c
       ),
-    })),
-  setPlayersOrder: (ids) => set({ playersOrder: ids }),
+    }));
+    // Автосохранение
+    setTimeout(() => get().saveGameState(), 0);
+  },
+  setPlayersOrder: (ids) => {
+    set({ playersOrder: ids });
+    // Автосохранение
+    setTimeout(() => get().saveGameState(), 0);
+  },
   reorderPlayersByScore: () => {
     const { players } = get();
     const sorted = [...players].sort(
@@ -161,6 +222,41 @@ export const useGameStore = create<GameState>((set, get) => ({
       timerSeconds: seconds,
       timerRunning: false,
       timerVisible: true,
+    });
+  },
+  // Методы localStorage
+  saveGameState: () => {
+    const { players, playersOrder, contests } = get();
+    const dataToSave: SavedGameState = {
+      players,
+      playersOrder,
+      contests,
+    };
+    saveToStorage(dataToSave);
+  },
+  loadGameState: () => {
+    const savedData = loadFromStorage();
+    if (savedData) {
+      set({
+        players: savedData.players,
+        playersOrder: savedData.playersOrder,
+        contests: savedData.contests,
+      });
+    }
+  },
+  resetGameState: () => {
+    clearStorage();
+    set({
+      players: [],
+      playersOrder: [],
+      contests: JSON.parse(JSON.stringify(contestsData)), // Перезагружаем конкурсы из исходных данных (глубокая копия)
+      deleteMode: false,
+      playersBarCollapsed: false,
+      playersBarVertical: false,
+      timerVisible: false,
+      timerSeconds: 60,
+      timerRunning: false,
+      timerInitialSeconds: 60,
     });
   },
 }));

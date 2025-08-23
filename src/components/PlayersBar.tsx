@@ -21,6 +21,7 @@ import {
   AppstoreOutlined,
   LeftOutlined,
   RightOutlined,
+  ReloadOutlined,
 } from "@ant-design/icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -93,6 +94,7 @@ export const PlayersBar = () => {
   const playersBarVertical = useGameStore((s) => s.playersBarVertical);
   const setPlayersBarCollapsed = useGameStore((s) => s.setPlayersBarCollapsed);
   const setPlayersBarVertical = useGameStore((s) => s.setPlayersBarVertical);
+  const resetGameState = useGameStore((s) => s.resetGameState);
 
   const players = useMemo(() => {
     if (playersOrder.length === 0) return playersState;
@@ -124,6 +126,34 @@ export const PlayersBar = () => {
   >({});
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceTimerRef = useRef<number | null>(null);
+
+  // Функция для сброса состояния игры
+  const handleResetGame = useCallback(() => {
+    console.log("handleResetGame вызвана"); // Отладка
+
+    // Временно используем confirm для проверки
+    if (
+      window.confirm(
+        "Вы уверены, что хотите начать новый квиз? Все данные текущей игры будут удалены."
+      )
+    ) {
+      console.log("Подтверждение нажато, сбрасываем состояние"); // Отладка
+      resetGameState();
+    }
+
+    // Modal.confirm({
+    //   title: "Новый квиз",
+    //   content:
+    //     "Вы уверены, что хотите начать новый квиз? Все данные текущей игры будут удалены.",
+    //   okText: "Да, начать новый квиз",
+    //   cancelText: "Отмена",
+    //   okType: "danger",
+    //   onOk: () => {
+    //     console.log("Подтверждение нажато, сбрасываем состояние"); // Отладка
+    //     resetGameState();
+    //   },
+    // });
+  }, [resetGameState]);
 
   const maxLen = 20;
 
@@ -328,6 +358,17 @@ export const PlayersBar = () => {
                 onClick={() => setDeleteMode(!deleteMode)}
               >
                 Удалить игрока
+              </Button>
+            </Tooltip>
+            <Tooltip title="Начать новый квиз (сбросить все данные)">
+              <Button
+                icon={<ReloadOutlined />}
+                onClick={() => {
+                  console.log("Кнопка 'Новый квиз' нажата"); // Отладка
+                  handleResetGame();
+                }}
+              >
+                Новый квиз
               </Button>
             </Tooltip>
           </Space>

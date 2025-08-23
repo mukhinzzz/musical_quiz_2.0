@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { PlayersBar } from "../components/PlayersBar";
 import { FloatingTimer } from "../components/FloatingTimer";
@@ -5,6 +6,12 @@ import { useGameStore } from "../store/game";
 
 export const MainLayout = () => {
   const playersBarVertical = useGameStore((s) => s.playersBarVertical);
+  const loadGameState = useGameStore((s) => s.loadGameState);
+
+  // Загружаем состояние игры при инициализации
+  useEffect(() => {
+    loadGameState();
+  }, [loadGameState]);
 
   return (
     <div
