@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import {
   Button,
   Card,
@@ -56,8 +56,9 @@ export const PlayersBar = () => {
   const [addOpen, setAddOpen] = useState(false);
   const [newName, setNewName] = useState("");
   const [change, setChange] = useState<number>(100);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const maxLen = 15;
+  const maxLen = 20;
   const leaderId = players[0]?.id;
   const lastId = players[players.length - 1]?.id;
 
@@ -70,49 +71,73 @@ export const PlayersBar = () => {
     setAddOpen(false);
   };
 
+  useEffect(() => {
+    if (addOpen && inputRef.current) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+    }
+  }, [addOpen]);
+
   return (
-    <div
+    <Flex
       className="glass"
-      style={{ width: "100%", overflowX: "auto", padding: 12 }}
+      vertical
+      gap={8}
+      style={{
+        width: "100%",
+        overflowX: "auto",
+        padding: 16,
+        borderRadius: 12,
+        border: "none",
+      }}
     >
-      <Space style={{ marginBottom: 8 }}>
-        <Button
-          type="primary"
-          icon={<UserAddOutlined />}
-          onClick={() => setAddOpen(true)}
-        >
-          Добавить игрока
-        </Button>
-        <Tooltip
-          title={
-            deleteMode ? "Выберите карточку для удаления" : "Удалить игрока"
-          }
-        >
+      <Flex
+        justify="space-between"
+        align="flex-end"
+        style={{ marginBottom: 8 }}
+      >
+        <Space>
           <Button
-            danger
-            icon={<DeleteOutlined />}
-            type={deleteMode ? "primary" : "default"}
-            onClick={() => setDeleteMode(!deleteMode)}
+            type="primary"
+            icon={<UserAddOutlined />}
+            onClick={() => setAddOpen(true)}
           >
-            Удалить игрока
+            Добавить игрока
           </Button>
-        </Tooltip>
-        <Text>Шаг изменения очков:</Text>
-        <InputNumber
-          value={change}
-          onChange={(v) => setChange(Number(v) || 0)}
-          step={50}
-          min={-10000}
-          max={10000}
-        />
-      </Space>
+          <Tooltip
+            title={
+              deleteMode ? "Выберите карточку для удаления" : "Удалить игрока"
+            }
+          >
+            <Button
+              danger
+              icon={<DeleteOutlined />}
+              type={deleteMode ? "primary" : "default"}
+              onClick={() => setDeleteMode(!deleteMode)}
+            >
+              Удалить игрока
+            </Button>
+          </Tooltip>
+        </Space>
+        <Space direction="vertical" size={4} align="center">
+          <Text style={{ fontSize: 12, lineHeight: 1 }}>Шаг</Text>
+          <InputNumber
+            value={change}
+            onChange={(v) => setChange(Number(v) || 0)}
+            step={50}
+            min={-10000}
+            max={10000}
+            size="small"
+          />
+        </Space>
+      </Flex>
       <div
         style={{
           display: "grid",
           gridAutoFlow: "column",
           gap: 12,
           alignItems: "stretch",
-          minHeight: 120,
         }}
       >
         <AnimatePresence initial={false}>
@@ -206,10 +231,12 @@ export const PlayersBar = () => {
         onCancel={() => setAddOpen(false)}
         onOk={handleAdd}
         okText="Добавить"
+        cancelText="Отменить"
         title="Введите имя игрока"
       >
         <Space direction="vertical" style={{ width: "100%" }}>
           <input
+            ref={inputRef}
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             onKeyDown={(e) => {
@@ -219,8 +246,12 @@ export const PlayersBar = () => {
             style={{
               width: "100%",
               padding: 8,
-              border: "1px solid #d9d9d9",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
               borderRadius: 6,
+              backgroundColor: "rgba(255, 255, 255, 0.05)",
+              color: "#EAEAFF",
+              fontSize: 14,
+              boxSizing: "border-box",
             }}
             placeholder="Имя игрока"
           />
@@ -229,6 +260,6 @@ export const PlayersBar = () => {
           </Text>
         </Space>
       </Modal>
-    </div>
+    </Flex>
   );
 };
