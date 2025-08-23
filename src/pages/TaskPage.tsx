@@ -22,7 +22,7 @@ export const TaskPage = () => {
 
   const task = contest?.tasks.find((t) => t.id === taskId);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [stopIdx, setStopIdx] = useState(0);
+  const lastStopTimeRef = useRef<number>(-1);
 
   // Инициализация таймера при открытии задания
   useEffect(() => {
@@ -34,18 +34,33 @@ export const TaskPage = () => {
   useEffect(() => {
     if (!task?.question.music || !audioRef.current) return;
     const stops = task.question.music.stops ?? [];
+
     const onTime = () => {
       if (!audioRef.current) return;
       const current = audioRef.current.currentTime;
-      if (stopIdx < stops.length && current >= stops[stopIdx]) {
+
+      // Сбросить последний стоп если перемотали назад
+      if (current < lastStopTimeRef.current) {
+        lastStopTimeRef.current = -1;
+      }
+
+      // Найти ближайший стоп, который мы достигли, но еще не обработали
+      const reachedStops = stops.filter(
+        (stop) => current >= stop && stop > lastStopTimeRef.current
+      );
+
+      if (reachedStops.length > 0) {
+        // Берем минимальный из достигнутых стопов
+        const nextStop = Math.min(...reachedStops);
         audioRef.current.pause();
-        setStopIdx((i) => i + 1);
+        lastStopTimeRef.current = nextStop;
       }
     };
+
     const el = audioRef.current;
     el.addEventListener("timeupdate", onTime);
     return () => el.removeEventListener("timeupdate", onTime);
-  }, [task, stopIdx]);
+  }, [task]);
 
   if (!contest || !task)
     return <div style={{ padding: 12 }}>Задание не найдено</div>;
