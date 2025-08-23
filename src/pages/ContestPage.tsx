@@ -1,9 +1,7 @@
-import { useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button, Card, Col, Row, Space, Typography } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { useGameStore } from "../store/game";
-import { PlayersBar } from "../components/PlayersBar";
 
 const { Title, Text } = Typography;
 
@@ -14,10 +12,6 @@ export const ContestPage = () => {
   const setTaskPlayed = useGameStore((s) => s.setTaskPlayed);
 
   if (!contest) return <div style={{ padding: 12 }}>Конкурс не найден</div>;
-
-  const remaining = contest.tasks.filter((t) => !t.played).length;
-
-  // quickPoints теперь вычисляются внутри PlayersBar от URL
 
   return (
     <div className="page-section">
@@ -30,12 +24,6 @@ export const ContestPage = () => {
       <Text>{contest.description}</Text>
       <div style={{ marginTop: 8 }}>
         <Text strong>Цена: {contest.points} баллов</Text>
-      </div>
-
-      <div style={{ marginTop: 12, marginBottom: 12 }}>
-        <Text type="secondary">
-          Быстрое начисление: нажмите по игроку сверху (+{contest.points})
-        </Text>
       </div>
 
       {/* Быстрое начисление поверх карточек игроков уже доступно в PlayersBar через ручной ввод.
