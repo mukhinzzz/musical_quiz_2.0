@@ -19,12 +19,10 @@ export const MainLayout = () => {
           <div style={{ flexShrink: 0 }}>
             <PlayersBar />
           </div>
-          <div style={{ flex: 1, overflow: "hidden" }}>
+          <div style={{ flex: 1 }}>
             <div
               className="container"
               style={{
-                height: "100vh",
-                overflowY: "auto",
                 padding: 0,
                 maxWidth: "none",
               }}

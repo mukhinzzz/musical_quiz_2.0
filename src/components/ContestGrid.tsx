@@ -1,4 +1,4 @@
-import { Card, Col, Row, Typography } from "antd";
+import { Card, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useGameStore } from "../store/game";
 
@@ -9,13 +9,21 @@ export const ContestGrid = () => {
   const contests = useGameStore((s) => s.contests);
 
   return (
-    <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-      <Row
-        gutter={[24, 24]}
-        justify="center"
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        className="grid-container"
         style={{
-          display: "flex",
-          flexWrap: "wrap",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, 154px)",
+          gap: "16px",
+          justifyContent: "center",
+          maxWidth: "1000px",
+          width: "100%",
         }}
       >
         {contests.map((c) => {
@@ -24,28 +32,19 @@ export const ContestGrid = () => {
           const remaining = total - played;
           const isCompleted = remaining === 0;
           return (
-            <Col
-              key={c.id}
-              style={{
-                minWidth: "200px",
-                maxWidth: "250px",
-                flex: "1 1 200px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
+            <div key={c.id}>
               <Card
                 hoverable
                 onClick={() => navigate(`/contest/${c.id}`)}
-                className={`contestCard ${isCompleted ? "disabled" : ""}`}
+                className={`contestCard grid-item contest ${
+                  isCompleted ? "disabled" : ""
+                }`}
                 style={{
                   opacity: isCompleted ? 0.7 : 1,
-                  height: "100%",
                   position: "relative",
                   cursor: "pointer",
-                  width: "100%",
-                  minWidth: "200px",
-                  minHeight: "200px",
+                  width: "154px",
+                  height: "154px",
                 }}
                 styles={{
                   header: {
@@ -57,7 +56,7 @@ export const ContestGrid = () => {
                   },
                   body: {
                     backgroundColor: "transparent",
-                    padding: "20px",
+                    padding: "14px",
                   },
                 }}
                 title={c.title}
@@ -93,10 +92,10 @@ export const ContestGrid = () => {
                 {/* Лейбл баллов в правом нижнем углу */}
                 <div className="contestCard-points-label">+{c.points}</div>
               </Card>
-            </Col>
+            </div>
           );
         })}
-      </Row>
+      </div>
     </div>
   );
 };

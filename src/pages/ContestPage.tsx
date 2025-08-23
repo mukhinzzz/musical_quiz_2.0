@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Button, Card, Col, Row, Typography } from "antd";
+import { Button, Card, Typography } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { useGameStore } from "../store/game";
 
@@ -63,35 +63,29 @@ export const ContestPage = () => {
       <div
         style={{
           marginBottom: 32,
-          maxWidth: "1000px",
-          margin: "0 auto 32px auto",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
-        <Row
-          gutter={[24, 24]}
-          justify="center"
+        <div
+          className="grid-container"
           style={{
-            display: "flex",
-            flexWrap: "wrap",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, 154px)",
+            gap: "16px",
+            justifyContent: "center",
+            maxWidth: "1000px",
+            width: "100%",
           }}
         >
           {contest.tasks.map((t) => (
-            <Col
-              key={t.id}
-              style={{
-                minWidth: "200px",
-                maxWidth: "250px",
-                flex: "1 1 200px",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
+            <div key={t.id}>
               <Card
                 hoverable={!t.played}
                 onClick={() =>
                   !t.played && navigate(`/contest/${contest.id}/task/${t.id}`)
                 }
-                className={`taskCard ${t.played ? "disabled" : ""}`}
+                className={`taskCard grid-item ${t.played ? "disabled" : ""}`}
                 style={{
                   textAlign: "center",
                   display: "flex",
@@ -99,12 +93,12 @@ export const ContestPage = () => {
                   justifyContent: "center",
                   position: "relative",
                   cursor: !t.played ? "pointer" : "default",
-                  width: "100%",
-                  minWidth: "200px",
+                  width: "154px",
+                  height: "112px",
                 }}
                 styles={{
                   body: {
-                    padding: "24px",
+                    padding: "16px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -142,7 +136,7 @@ export const ContestPage = () => {
                 )}
                 <div
                   style={{
-                    fontSize: "48px",
+                    fontSize: "34px",
                     fontWeight: 700,
                     color: t.played ? "#9CA3AF" : "#EAEAFF",
                     lineHeight: 1,
@@ -151,9 +145,9 @@ export const ContestPage = () => {
                   {t.order}
                 </div>
               </Card>
-            </Col>
+            </div>
           ))}
-        </Row>
+        </div>
       </div>
 
       {/* Кнопка возврата к конкурсам внизу */}
