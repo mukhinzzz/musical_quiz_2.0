@@ -118,6 +118,46 @@ button:focus-visible {
   border: 1px solid rgba(124,58,237,0.35);
 }
 
+.contestCard-progress-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(99, 102, 241, 0.15));
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  color: #C7C7E8;
+  z-index: 2;
+}
+
+.contestCard-points-label {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ADE80;
+  z-index: 2;
+}
+
+.contestCard.disabled .contestCard-progress-label {
+  background: rgba(156, 163, 175, 0.15);
+  border-color: rgba(156, 163, 175, 0.25);
+  color: #9CA3AF;
+}
+
+.contestCard.disabled .contestCard-points-label {
+  background: rgba(156, 163, 175, 0.15);
+  border-color: rgba(156, 163, 175, 0.25);
+  color: #9CA3AF;
+}
+
 .container {
   max-width: 1280px;
   margin: 0 auto;
