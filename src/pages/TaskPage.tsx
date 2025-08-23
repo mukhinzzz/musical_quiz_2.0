@@ -80,92 +80,354 @@ export const TaskPage = () => {
 
   return (
     <div className="page-section">
-      <Space style={{ marginBottom: 12 }}>
-        <Button onClick={() => navigate(`/contest/${contest.id}`)}>
-          К заданиям
-        </Button>
-        <Button onClick={onBack} type="primary">
-          К конкурсам
-        </Button>
-        <Button onClick={onTaskDone}>Задание выполнено</Button>
-      </Space>
-      <Title level={3} style={{ marginTop: 0 }}>
-        {contest.title}
-      </Title>
-      <Text>{contest.description}</Text>
-      <div style={{ marginTop: 8 }}>
-        <Text strong>Цена: {contest.points} баллов</Text>
+      {/* Заголовок с баллами */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: 32,
+          gap: "16px",
+        }}
+      >
+        <div style={{ textAlign: "center" }}>
+          <Title
+            level={1}
+            style={{ margin: 0, fontSize: "42px", fontWeight: 700 }}
+          >
+            {contest.title} - Задание {task.order}
+          </Title>
+          <Text style={{ fontSize: "16px", color: "#B4B4CC" }}>
+            {contest.description}
+          </Text>
+        </div>
+        <div
+          className="contestCard-points-label"
+          style={{
+            position: "static",
+            margin: 0,
+            fontSize: "18px",
+            padding: "8px 16px",
+            borderRadius: "12px",
+          }}
+        >
+          +{contest.points}
+        </div>
       </div>
 
-      <div style={{ marginTop: 16 }}>
-        {q.text && <Paragraph style={{ fontSize: 16 }}>{q.text}</Paragraph>}
+      {/* Карточка с вопросом */}
+      <Card
+        className="contestCard"
+        title="Вопрос"
+        style={{
+          marginBottom: 32,
+          maxWidth: "800px",
+          margin: "0 auto 32px auto",
+        }}
+        styles={{
+          header: {
+            backgroundColor: "transparent",
+            borderBottom: "1px solid rgba(124, 58, 237, 0.15)",
+            color: "#EAEAFF",
+            fontSize: "18px",
+            fontWeight: 600,
+          },
+          body: {
+            backgroundColor: "transparent",
+            padding: "24px",
+          },
+        }}
+      >
+        {q.text && (
+          <Paragraph
+            style={{
+              fontSize: 18,
+              lineHeight: 1.6,
+              color: "#EAEAFF",
+              marginBottom: q.photo || q.music ? 20 : 0,
+            }}
+          >
+            {q.text}
+          </Paragraph>
+        )}
+
         {q.photo && (
           <div
-            className="glass"
-            style={{ margin: "12px 0", padding: 8, display: "inline-block" }}
+            style={{
+              textAlign: "center",
+              marginBottom: q.music ? 20 : 0,
+            }}
           >
             <img
               src={q.photo}
               alt="question"
-              style={{ maxWidth: "100%", borderRadius: 8 }}
+              style={{
+                maxWidth: "100%",
+                borderRadius: 12,
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+              }}
             />
           </div>
         )}
+
         {q.music && (
-          <Card className="glass" size="small" style={{ maxWidth: 720 }}>
+          <div
+            className="glass"
+            style={{
+              padding: "16px",
+              borderRadius: "12px",
+              backgroundColor: "rgba(124, 58, 237, 0.05)",
+            }}
+          >
             <audio
               ref={audioRef}
               controls
               src={q.music.link}
               style={{ width: "100%" }}
             />
-          </Card>
+          </div>
         )}
-      </div>
+      </Card>
 
-      <Space style={{ marginTop: 16 }}>
-        <InputNumber
-          value={timeSec}
-          onChange={(v) => setTimeSec(Number(v) || 0)}
-          addonAfter="сек"
-          min={0}
-          max={3600}
-        />
-        {!running ? (
-          <Button type="primary" onClick={() => setRunning(true)}>
-            Старт таймера
-          </Button>
-        ) : (
-          <Button onClick={() => setRunning(false)}>
-            Приостановить таймер
-          </Button>
-        )}
-        <Button onClick={resetTimer}>Сбросить таймер</Button>
-        {a && <Button onClick={handleShowAnswer}>Показать ответ</Button>}
-      </Space>
+      {/* Таймер */}
+      <Card
+        className="contestCard"
+        title="Таймер"
+        style={{
+          marginBottom: 32,
+          maxWidth: "600px",
+          margin: "0 auto 32px auto",
+        }}
+        styles={{
+          header: {
+            backgroundColor: "transparent",
+            borderBottom: "1px solid rgba(124, 58, 237, 0.15)",
+            color: "#EAEAFF",
+            fontSize: "18px",
+            fontWeight: 600,
+          },
+          body: {
+            backgroundColor: "transparent",
+            padding: "24px",
+            textAlign: "center",
+          },
+        }}
+      >
+        {/* Большой дисплей таймера */}
+        <div
+          style={{
+            fontSize: "72px",
+            fontWeight: 700,
+            color: running && timeSec <= 10 ? "#ff4d4f" : "#EAEAFF",
+            marginBottom: "24px",
+            fontFamily: "monospace",
+            textShadow:
+              running && timeSec <= 10
+                ? "0 0 20px rgba(255, 77, 79, 0.5)"
+                : "none",
+            transition: "all 0.3s ease",
+          }}
+        >
+          {Math.floor(timeSec / 60)}:
+          {(timeSec % 60).toString().padStart(2, "0")}
+        </div>
 
+        {/* Настройка времени */}
+        <div style={{ marginBottom: "24px" }}>
+          <InputNumber
+            value={timeSec}
+            onChange={(v) => setTimeSec(Number(v) || 0)}
+            addonAfter="сек"
+            min={0}
+            max={3600}
+            size="large"
+            disabled={running}
+            style={{ marginRight: "12px" }}
+          />
+        </div>
+
+        {/* Кнопки управления таймером */}
+        <Space size="large">
+          {!running ? (
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => setRunning(true)}
+              disabled={timeSec === 0}
+              style={{
+                background: "linear-gradient(135deg, #52c41a, #73d13d)",
+                borderColor: "#52c41a",
+                minWidth: "140px",
+              }}
+            >
+              Старт таймера
+            </Button>
+          ) : (
+            <Button
+              size="large"
+              onClick={() => setRunning(false)}
+              style={{
+                background: "linear-gradient(135deg, #faad14, #ffc53d)",
+                borderColor: "#faad14",
+                color: "#000",
+                minWidth: "140px",
+              }}
+            >
+              Пауза
+            </Button>
+          )}
+          <Button
+            size="large"
+            onClick={resetTimer}
+            style={{ minWidth: "140px" }}
+          >
+            Сбросить
+          </Button>
+        </Space>
+      </Card>
+
+      {/* Карточка с ответом */}
       {showAnswer && a && (
-        <Card className="glass" style={{ marginTop: 16 }} title="Ответ">
-          {a.text && <Paragraph style={{ fontSize: 16 }}>{a.text}</Paragraph>}
+        <Card
+          className="contestCard"
+          title="Ответ"
+          style={{
+            maxWidth: "800px",
+            margin: "0 auto",
+            border: "1px solid rgba(34, 197, 94, 0.3)",
+            background:
+              "linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(34, 197, 94, 0.05) 100%)",
+          }}
+          styles={{
+            header: {
+              backgroundColor: "transparent",
+              borderBottom: "1px solid rgba(34, 197, 94, 0.15)",
+              color: "#4ADE80",
+              fontSize: "18px",
+              fontWeight: 600,
+            },
+            body: {
+              backgroundColor: "transparent",
+              padding: "24px",
+            },
+          }}
+        >
+          {a.text && (
+            <Paragraph
+              style={{
+                fontSize: 18,
+                lineHeight: 1.6,
+                color: "#EAEAFF",
+                marginBottom: a.photo || a.music ? 20 : 0,
+              }}
+            >
+              {a.text}
+            </Paragraph>
+          )}
+
           {a.photo && (
             <div
-              className="glass"
-              style={{ margin: "12px 0", padding: 8, display: "inline-block" }}
+              style={{
+                textAlign: "center",
+                marginBottom: a.music ? 20 : 0,
+              }}
             >
               <img
                 src={a.photo}
                 alt="answer"
-                style={{ maxWidth: "100%", borderRadius: 8 }}
+                style={{
+                  maxWidth: "100%",
+                  borderRadius: 12,
+                  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+                }}
               />
             </div>
           )}
+
           {a.music && (
-            <Card className="glass" size="small" style={{ maxWidth: 720 }}>
+            <div
+              className="glass"
+              style={{
+                padding: "16px",
+                borderRadius: "12px",
+                backgroundColor: "rgba(34, 197, 94, 0.05)",
+              }}
+            >
               <audio controls src={a.music.link} style={{ width: "100%" }} />
-            </Card>
+            </div>
           )}
         </Card>
       )}
+
+      {/* Кнопки управления в два ряда */}
+      <div style={{ textAlign: "center", marginTop: 40 }}>
+        {/* Верхний ряд: основные действия */}
+        <div style={{ marginBottom: 16 }}>
+          <Space size="large">
+            {a && (
+              <Button
+                type="primary"
+                size="large"
+                onClick={handleShowAnswer}
+                disabled={showAnswer}
+                style={{
+                  background: showAnswer
+                    ? undefined
+                    : "linear-gradient(135deg, #722ed1, #9254de)",
+                  borderColor: showAnswer ? undefined : "#722ed1",
+                  minWidth: "180px",
+                  height: "50px",
+                  fontSize: "16px",
+                }}
+              >
+                {showAnswer ? "Ответ показан" : "Показать ответ"}
+              </Button>
+            )}
+            <Button
+              type="primary"
+              size="large"
+              onClick={onTaskDone}
+              style={{
+                background: "linear-gradient(135deg, #52c41a, #73d13d)",
+                borderColor: "#52c41a",
+                minWidth: "180px",
+                height: "50px",
+                fontSize: "16px",
+              }}
+            >
+              Задание выполнено
+            </Button>
+          </Space>
+        </div>
+
+        {/* Нижний ряд: навигация */}
+        <div>
+          <Space size="large">
+            <Button
+              size="large"
+              onClick={() => navigate(`/contest/${contest.id}`)}
+              style={{
+                minWidth: "180px",
+                height: "45px",
+                fontSize: "15px",
+              }}
+            >
+              К заданиям
+            </Button>
+            <Button
+              size="large"
+              onClick={onBack}
+              style={{
+                minWidth: "180px",
+                height: "45px",
+                fontSize: "15px",
+              }}
+            >
+              К конкурсам
+            </Button>
+          </Space>
+        </div>
+      </div>
     </div>
   );
 };
