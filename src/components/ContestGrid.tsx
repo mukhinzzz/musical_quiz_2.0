@@ -20,6 +20,7 @@ export const ContestGrid = () => {
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, 220px)",
+          gridAutoRows: "1fr",
           gap: "24px",
           justifyContent: "center",
           maxWidth: "1000px",
@@ -32,7 +33,14 @@ export const ContestGrid = () => {
           const remaining = total - played;
           const isCompleted = remaining === 0;
           return (
-            <div key={c.id}>
+            <div
+              key={c.id}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
+              }}
+            >
               <Card
                 hoverable
                 onClick={() => navigate(`/contest/${c.id}`)}
@@ -44,7 +52,9 @@ export const ContestGrid = () => {
                   position: "relative",
                   cursor: "pointer",
                   width: "220px",
-                  height: "220px",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
                 styles={{
                   header: {
@@ -57,6 +67,9 @@ export const ContestGrid = () => {
                   body: {
                     backgroundColor: "transparent",
                     padding: "20px",
+                    display: "flex",
+                    flexDirection: "column",
+                    flexGrow: 1,
                   },
                 }}
                 title={c.title}
@@ -66,9 +79,8 @@ export const ContestGrid = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    height: "100%",
-                    minHeight: "80px",
                     paddingBottom: "40px",
+                    flexGrow: 1,
                   }}
                 >
                   <Text
@@ -79,8 +91,7 @@ export const ContestGrid = () => {
                       textAlign: "center",
                     }}
                   >
-                    {c.description.slice(0, 150)}
-                    {c.description.length > 150 ? "..." : ""}
+                    {c.description}
                   </Text>
                 </div>
 
