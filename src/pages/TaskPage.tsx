@@ -1,14 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Button,
-  Card,
-  Flex,
-  Space,
-  Typography,
-  InputNumber,
-  message,
-} from "antd";
+import { Button, Card, Space, Typography } from "antd";
+import { ClockCircleOutlined } from "@ant-design/icons";
 import { useGameStore } from "../store/game";
 
 const { Title, Text, Paragraph } = Typography;
@@ -21,22 +14,22 @@ export const TaskPage = () => {
   );
   const markPlayed = useGameStore((s) => s.markTaskPlayed);
   const reorderPlayersByScore = useGameStore((s) => s.reorderPlayersByScore);
+  const initTimer = useGameStore((s) => s.initTimer);
+  const timerVisible = useGameStore((s) => s.timerVisible);
+  const setTimerVisible = useGameStore((s) => s.setTimerVisible);
 
-  const [timeSec, setTimeSec] = useState<number>(() => contest?.timeSec ?? 0);
-  const [running, setRunning] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
 
   const task = contest?.tasks.find((t) => t.id === taskId);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [stopIdx, setStopIdx] = useState(0);
 
+  // Инициализация таймера при открытии задания
   useEffect(() => {
-    let timer: any;
-    if (running && timeSec > 0) {
-      timer = setInterval(() => setTimeSec((s) => (s > 0 ? s - 1 : 0)), 1000);
+    if (contest?.timeSec) {
+      initTimer(contest.timeSec);
     }
-    return () => clearInterval(timer);
-  }, [running, timeSec]);
+  }, [contest?.timeSec, initTimer]);
 
   useEffect(() => {
     if (!task?.question.music || !audioRef.current) return;
@@ -59,11 +52,6 @@ export const TaskPage = () => {
 
   const q = task.question;
   const a = task.answer;
-
-  const resetTimer = () => {
-    setTimeSec(contest.timeSec ?? 60);
-    setRunning(false);
-  };
 
   const handleShowAnswer = () => setShowAnswer(true);
 
@@ -118,7 +106,41 @@ export const TaskPage = () => {
       {/* Карточка с вопросом */}
       <Card
         className="contestCard taskPageCard"
-        title="Вопрос"
+        title={
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <span>Вопрос</span>
+            {!timerVisible && (
+              <Button
+                type="text"
+                size="small"
+                icon={<ClockCircleOutlined />}
+                onClick={() => {
+                  if (contest?.timeSec) {
+                    initTimer(contest.timeSec);
+                  } else {
+                    setTimerVisible(true);
+                  }
+                }}
+                style={{
+                  color: "#EAEAFF",
+                  border: "none",
+                  padding: "4px 8px",
+                  height: "auto",
+                  fontSize: "12px",
+                }}
+              >
+                Показать таймер
+              </Button>
+            )}
+          </div>
+        }
         style={{
           marginBottom: 24,
           maxWidth: "800px",
@@ -186,102 +208,6 @@ export const TaskPage = () => {
             />
           </div>
         )}
-      </Card>
-
-      {/* Таймер */}
-      <Card
-        className="contestCard taskPageCard"
-        title="Таймер"
-        style={{
-          marginBottom: 24,
-          maxWidth: "600px",
-          margin: "0 auto 24px auto",
-        }}
-        styles={{
-          header: {
-            backgroundColor: "transparent",
-            borderBottom: "1px solid rgba(124, 58, 237, 0.15)",
-            color: "#EAEAFF",
-            fontSize: "18px",
-            fontWeight: 600,
-          },
-          body: {
-            backgroundColor: "transparent",
-            textAlign: "center",
-          },
-        }}
-      >
-        {/* Большой дисплей таймера */}
-        <div
-          style={{
-            fontSize: "72px",
-            fontWeight: 700,
-            color: running && timeSec <= 10 ? "#ff4d4f" : "#EAEAFF",
-            marginBottom: "20px",
-            fontFamily: "monospace",
-            textShadow:
-              running && timeSec <= 10
-                ? "0 0 20px rgba(255, 77, 79, 0.5)"
-                : "none",
-            transition: "all 0.3s ease",
-          }}
-        >
-          {Math.floor(timeSec / 60)}:
-          {(timeSec % 60).toString().padStart(2, "0")}
-        </div>
-
-        {/* Настройка времени */}
-        <div style={{ marginBottom: "20px" }}>
-          <InputNumber
-            value={timeSec}
-            onChange={(v) => setTimeSec(Number(v) || 0)}
-            addonAfter="сек"
-            min={0}
-            max={3600}
-            size="large"
-            disabled={running}
-            style={{ marginRight: "12px" }}
-          />
-        </div>
-
-        {/* Кнопки управления таймером */}
-        <Space size="large">
-          {!running ? (
-            <Button
-              type="primary"
-              size="large"
-              onClick={() => setRunning(true)}
-              disabled={timeSec === 0}
-              style={{
-                background: "linear-gradient(135deg, #52c41a, #73d13d)",
-                borderColor: "#52c41a",
-                minWidth: "140px",
-              }}
-            >
-              Старт таймера
-            </Button>
-          ) : (
-            <Button
-              size="large"
-              onClick={() => setRunning(false)}
-              style={{
-                background: "linear-gradient(135deg, #faad14, #ffc53d)",
-                borderColor: "#faad14",
-                color: "#000",
-                minWidth: "140px",
-              }}
-            >
-              Пауза
-            </Button>
-          )}
-          <Button
-            size="large"
-            onClick={resetTimer}
-            style={{ minWidth: "140px" }}
-          >
-            Сбросить
-          </Button>
-        </Space>
       </Card>
 
       {/* Карточка с ответом */}

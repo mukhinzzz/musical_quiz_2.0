@@ -41,6 +41,11 @@ type GameState = {
   playersOrder: string[];
   playersBarCollapsed: boolean;
   playersBarVertical: boolean;
+  // Таймер
+  timerVisible: boolean;
+  timerSeconds: number;
+  timerRunning: boolean;
+  timerInitialSeconds: number;
   addPlayer: (name: string) => void;
   removePlayerById: (id: string) => void;
   setDeleteMode: (on: boolean) => void;
@@ -53,6 +58,12 @@ type GameState = {
   reorderPlayersByScore: () => void;
   setPlayersBarCollapsed: (collapsed: boolean) => void;
   setPlayersBarVertical: (vertical: boolean) => void;
+  // Методы таймера
+  setTimerVisible: (visible: boolean) => void;
+  setTimerSeconds: (seconds: number) => void;
+  setTimerRunning: (running: boolean) => void;
+  resetTimer: () => void;
+  initTimer: (seconds: number) => void;
 };
 
 const generateId = () => Math.random().toString(36).slice(2, 10);
@@ -64,6 +75,11 @@ export const useGameStore = create<GameState>((set, get) => ({
   playersOrder: [],
   playersBarCollapsed: false,
   playersBarVertical: false,
+  // Начальные значения таймера
+  timerVisible: false,
+  timerSeconds: 60,
+  timerRunning: false,
+  timerInitialSeconds: 60,
   addPlayer: (name) =>
     set((state) => {
       const id = generateId();
@@ -128,4 +144,23 @@ export const useGameStore = create<GameState>((set, get) => ({
   setPlayersBarCollapsed: (collapsed) =>
     set({ playersBarCollapsed: collapsed }),
   setPlayersBarVertical: (vertical) => set({ playersBarVertical: vertical }),
+  // Методы таймера
+  setTimerVisible: (visible) => set({ timerVisible: visible }),
+  setTimerSeconds: (seconds) => set({ timerSeconds: seconds }),
+  setTimerRunning: (running) => set({ timerRunning: running }),
+  resetTimer: () => {
+    const { timerInitialSeconds } = get();
+    set({
+      timerSeconds: timerInitialSeconds,
+      timerRunning: false,
+    });
+  },
+  initTimer: (seconds) => {
+    set({
+      timerInitialSeconds: seconds,
+      timerSeconds: seconds,
+      timerRunning: false,
+      timerVisible: true,
+    });
+  },
 }));

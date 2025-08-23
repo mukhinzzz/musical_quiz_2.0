@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { PlayersBar } from "../components/PlayersBar";
+import { FloatingTimer } from "../components/FloatingTimer";
 import { useGameStore } from "../store/game";
 
 export const MainLayout = () => {
@@ -45,6 +46,9 @@ export const MainLayout = () => {
           </div>
         </>
       )}
+
+      {/* Плавающий таймер */}
+      <FloatingTimer />
     </div>
   );
 };
