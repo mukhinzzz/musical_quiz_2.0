@@ -100,7 +100,6 @@ button:focus-visible {
   backdrop-filter: blur(16px);
   min-width: 220px;
   min-height: 220px;
-  aspect-ratio: 1;
 }
 
 .contestCard:hover {
@@ -312,6 +311,15 @@ button:focus-visible {
     min-width: 220px;
     min-height: 220px;
   }
+}
+
+/* Карточки на странице задания - адаптивная высота */
+.taskPageCard {
+  min-height: auto !important;
+}
+
+.taskPageCard .ant-card-body {
+  padding: 20px !important;
 }
 
 /* Адаптивные сетки */

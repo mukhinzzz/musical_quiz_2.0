@@ -95,7 +95,7 @@ export const TaskPage = () => {
             level={1}
             style={{ margin: 0, fontSize: "42px", fontWeight: 700 }}
           >
-            {contest.title} - Задание {task.order}
+            {contest.title} - {task.order}
           </Title>
           <Text style={{ fontSize: "16px", color: "#B4B4CC" }}>
             {contest.description}
@@ -117,12 +117,12 @@ export const TaskPage = () => {
 
       {/* Карточка с вопросом */}
       <Card
-        className="contestCard"
+        className="contestCard taskPageCard"
         title="Вопрос"
         style={{
-          marginBottom: 32,
+          marginBottom: 24,
           maxWidth: "800px",
-          margin: "0 auto 32px auto",
+          margin: "0 auto 24px auto",
         }}
         styles={{
           header: {
@@ -134,7 +134,6 @@ export const TaskPage = () => {
           },
           body: {
             backgroundColor: "transparent",
-            padding: "24px",
           },
         }}
       >
@@ -144,7 +143,7 @@ export const TaskPage = () => {
               fontSize: 18,
               lineHeight: 1.6,
               color: "#EAEAFF",
-              marginBottom: q.photo || q.music ? 20 : 0,
+              marginBottom: q.photo || q.music ? 16 : 0,
             }}
           >
             {q.text}
@@ -191,12 +190,12 @@ export const TaskPage = () => {
 
       {/* Таймер */}
       <Card
-        className="contestCard"
+        className="contestCard taskPageCard"
         title="Таймер"
         style={{
-          marginBottom: 32,
+          marginBottom: 24,
           maxWidth: "600px",
-          margin: "0 auto 32px auto",
+          margin: "0 auto 24px auto",
         }}
         styles={{
           header: {
@@ -208,7 +207,6 @@ export const TaskPage = () => {
           },
           body: {
             backgroundColor: "transparent",
-            padding: "24px",
             textAlign: "center",
           },
         }}
@@ -219,7 +217,7 @@ export const TaskPage = () => {
             fontSize: "72px",
             fontWeight: 700,
             color: running && timeSec <= 10 ? "#ff4d4f" : "#EAEAFF",
-            marginBottom: "24px",
+            marginBottom: "20px",
             fontFamily: "monospace",
             textShadow:
               running && timeSec <= 10
@@ -233,7 +231,7 @@ export const TaskPage = () => {
         </div>
 
         {/* Настройка времени */}
-        <div style={{ marginBottom: "24px" }}>
+        <div style={{ marginBottom: "20px" }}>
           <InputNumber
             value={timeSec}
             onChange={(v) => setTimeSec(Number(v) || 0)}
@@ -289,7 +287,7 @@ export const TaskPage = () => {
       {/* Карточка с ответом */}
       {showAnswer && a && (
         <Card
-          className="contestCard"
+          className="contestCard taskPageCard"
           title="Ответ"
           style={{
             maxWidth: "800px",
@@ -308,7 +306,6 @@ export const TaskPage = () => {
             },
             body: {
               backgroundColor: "transparent",
-              padding: "24px",
             },
           }}
         >
@@ -318,7 +315,7 @@ export const TaskPage = () => {
                 fontSize: 18,
                 lineHeight: 1.6,
                 color: "#EAEAFF",
-                marginBottom: a.photo || a.music ? 20 : 0,
+                marginBottom: a.photo || a.music ? 16 : 0,
               }}
             >
               {a.text}
@@ -360,7 +357,7 @@ export const TaskPage = () => {
       )}
 
       {/* Кнопки управления в два ряда */}
-      <div style={{ textAlign: "center", marginTop: 40 }}>
+      <div style={{ textAlign: "center", marginTop: 32 }}>
         {/* Верхний ряд: основные действия */}
         <div style={{ marginBottom: 16 }}>
           <Space size="large">
