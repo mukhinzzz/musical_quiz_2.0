@@ -15,18 +15,18 @@ export const ContestGrid = () => {
           const total = c.tasks.length;
           const played = c.tasks.filter((t) => t.played).length;
           const remaining = total - played;
-          const disabled = remaining === 0;
+          const isCompleted = remaining === 0;
           return (
             <Col key={c.id} xs={24} sm={12} md={8} lg={6}>
               <Card
-                hoverable={!disabled}
-                onClick={() => !disabled && navigate(`/contest/${c.id}`)}
-                className={`contestCard ${disabled ? "disabled" : ""}`}
+                hoverable
+                onClick={() => navigate(`/contest/${c.id}`)}
+                className={`contestCard ${isCompleted ? "disabled" : ""}`}
                 style={{
-                  opacity: disabled ? 0.7 : 1,
+                  opacity: isCompleted ? 0.7 : 1,
                   height: "100%",
                   position: "relative",
-                  cursor: disabled ? "not-allowed" : "pointer",
+                  cursor: "pointer",
                 }}
                 styles={{
                   header: {
@@ -68,7 +68,7 @@ export const ContestGrid = () => {
 
                 {/* Лейбл прогресса в левом нижнем углу */}
                 <div className="contestCard-progress-label">
-                  {remaining} из {total}
+                  {isCompleted ? "Завершено" : `${remaining} из ${total}`}
                 </div>
 
                 {/* Лейбл баллов в правом нижнем углу */}
