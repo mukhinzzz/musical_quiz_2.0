@@ -9,15 +9,31 @@ export const ContestGrid = () => {
   const contests = useGameStore((s) => s.contests);
 
   return (
-    <div style={{ padding: "0 12px" }}>
-      <Row gutter={[12, 12]}>
+    <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
+      <Row
+        gutter={[24, 24]}
+        justify="center"
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+        }}
+      >
         {contests.map((c) => {
           const total = c.tasks.length;
           const played = c.tasks.filter((t) => t.played).length;
           const remaining = total - played;
           const isCompleted = remaining === 0;
           return (
-            <Col key={c.id} xs={24} sm={12} md={8} lg={6}>
+            <Col
+              key={c.id}
+              style={{
+                minWidth: "200px",
+                maxWidth: "250px",
+                flex: "1 1 200px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <Card
                 hoverable
                 onClick={() => navigate(`/contest/${c.id}`)}
@@ -27,6 +43,9 @@ export const ContestGrid = () => {
                   height: "100%",
                   position: "relative",
                   cursor: "pointer",
+                  width: "100%",
+                  minWidth: "200px",
+                  minHeight: "200px",
                 }}
                 styles={{
                   header: {
@@ -38,7 +57,7 @@ export const ContestGrid = () => {
                   },
                   body: {
                     backgroundColor: "transparent",
-                    padding: "16px",
+                    padding: "20px",
                   },
                 }}
                 title={c.title}

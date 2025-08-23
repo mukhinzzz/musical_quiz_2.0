@@ -99,6 +99,9 @@ button:focus-visible {
   border: 1px solid rgba(124, 58, 237, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(16px);
+  min-width: 200px;
+  min-height: 200px;
+  aspect-ratio: 1;
 }
 
 .contestCard:hover {
@@ -287,5 +290,27 @@ button:focus-visible {
   .taskCard {
     height: 160px;
     min-width: 200px;
+  }
+}
+
+/* Адаптивность для карточек конкурсов */
+@media (max-width: 576px) {
+  .contestCard {
+    min-width: 150px;
+    min-height: 150px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .contestCard {
+    min-width: 180px;
+    min-height: 180px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .contestCard {
+    min-width: 200px;
+    min-height: 200px;
   }
 }
