@@ -31,6 +31,30 @@ export const TaskPage = () => {
     }
   }, [contest?.timeSec, initTimer]);
 
+  // Управление воспроизведением с помощью пробела
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      // Проверяем, что нажат пробел и нет активного поля ввода
+      if (
+        event.code === "Space" &&
+        event.target === document.body &&
+        audioRef.current &&
+        task?.question.music
+      ) {
+        event.preventDefault(); // Предотвращаем скролл страницы
+
+        if (audioRef.current.paused) {
+          audioRef.current.play();
+        } else {
+          audioRef.current.pause();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+    return () => document.removeEventListener("keydown", handleKeyPress);
+  }, [task?.question.music]);
+
   useEffect(() => {
     if (!task?.question.music || !audioRef.current) return;
     const stops = task.question.music.stops ?? [];
