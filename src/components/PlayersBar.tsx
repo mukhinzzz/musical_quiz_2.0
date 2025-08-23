@@ -134,8 +134,8 @@ export const PlayersBar = () => {
       </Flex>
       <div
         style={{
-          display: "grid",
-          gridAutoFlow: "column",
+          display: "flex",
+          flexWrap: "wrap",
           gap: 12,
           alignItems: "stretch",
         }}
@@ -161,64 +161,116 @@ export const PlayersBar = () => {
                       adjustScore(p.id, quickPoints);
                     }
                   }}
-                  className="glass cardHover"
+                  className="cardHover"
                   style={{
-                    borderColor: isLeader
-                      ? "#52c41a"
+                    background: isLeader
+                      ? "linear-gradient(135deg, rgba(82, 196, 26, 0.15) 0%, rgba(34, 197, 94, 0.1) 100%)"
                       : isLast
-                      ? "#ff4d4f"
-                      : undefined,
+                      ? "linear-gradient(135deg, rgba(255, 77, 79, 0.15) 0%, rgba(239, 68, 68, 0.1) 100%)"
+                      : "linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%)",
+                    border: isLeader
+                      ? "1px solid rgba(82, 196, 26, 0.4)"
+                      : isLast
+                      ? "1px solid rgba(255, 77, 79, 0.4)"
+                      : "1px solid rgba(124, 58, 237, 0.3)",
+                    borderRadius: 12,
                     boxShadow: isLeader
-                      ? "0 0 0 2px rgba(82,196,26,0.3), 0 10px 30px rgba(34,197,94,0.2)"
+                      ? "0 0 0 1px rgba(82,196,26,0.2), 0 8px 25px rgba(34,197,94,0.15)"
                       : isLast
-                      ? "0 0 0 2px rgba(255,77,79,0.3), 0 10px 30px rgba(239,68,68,0.2)"
-                      : undefined,
+                      ? "0 0 0 1px rgba(255,77,79,0.2), 0 8px 25px rgba(239,68,68,0.15)"
+                      : "0 0 0 1px rgba(124,58,237,0.2), 0 8px 25px rgba(124,58,237,0.1)",
                     cursor: deleteMode ? "pointer" : "default",
+                    backdropFilter: "blur(10px)",
                   }}
-                  title={
-                    <Space>
-                      <Text strong>{p.name}</Text>
-                      {deleteMode && (
-                        <Text
-                          type="danger"
-                          style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: 4,
-                          }}
-                        >
-                          <ExclamationCircleOutlined /> Нажмите для удаления
-                        </Text>
-                      )}
-                    </Space>
-                  }
                 >
-                  <Flex align="center" gap={8}>
-                    <Button
-                      icon={<MinusOutlined />}
-                      onClick={() => adjustScore(p.id, -Math.abs(change))}
-                    />
-                    <InputNumber
-                      value={change}
-                      onChange={(v) => setChange(Number(v) || 0)}
-                      step={50}
-                      min={-10000}
-                      max={10000}
-                    />
-                    <Button
-                      type="primary"
-                      icon={<PlusOutlined />}
-                      onClick={() => adjustScore(p.id, Math.abs(change))}
-                    />
-                    <Text style={{ marginLeft: "auto" }} strong>
+                  <Flex
+                    vertical
+                    align="center"
+                    gap={8}
+                    style={{ textAlign: "center" }}
+                  >
+                    {/* Имя игрока */}
+                    <Text strong style={{ fontSize: 16, color: "#EAEAFF" }}>
+                      {p.name}
+                    </Text>
+
+                    {deleteMode && (
+                      <Text
+                        type="danger"
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 4,
+                          fontSize: 12,
+                        }}
+                      >
+                        <ExclamationCircleOutlined /> Нажмите для удаления
+                      </Text>
+                    )}
+
+                    {/* Баллы крупно */}
+                    <Text
+                      style={{
+                        fontSize: 32,
+                        fontWeight: 700,
+                        color: "#EAEAFF",
+                        lineHeight: 1,
+                        margin: "8px 0",
+                      }}
+                    >
                       {p.score}
                     </Text>
+
+                    {/* Отображение шага изменения */}
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: "rgba(234, 234, 255, 0.7)",
+                      }}
+                    >
+                      ±{change}
+                    </Text>
+
+                    {/* Кнопки управления */}
+                    <Flex gap={8} style={{ marginTop: 4 }}>
+                      <Button
+                        icon={<MinusOutlined />}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          adjustScore(p.id, -Math.abs(change));
+                        }}
+                        style={{
+                          borderRadius: 8,
+                          background: "rgba(255, 77, 79, 0.1)",
+                          borderColor: "rgba(255, 77, 79, 0.3)",
+                          color: "#ff6b6b",
+                        }}
+                      />
+                      <Button
+                        type="primary"
+                        icon={<PlusOutlined />}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          adjustScore(p.id, Math.abs(change));
+                        }}
+                        style={{
+                          borderRadius: 8,
+                          background: "rgba(82, 196, 26, 0.2)",
+                          borderColor: "rgba(82, 196, 26, 0.4)",
+                          color: "#52c41a",
+                        }}
+                      />
+                    </Flex>
+
+                    {typeof quickPoints === "number" && quickPoints !== 0 && (
+                      <Text
+                        type="success"
+                        style={{ marginTop: 4, fontSize: 12 }}
+                      >
+                        +{quickPoints}
+                      </Text>
+                    )}
                   </Flex>
-                  {typeof quickPoints === "number" && quickPoints !== 0 && (
-                    <div style={{ marginTop: 8 }}>
-                      <Text type="success">+{quickPoints}</Text>
-                    </div>
-                  )}
                 </Card>
               </motion.div>
             );
