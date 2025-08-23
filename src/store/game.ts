@@ -39,6 +39,8 @@ type GameState = {
   deleteMode: boolean;
   contests: Contest[];
   playersOrder: string[];
+  playersBarCollapsed: boolean;
+  playersBarVertical: boolean;
   addPlayer: (name: string) => void;
   removePlayerById: (id: string) => void;
   setDeleteMode: (on: boolean) => void;
@@ -49,6 +51,8 @@ type GameState = {
   setTaskPlayed: (contestId: string, taskId: string, played: boolean) => void;
   setPlayersOrder: (ids: string[]) => void;
   reorderPlayersByScore: () => void;
+  setPlayersBarCollapsed: (collapsed: boolean) => void;
+  setPlayersBarVertical: (vertical: boolean) => void;
 };
 
 const generateId = () => Math.random().toString(36).slice(2, 10);
@@ -58,6 +62,8 @@ export const useGameStore = create<GameState>((set, get) => ({
   deleteMode: false,
   contests: [],
   playersOrder: [],
+  playersBarCollapsed: false,
+  playersBarVertical: false,
   addPlayer: (name) =>
     set((state) => {
       const id = generateId();
@@ -119,4 +125,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     );
     set({ playersOrder: sorted.map((p) => p.id) });
   },
+  setPlayersBarCollapsed: (collapsed) =>
+    set({ playersBarCollapsed: collapsed }),
+  setPlayersBarVertical: (vertical) => set({ playersBarVertical: vertical }),
 }));

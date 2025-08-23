@@ -15,6 +15,12 @@ import {
   UserAddOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
+  UpOutlined,
+  DownOutlined,
+  MenuOutlined,
+  AppstoreOutlined,
+  LeftOutlined,
+  RightOutlined,
 } from "@ant-design/icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -33,6 +39,10 @@ export const PlayersBar = () => {
   const setDeleteMode = useGameStore((s) => s.setDeleteMode);
   const removePlayerById = useGameStore((s) => s.removePlayerById);
   const reorderPlayersByScore = useGameStore((s) => s.reorderPlayersByScore);
+  const playersBarCollapsed = useGameStore((s) => s.playersBarCollapsed);
+  const playersBarVertical = useGameStore((s) => s.playersBarVertical);
+  const setPlayersBarCollapsed = useGameStore((s) => s.setPlayersBarCollapsed);
+  const setPlayersBarVertical = useGameStore((s) => s.setPlayersBarVertical);
 
   const players = useMemo(() => {
     if (playersOrder.length === 0) return playersState;
@@ -115,204 +125,488 @@ export const PlayersBar = () => {
       vertical
       gap={8}
       style={{
-        width: "100%",
-        overflowX: "auto",
-        padding: 16,
-        borderRadius: 12,
+        width: playersBarVertical ? (playersBarCollapsed ? 40 : 280) : "100%",
+        height: playersBarVertical ? "auto" : "auto",
+        maxHeight: playersBarVertical ? "100vh" : "none",
+        overflowX: playersBarVertical ? "visible" : "auto",
+        overflowY: playersBarVertical ? "auto" : "visible",
+        padding: playersBarVertical ? (playersBarCollapsed ? 8 : 12) : 16,
+        borderRadius: playersBarVertical ? 12 : 12,
         border: "none",
+        transition: "all 0.3s ease",
       }}
     >
+      {/* Заголовок с кнопками управления */}
       <Flex
-        justify="space-between"
-        align="flex-end"
-        style={{ marginBottom: 8 }}
+        justify={
+          playersBarCollapsed && playersBarVertical ? "center" : "space-between"
+        }
+        align="center"
+        style={{ marginBottom: playersBarCollapsed ? 0 : 8 }}
       >
-        <Space>
-          <Button
-            type="primary"
-            icon={<UserAddOutlined />}
-            onClick={() => setAddOpen(true)}
-          >
-            Добавить игрока
-          </Button>
-          <Tooltip
-            title={
-              deleteMode ? "Выберите карточку для удаления" : "Удалить игрока"
-            }
-          >
+        <Flex gap={4}>
+          {/* Кнопка сворачивания/разворачивания */}
+          <Tooltip title={playersBarCollapsed ? "Развернуть" : "Свернуть"}>
             <Button
-              danger
-              icon={<DeleteOutlined />}
-              type={deleteMode ? "primary" : "default"}
-              onClick={() => setDeleteMode(!deleteMode)}
-            >
-              Удалить игрока
-            </Button>
+              size="small"
+              icon={
+                playersBarCollapsed ? (
+                  playersBarVertical ? (
+                    <RightOutlined />
+                  ) : (
+                    <UpOutlined />
+                  )
+                ) : playersBarVertical ? (
+                  <LeftOutlined />
+                ) : (
+                  <DownOutlined />
+                )
+              }
+              onClick={() => setPlayersBarCollapsed(!playersBarCollapsed)}
+            />
           </Tooltip>
-        </Space>
-        <Space direction="vertical" size={4} align="center">
-          <Text style={{ fontSize: 12, lineHeight: 1 }}>Шаг</Text>
-          <InputNumber
-            value={change}
-            onChange={(v) => setChange(Number(v) || 0)}
-            step={50}
-            min={-10000}
-            max={10000}
-            size="small"
-          />
-        </Space>
+
+          {/* Кнопка переключения режима */}
+          {!playersBarCollapsed && (
+            <Tooltip
+              title={
+                playersBarVertical
+                  ? "Горизонтальный режим"
+                  : "Вертикальный режим"
+              }
+            >
+              <Button
+                size="small"
+                icon={
+                  playersBarVertical ? <AppstoreOutlined /> : <MenuOutlined />
+                }
+                onClick={() => setPlayersBarVertical(!playersBarVertical)}
+              />
+            </Tooltip>
+          )}
+        </Flex>
+
+        {!playersBarCollapsed && !playersBarVertical && (
+          <Text strong style={{ fontSize: 14, color: "#EAEAFF" }}>
+            Панель игроков
+          </Text>
+        )}
+
+        {/* Инпут шага для вертикального режима - перемещаем на место заголовка */}
+        {!playersBarCollapsed && playersBarVertical && (
+          <div style={{ textAlign: "center" }}>
+            <Text
+              style={{
+                fontSize: 11,
+                lineHeight: 1,
+                color: "rgba(234, 234, 255, 0.7)",
+                display: "block",
+                marginBottom: 4,
+              }}
+            >
+              Шаг
+            </Text>
+            <InputNumber
+              value={change}
+              onChange={(v) => setChange(Number(v) || 0)}
+              step={50}
+              min={-10000}
+              max={10000}
+              size="small"
+              style={{
+                width: 70,
+                fontSize: 12,
+              }}
+            />
+          </div>
+        )}
       </Flex>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 12,
-          alignItems: "stretch",
-        }}
-      >
-        <AnimatePresence initial={false}>
-          {players.map((p) => {
-            const isLeader = p.id === leaderId;
-            const isLast = p.id === lastId && players.length > 1;
-            return (
-              <motion.div
-                key={p.id}
-                layout
-                transition={{ type: "spring", stiffness: 500, damping: 40 }}
-                style={{
-                  flex: "1 1 220px",
-                  minWidth: 220,
-                  maxWidth: 300,
-                }}
+
+      {/* Основные кнопки управления - показываем только если не свернуто */}
+      {!playersBarCollapsed && (
+        <Flex
+          justify={playersBarVertical ? "center" : "space-between"}
+          align={playersBarVertical ? "center" : "flex-end"}
+          vertical={playersBarVertical ? false : false}
+          style={{ marginBottom: 8, gap: playersBarVertical ? 4 : 0 }}
+        >
+          {playersBarVertical ? (
+            // Кнопки в один ряд для вертикального режима
+            <Space direction="horizontal" size={4}>
+              <Button
+                type="primary"
+                icon={<UserAddOutlined />}
+                onClick={() => setAddOpen(true)}
+                size="small"
+                style={{ fontSize: 11, height: 28, minWidth: 80 }}
               >
-                <Card
-                  hoverable
+                Добавить
+              </Button>
+              <Tooltip
+                title={
+                  deleteMode
+                    ? "Выберите карточку для удаления"
+                    : "Удалить игрока"
+                }
+              >
+                <Button
+                  danger
+                  icon={<DeleteOutlined />}
+                  type={deleteMode ? "primary" : "default"}
+                  onClick={() => setDeleteMode(!deleteMode)}
                   size="small"
-                  onClick={() => {
-                    if (deleteMode) {
-                      removePlayerById(p.id);
-                    } else if (quickPoints && quickPoints !== 0) {
-                      adjustScore(p.id, quickPoints);
-                    }
-                  }}
-                  className="cardHover"
+                  style={{ fontSize: 11, height: 28, minWidth: 80 }}
+                >
+                  Удалить
+                </Button>
+              </Tooltip>
+            </Space>
+          ) : (
+            // Обычный layout для горизонтального режима
+            <>
+              <Space direction="horizontal" size={8}>
+                <Button
+                  type="primary"
+                  icon={<UserAddOutlined />}
+                  onClick={() => setAddOpen(true)}
+                >
+                  Добавить игрока
+                </Button>
+                <Tooltip
+                  title={
+                    deleteMode
+                      ? "Выберите карточку для удаления"
+                      : "Удалить игрока"
+                  }
+                >
+                  <Button
+                    danger
+                    icon={<DeleteOutlined />}
+                    type={deleteMode ? "primary" : "default"}
+                    onClick={() => setDeleteMode(!deleteMode)}
+                  >
+                    Удалить игрока
+                  </Button>
+                </Tooltip>
+              </Space>
+              <Space direction="vertical" size={4} align="center">
+                <Text style={{ fontSize: 12, lineHeight: 1 }}>Шаг</Text>
+                <InputNumber
+                  value={change}
+                  onChange={(v) => setChange(Number(v) || 0)}
+                  step={50}
+                  min={-10000}
+                  max={10000}
+                  size="small"
+                />
+              </Space>
+            </>
+          )}
+        </Flex>
+      )}
+      {/* Карточки игроков - показываем только если не свернуто */}
+      {!playersBarCollapsed && (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: playersBarVertical ? "column" : "row",
+            flexWrap: playersBarVertical ? "nowrap" : "wrap",
+            gap: playersBarVertical ? 6 : 12,
+            alignItems: "stretch",
+            flex: 1,
+            overflowY: playersBarVertical ? "auto" : "visible",
+          }}
+        >
+          <AnimatePresence initial={false}>
+            {players.map((p) => {
+              const isLeader = p.id === leaderId;
+              const isLast = p.id === lastId && players.length > 1;
+              return (
+                <motion.div
+                  key={p.id}
+                  layout
+                  transition={{ type: "spring", stiffness: 500, damping: 40 }}
                   style={{
-                    background: isLeader
-                      ? "linear-gradient(135deg, rgba(82, 196, 26, 0.15) 0%, rgba(34, 197, 94, 0.1) 100%)"
-                      : isLast
-                      ? "linear-gradient(135deg, rgba(255, 77, 79, 0.15) 0%, rgba(239, 68, 68, 0.1) 100%)"
-                      : "linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%)",
-                    border: isLeader
-                      ? "1px solid rgba(82, 196, 26, 0.4)"
-                      : isLast
-                      ? "1px solid rgba(255, 77, 79, 0.4)"
-                      : "1px solid rgba(124, 58, 237, 0.3)",
-                    borderRadius: 12,
-                    boxShadow: isLeader
-                      ? "0 0 0 1px rgba(82,196,26,0.2), 0 8px 25px rgba(34,197,94,0.15)"
-                      : isLast
-                      ? "0 0 0 1px rgba(255,77,79,0.2), 0 8px 25px rgba(239,68,68,0.15)"
-                      : "0 0 0 1px rgba(124,58,237,0.2), 0 8px 25px rgba(124,58,237,0.1)",
-                    cursor: deleteMode ? "pointer" : "default",
-                    backdropFilter: "blur(10px)",
+                    flex: playersBarVertical ? "none" : "1 1 220px",
+                    minWidth: playersBarVertical ? "auto" : 220,
+                    maxWidth: playersBarVertical ? "none" : 300,
+                    width: playersBarVertical ? "100%" : "auto",
                   }}
                 >
-                  <Flex
-                    vertical
-                    align="center"
-                    gap={8}
-                    style={{ textAlign: "center" }}
-                  >
-                    {/* Имя игрока */}
-                    <Text strong style={{ fontSize: 16, color: "#EAEAFF" }}>
-                      {p.name}
-                    </Text>
-
-                    {deleteMode && (
-                      <Text
-                        type="danger"
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 4,
-                          fontSize: 12,
-                        }}
-                      >
-                        <ExclamationCircleOutlined /> Нажмите для удаления
-                      </Text>
-                    )}
-
-                    {/* Баллы крупно */}
-                    <Text
+                  {playersBarVertical ? (
+                    // Компактная карточка для вертикального режима
+                    <Card
+                      hoverable
+                      size="small"
+                      onClick={() => {
+                        if (deleteMode) {
+                          removePlayerById(p.id);
+                        } else if (quickPoints && quickPoints !== 0) {
+                          adjustScore(p.id, quickPoints);
+                        }
+                      }}
+                      className=""
                       style={{
-                        fontSize: 32,
-                        fontWeight: 700,
-                        color: "#EAEAFF",
-                        lineHeight: 1,
-                        margin: "8px 0",
+                        background: isLeader
+                          ? "linear-gradient(90deg, rgba(82, 196, 26, 0.15) 0%, rgba(34, 197, 94, 0.1) 100%)"
+                          : isLast
+                          ? "linear-gradient(90deg, rgba(255, 77, 79, 0.15) 0%, rgba(239, 68, 68, 0.1) 100%)"
+                          : "linear-gradient(90deg, rgba(124, 58, 237, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%)",
+                        border: isLeader
+                          ? "1px solid rgba(82, 196, 26, 0.4)"
+                          : isLast
+                          ? "1px solid rgba(255, 77, 79, 0.4)"
+                          : "1px solid rgba(124, 58, 237, 0.3)",
+                        borderRadius: 8,
+                        boxShadow: isLeader
+                          ? "0 0 0 1px rgba(82,196,26,0.2), 0 4px 12px rgba(34,197,94,0.1)"
+                          : isLast
+                          ? "0 0 0 1px rgba(255,77,79,0.2), 0 4px 12px rgba(239,68,68,0.1)"
+                          : "0 0 0 1px rgba(124,58,237,0.2), 0 4px 12px rgba(124,58,237,0.1)",
+                        cursor: deleteMode ? "pointer" : "default",
+                        backdropFilter: "blur(10px)",
+                        padding: "6px",
                       }}
                     >
-                      {p.score}
-                    </Text>
+                      <Flex align="center" gap={8}>
+                        {/* Левая часть: Имя */}
+                        <Text
+                          strong
+                          style={{
+                            fontSize: 13,
+                            color: "#EAEAFF",
+                            flex: 1,
+                            lineHeight: 1.2,
+                            wordBreak: "break-word",
+                            whiteSpace: "normal",
+                          }}
+                        >
+                          {p.name}
+                        </Text>
 
-                    {/* Кнопки управления */}
-                    <Flex gap={8} align="center" style={{ marginTop: 4 }}>
-                      <Button
-                        icon={<MinusOutlined />}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleScoreChange(p.id, -Math.abs(change));
-                        }}
-                        style={{
-                          borderRadius: 8,
-                          background: "rgba(255, 77, 79, 0.1)",
-                          borderColor: "rgba(255, 77, 79, 0.3)",
-                          color: "#ff6b6b",
-                        }}
-                      />
-                      {/* Отображение шага изменения между кнопками */}
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: 600,
-                          color: "#EAEAFF",
-                          minWidth: 40,
-                          textAlign: "center",
-                        }}
-                      >
-                        {change}
-                      </Text>
-                      <Button
-                        type="primary"
-                        icon={<PlusOutlined />}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleScoreChange(p.id, Math.abs(change));
-                        }}
-                        style={{
-                          borderRadius: 8,
-                          background: "rgba(82, 196, 26, 0.2)",
-                          borderColor: "rgba(82, 196, 26, 0.4)",
-                          color: "#52c41a",
-                        }}
-                      />
-                    </Flex>
+                        {/* Центральная часть: Счет */}
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            fontWeight: 700,
+                            color: "#EAEAFF",
+                            lineHeight: 1,
+                            minWidth: 40,
+                            textAlign: "center",
+                          }}
+                        >
+                          {p.score}
+                        </Text>
 
-                    {typeof quickPoints === "number" && quickPoints !== 0 && (
-                      <Text
-                        type="success"
-                        style={{ marginTop: 4, fontSize: 12 }}
+                        {/* Правая часть: Кнопки */}
+                        <Flex gap={2} align="center">
+                          <Button
+                            size="small"
+                            icon={<MinusOutlined />}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleScoreChange(p.id, -Math.abs(change));
+                            }}
+                            style={{
+                              borderRadius: 4,
+                              background: "rgba(255, 77, 79, 0.1)",
+                              borderColor: "rgba(255, 77, 79, 0.3)",
+                              color: "#ff6b6b",
+                              minWidth: "auto",
+                              width: 24,
+                              height: 24,
+                              padding: 0,
+                              fontSize: 10,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          />
+                          <Button
+                            size="small"
+                            icon={<PlusOutlined />}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleScoreChange(p.id, Math.abs(change));
+                            }}
+                            style={{
+                              borderRadius: 4,
+                              background: "rgba(82, 196, 26, 0.2)",
+                              borderColor: "rgba(82, 196, 26, 0.4)",
+                              color: "#52c41a",
+                              minWidth: "auto",
+                              width: 24,
+                              height: 24,
+                              padding: 0,
+                              fontSize: 10,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          />
+                        </Flex>
+                      </Flex>
+
+                      {deleteMode && (
+                        <Text
+                          type="danger"
+                          style={{
+                            fontSize: 10,
+                            textAlign: "center",
+                            marginTop: 4,
+                          }}
+                        >
+                          <ExclamationCircleOutlined /> Удалить
+                        </Text>
+                      )}
+
+                      {typeof quickPoints === "number" && quickPoints !== 0 && (
+                        <Text
+                          type="success"
+                          style={{
+                            fontSize: 9,
+                            textAlign: "center",
+                            lineHeight: 1,
+                            marginTop: 2,
+                          }}
+                        >
+                          +{quickPoints}
+                        </Text>
+                      )}
+                    </Card>
+                  ) : (
+                    // Обычная карточка для горизонтального режима
+                    <Card
+                      hoverable
+                      size="small"
+                      onClick={() => {
+                        if (deleteMode) {
+                          removePlayerById(p.id);
+                        } else if (quickPoints && quickPoints !== 0) {
+                          adjustScore(p.id, quickPoints);
+                        }
+                      }}
+                      className="cardHover"
+                      style={{
+                        background: isLeader
+                          ? "linear-gradient(135deg, rgba(82, 196, 26, 0.15) 0%, rgba(34, 197, 94, 0.1) 100%)"
+                          : isLast
+                          ? "linear-gradient(135deg, rgba(255, 77, 79, 0.15) 0%, rgba(239, 68, 68, 0.1) 100%)"
+                          : "linear-gradient(135deg, rgba(124, 58, 237, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%)",
+                        border: isLeader
+                          ? "1px solid rgba(82, 196, 26, 0.4)"
+                          : isLast
+                          ? "1px solid rgba(255, 77, 79, 0.4)"
+                          : "1px solid rgba(124, 58, 237, 0.3)",
+                        borderRadius: 12,
+                        boxShadow: isLeader
+                          ? "0 0 0 1px rgba(82,196,26,0.2), 0 8px 25px rgba(34,197,94,0.15)"
+                          : isLast
+                          ? "0 0 0 1px rgba(255,77,79,0.2), 0 8px 25px rgba(239,68,68,0.15)"
+                          : "0 0 0 1px rgba(124,58,237,0.2), 0 8px 25px rgba(124,58,237,0.1)",
+                        cursor: deleteMode ? "pointer" : "default",
+                        backdropFilter: "blur(10px)",
+                      }}
+                    >
+                      <Flex
+                        vertical
+                        align="center"
+                        gap={8}
+                        style={{ textAlign: "center" }}
                       >
-                        +{quickPoints}
-                      </Text>
-                    )}
-                  </Flex>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
-      </div>
+                        {/* Имя игрока */}
+                        <Text strong style={{ fontSize: 16, color: "#EAEAFF" }}>
+                          {p.name}
+                        </Text>
+
+                        {deleteMode && (
+                          <Text
+                            type="danger"
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 4,
+                              fontSize: 12,
+                            }}
+                          >
+                            <ExclamationCircleOutlined /> Нажмите для удаления
+                          </Text>
+                        )}
+
+                        {/* Баллы крупно */}
+                        <Text
+                          style={{
+                            fontSize: 32,
+                            fontWeight: 700,
+                            color: "#EAEAFF",
+                            lineHeight: 1,
+                            margin: "8px 0",
+                          }}
+                        >
+                          {p.score}
+                        </Text>
+
+                        {/* Кнопки управления */}
+                        <Flex gap={8} align="center" style={{ marginTop: 4 }}>
+                          <Button
+                            icon={<MinusOutlined />}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleScoreChange(p.id, -Math.abs(change));
+                            }}
+                            style={{
+                              borderRadius: 8,
+                              background: "rgba(255, 77, 79, 0.1)",
+                              borderColor: "rgba(255, 77, 79, 0.3)",
+                              color: "#ff6b6b",
+                            }}
+                          />
+                          {/* Отображение шага изменения между кнопками */}
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontWeight: 600,
+                              color: "#EAEAFF",
+                              minWidth: 40,
+                              textAlign: "center",
+                            }}
+                          >
+                            {change}
+                          </Text>
+                          <Button
+                            type="primary"
+                            icon={<PlusOutlined />}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleScoreChange(p.id, Math.abs(change));
+                            }}
+                            style={{
+                              borderRadius: 8,
+                              background: "rgba(82, 196, 26, 0.2)",
+                              borderColor: "rgba(82, 196, 26, 0.4)",
+                              color: "#52c41a",
+                            }}
+                          />
+                        </Flex>
+
+                        {typeof quickPoints === "number" &&
+                          quickPoints !== 0 && (
+                            <Text
+                              type="success"
+                              style={{ marginTop: 4, fontSize: 12 }}
+                            >
+                              +{quickPoints}
+                            </Text>
+                          )}
+                      </Flex>
+                    </Card>
+                  )}
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+      )}
 
       <Modal
         open={addOpen}
