@@ -28,6 +28,56 @@ import { useGameStore } from "../store/game";
 
 const { Text } = Typography;
 
+// Компонент анимированного счетчика
+const AnimatedScore = ({
+  score,
+  isAnimating,
+  animationData,
+}: {
+  score: number;
+  isAnimating: boolean;
+  animationData?: { from: number; to: number };
+}) => {
+  const [displayScore, setDisplayScore] = useState(score);
+
+  useEffect(() => {
+    if (isAnimating && animationData) {
+      const { from, to } = animationData;
+      const diff = to - from;
+      const duration = 300;
+      const startTime = Date.now();
+
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Эффект быстрой смены цифр
+        if (progress < 0.8) {
+          const randomOffset =
+            Math.floor(Math.random() * Math.abs(diff) * 2) - Math.abs(diff);
+          setDisplayScore(from + randomOffset);
+        } else {
+          // В конце показываем правильное значение
+          const currentScore = from + diff * progress;
+          setDisplayScore(Math.round(currentScore));
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          setDisplayScore(to);
+        }
+      };
+
+      animate();
+    } else {
+      setDisplayScore(score);
+    }
+  }, [score, isAnimating, animationData]);
+
+  return <>{displayScore}</>;
+};
+
 export const PlayersBar = () => {
   const location = useLocation();
   const playersState = useGameStore((s) => s.players);
@@ -67,12 +117,28 @@ export const PlayersBar = () => {
   const [addOpen, setAddOpen] = useState(false);
   const [newName, setNewName] = useState("");
   const [change, setChange] = useState<number>(100);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [clickedCard, setClickedCard] = useState<string | null>(null);
+  const [animatingScores, setAnimatingScores] = useState<
+    Record<string, { from: number; to: number }>
+  >({});
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceTimerRef = useRef<number | null>(null);
 
   const maxLen = 20;
-  const leaderId = players[0]?.id;
-  const lastId = players[players.length - 1]?.id;
+
+  // Определяем лидеров и аутсайдеров по счету
+  const scores = players.map((p) => p.score);
+  const maxScore = Math.max(...scores);
+  const minScore = Math.min(...scores);
+  const allScoresEqual = maxScore === minScore;
+
+  const leaderIds = allScoresEqual
+    ? []
+    : players.filter((p) => p.score === maxScore).map((p) => p.id);
+  const lastIds = allScoresEqual
+    ? []
+    : players.filter((p) => p.score === minScore).map((p) => p.id);
 
   const canAdd = newName.trim().length > 0 && newName.trim().length <= maxLen;
 
@@ -93,13 +159,35 @@ export const PlayersBar = () => {
     }, 1500);
   }, [reorderPlayersByScore]);
 
-  // Функция изменения счета с debounce пересортировкой
+  // Функция изменения счета с debounce пересортировкой и анимацией
   const handleScoreChange = useCallback(
     (playerId: string, delta: number) => {
+      // Найдем текущий счет игрока
+      const player = players.find((p) => p.id === playerId);
+      if (player) {
+        const fromScore = player.score;
+        const toScore = player.score + delta;
+
+        // Запускаем анимацию счетчика
+        setAnimatingScores((prev) => ({
+          ...prev,
+          [playerId]: { from: fromScore, to: toScore },
+        }));
+
+        // Убираем анимацию через время
+        setTimeout(() => {
+          setAnimatingScores((prev) => {
+            const newState = { ...prev };
+            delete newState[playerId];
+            return newState;
+          });
+        }, 300);
+      }
+
       adjustScore(playerId, delta);
       debouncedReorder();
     },
-    [adjustScore, debouncedReorder]
+    [adjustScore, debouncedReorder, players]
   );
 
   useEffect(() => {
@@ -319,8 +407,8 @@ export const PlayersBar = () => {
         >
           <AnimatePresence initial={false}>
             {players.map((p) => {
-              const isLeader = p.id === leaderId;
-              const isLast = p.id === lastId && players.length > 1;
+              const isLeader = leaderIds.includes(p.id);
+              const isLast = lastIds.includes(p.id) && players.length > 1;
               return (
                 <motion.div
                   key={p.id}
@@ -339,12 +427,17 @@ export const PlayersBar = () => {
                       hoverable
                       size="small"
                       onClick={() => {
+                        setClickedCard(p.id);
+                        setTimeout(() => setClickedCard(null), 150);
+
                         if (deleteMode) {
                           removePlayerById(p.id);
                         } else if (quickPoints && quickPoints !== 0) {
-                          adjustScore(p.id, quickPoints);
+                          handleScoreChange(p.id, quickPoints);
                         }
                       }}
+                      onMouseEnter={() => setHoveredCard(p.id)}
+                      onMouseLeave={() => setHoveredCard(null)}
                       className=""
                       style={{
                         background: isLeader
@@ -363,9 +456,18 @@ export const PlayersBar = () => {
                           : isLast
                           ? "0 0 0 1px rgba(255,77,79,0.2), 0 4px 12px rgba(239,68,68,0.1)"
                           : "0 0 0 1px rgba(124,58,237,0.2), 0 4px 12px rgba(124,58,237,0.1)",
-                        cursor: deleteMode ? "pointer" : "default",
+                        cursor: deleteMode
+                          ? "pointer"
+                          : quickPoints && quickPoints !== 0
+                          ? "pointer"
+                          : "default",
                         backdropFilter: "blur(10px)",
                         padding: "6px",
+                        position: "relative",
+                        overflow: "visible",
+                        transform:
+                          clickedCard === p.id ? "scale(0.95)" : "scale(1)",
+                        transition: "transform 0.15s ease",
                       }}
                     >
                       <Flex align="center" gap={8}>
@@ -395,7 +497,11 @@ export const PlayersBar = () => {
                             textAlign: "center",
                           }}
                         >
-                          {p.score}
+                          <AnimatedScore
+                            score={p.score}
+                            isAnimating={!!animatingScores[p.id]}
+                            animationData={animatingScores[p.id]}
+                          />
                         </Text>
 
                         {/* Правая часть: Кнопки */}
@@ -460,19 +566,31 @@ export const PlayersBar = () => {
                         </Text>
                       )}
 
-                      {typeof quickPoints === "number" && quickPoints !== 0 && (
-                        <Text
-                          type="success"
-                          style={{
-                            fontSize: 9,
-                            textAlign: "center",
-                            lineHeight: 1,
-                            marginTop: 2,
-                          }}
-                        >
-                          +{quickPoints}
-                        </Text>
-                      )}
+                      {/* Анимированный лейбл quick points в левом верхнем углу */}
+                      {typeof quickPoints === "number" &&
+                        quickPoints !== 0 &&
+                        hoveredCard === p.id && (
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: 4,
+                              left: 4,
+                              background:
+                                "linear-gradient(135deg, #52c41a, #73d13d)",
+                              color: "white",
+                              fontSize: 10,
+                              fontWeight: 600,
+                              padding: "0px 3px",
+                              borderRadius: 6,
+                              boxShadow: "0 2px 8px rgba(82, 196, 26, 0.3)",
+                              zIndex: 10,
+                              animation: "quickPointsSlide 0.2s ease-out",
+                              border: "1px solid rgba(255, 255, 255, 0.2)",
+                            }}
+                          >
+                            +{quickPoints}
+                          </div>
+                        )}
                     </Card>
                   ) : (
                     // Обычная карточка для горизонтального режима
@@ -480,12 +598,17 @@ export const PlayersBar = () => {
                       hoverable
                       size="small"
                       onClick={() => {
+                        setClickedCard(p.id);
+                        setTimeout(() => setClickedCard(null), 150);
+
                         if (deleteMode) {
                           removePlayerById(p.id);
                         } else if (quickPoints && quickPoints !== 0) {
-                          adjustScore(p.id, quickPoints);
+                          handleScoreChange(p.id, quickPoints);
                         }
                       }}
+                      onMouseEnter={() => setHoveredCard(p.id)}
+                      onMouseLeave={() => setHoveredCard(null)}
                       className="cardHover"
                       style={{
                         background: isLeader
@@ -504,8 +627,17 @@ export const PlayersBar = () => {
                           : isLast
                           ? "0 0 0 1px rgba(255,77,79,0.2), 0 8px 25px rgba(239,68,68,0.15)"
                           : "0 0 0 1px rgba(124,58,237,0.2), 0 8px 25px rgba(124,58,237,0.1)",
-                        cursor: deleteMode ? "pointer" : "default",
+                        cursor: deleteMode
+                          ? "pointer"
+                          : quickPoints && quickPoints !== 0
+                          ? "pointer"
+                          : "default",
                         backdropFilter: "blur(10px)",
+                        position: "relative",
+                        overflow: "visible",
+                        transform:
+                          clickedCard === p.id ? "scale(0.95)" : "scale(1)",
+                        transition: "transform 0.15s ease",
                       }}
                     >
                       <Flex
@@ -543,7 +675,11 @@ export const PlayersBar = () => {
                             margin: "8px 0",
                           }}
                         >
-                          {p.score}
+                          <AnimatedScore
+                            score={p.score}
+                            isAnimating={!!animatingScores[p.id]}
+                            animationData={animatingScores[p.id]}
+                          />
                         </Text>
 
                         {/* Кнопки управления */}
@@ -589,14 +725,30 @@ export const PlayersBar = () => {
                           />
                         </Flex>
 
+                        {/* Анимированный лейбл quick points в левом верхнем углу */}
                         {typeof quickPoints === "number" &&
-                          quickPoints !== 0 && (
-                            <Text
-                              type="success"
-                              style={{ marginTop: 4, fontSize: 12 }}
+                          quickPoints !== 0 &&
+                          hoveredCard === p.id && (
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: 8,
+                                left: 8,
+                                background:
+                                  "linear-gradient(135deg, #52c41a, #73d13d)",
+                                color: "white",
+                                fontSize: 11,
+                                fontWeight: 600,
+                                padding: "1px 4px",
+                                borderRadius: 8,
+                                boxShadow: "0 4px 12px rgba(82, 196, 26, 0.3)",
+                                zIndex: 10,
+                                animation: "quickPointsSlide 0.2s ease-out",
+                                border: "1px solid rgba(255, 255, 255, 0.2)",
+                              }}
                             >
                               +{quickPoints}
-                            </Text>
+                            </div>
                           )}
                       </Flex>
                     </Card>
