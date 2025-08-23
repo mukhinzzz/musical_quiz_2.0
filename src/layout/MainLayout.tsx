@@ -30,9 +30,15 @@ export const MainLayout = () => {
           <FireOutlined /> Musical Quiz
         </Link>
       </header>
-      <PlayersBar />
+      <div className="stickyBar">
+        <div className="container">
+          <PlayersBar />
+        </div>
+      </div>
       <div style={{ flex: 1 }}>
-        <Outlet />
+        <div className="container">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

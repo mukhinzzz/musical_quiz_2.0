@@ -20,7 +20,7 @@ export const ContestPage = () => {
   // quickPoints теперь вычисляются внутри PlayersBar от URL
 
   return (
-    <div style={{ padding: 12 }}>
+    <div className="page-section">
       <Space style={{ marginBottom: 12 }}>
         <Button onClick={() => navigate("/")}>К конкурсам</Button>
       </Space>
@@ -48,7 +48,12 @@ export const ContestPage = () => {
               onClick={() =>
                 !t.played && navigate(`/contest/${contest.id}/task/${t.id}`)
               }
-              style={{ textAlign: "center", opacity: t.played ? 0.6 : 1 }}
+              className="glass cardHover"
+              style={{
+                textAlign: "center",
+                opacity: t.played ? 0.6 : 1,
+                position: "relative",
+              }}
             >
               {t.played && (
                 <button

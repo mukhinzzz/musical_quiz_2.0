@@ -136,7 +136,7 @@ export const PlayersBar = () => {
                       adjustScore(p.id, quickPoints);
                     }
                   }}
-                  className="glass"
+                  className="glass cardHover"
                   style={{
                     borderColor: isLeader
                       ? "#52c41a"
