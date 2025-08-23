@@ -8,6 +8,7 @@ import {
   Space,
   Typography,
   Tooltip,
+  App,
 } from "antd";
 import {
   PlusOutlined,
@@ -127,33 +128,30 @@ export const PlayersBar = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceTimerRef = useRef<number | null>(null);
 
+  // Используем хук для модальных окон
+  const { modal } = App.useApp();
+
   // Функция для сброса состояния игры
   const handleResetGame = useCallback(() => {
     console.log("handleResetGame вызвана"); // Отладка
 
-    // Временно используем confirm для проверки
-    if (
-      window.confirm(
-        "Вы уверены, что хотите начать новый квиз? Все данные текущей игры будут удалены."
-      )
-    ) {
-      console.log("Подтверждение нажато, сбрасываем состояние"); // Отладка
-      resetGameState();
-    }
-
-    // Modal.confirm({
-    //   title: "Новый квиз",
-    //   content:
-    //     "Вы уверены, что хотите начать новый квиз? Все данные текущей игры будут удалены.",
-    //   okText: "Да, начать новый квиз",
-    //   cancelText: "Отмена",
-    //   okType: "danger",
-    //   onOk: () => {
-    //     console.log("Подтверждение нажато, сбрасываем состояние"); // Отладка
-    //     resetGameState();
-    //   },
-    // });
-  }, [resetGameState]);
+    modal.confirm({
+      title: "Новый квиз",
+      content:
+        "Вы уверены, что хотите начать новый квиз? Все данные текущей игры будут удалены.",
+      okText: "Да, начать новый квиз",
+      cancelText: "Отмена",
+      okType: "danger",
+      centered: true,
+      onOk: () => {
+        console.log("Подтверждение нажато, сбрасываем состояние"); // Отладка
+        resetGameState();
+      },
+      onCancel: () => {
+        console.log("Отмена нажата"); // Отладка
+      },
+    });
+  }, [resetGameState, modal]);
 
   const maxLen = 20;
 
