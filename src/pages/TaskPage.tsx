@@ -170,27 +170,22 @@ export const TaskPage = () => {
 
   return (
     <div className="page-section">
-      {/* Заголовок с баллами */}
+      {/* Заголовок с лейблом баллов */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          marginBottom: 32,
-          gap: "16px",
+          marginBottom: 24,
+          gap: "12px",
         }}
       >
-        <div style={{ textAlign: "center" }}>
-          <Title
-            level={1}
-            style={{ margin: 0, fontSize: "42px", fontWeight: 700 }}
-          >
-            {contest.title} - {task.order}
-          </Title>
-          <Text style={{ fontSize: "16px", color: "#B4B4CC" }}>
-            {contest.description}
-          </Text>
-        </div>
+        <Title
+          level={1}
+          style={{ margin: 0, fontSize: "48px", fontWeight: 700 }}
+        >
+          {contest.title} - {task.order}
+        </Title>
         <div
           className="contestCard-points-label"
           style={{
@@ -204,6 +199,20 @@ export const TaskPage = () => {
           +{contest.points}
         </div>
       </div>
+
+      <Text
+        style={{
+          display: "block",
+          marginBottom: 40,
+          fontSize: "18px",
+          lineHeight: 1.6,
+          textAlign: "center",
+          maxWidth: "600px",
+          margin: "0 auto 40px auto",
+        }}
+      >
+        {contest.description}
+      </Text>
 
       {/* Карточка с вопросом */}
       <Card
