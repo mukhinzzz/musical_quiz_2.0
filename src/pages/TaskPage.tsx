@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, Space, Typography } from "antd";
-import { ClockCircleOutlined } from "@ant-design/icons";
+import { ClockCircleOutlined, PlayCircleOutlined } from "@ant-design/icons";
 import { useGameStore } from "../store/game";
 
 const { Title, Text, Paragraph } = Typography;
@@ -19,10 +19,12 @@ export const TaskPage = () => {
   const setTimerVisible = useGameStore((s) => s.setTimerVisible);
 
   const [showAnswer, setShowAnswer] = useState(false);
+  const [isPlayingFragment, setIsPlayingFragment] = useState(false);
 
   const task = contest?.tasks.find((t) => t.id === taskId);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lastStopTimeRef = useRef<number>(-1);
+  const fragmentTimeoutRef = useRef<number | null>(null);
 
   // Инициализация таймера при открытии задания
   useEffect(() => {
@@ -93,6 +95,67 @@ export const TaskPage = () => {
   const a = task.answer;
 
   const handleShowAnswer = () => setShowAnswer(true);
+
+  // Функция для воспроизведения отрывка
+  const playFragment = () => {
+    if (!audioRef.current || !task?.question.music) return;
+
+    const music = task.question.music;
+    const startTime = music.startTime ?? 0;
+    const endTime = music.endTime;
+
+    // Очищаем предыдущий таймаут если он есть
+    if (fragmentTimeoutRef.current) {
+      clearTimeout(fragmentTimeoutRef.current);
+    }
+
+    // Устанавливаем время начала
+    audioRef.current.currentTime = startTime;
+    audioRef.current.play();
+    setIsPlayingFragment(true);
+
+    // Если есть endTime, устанавливаем таймаут для остановки
+    if (endTime && endTime > startTime) {
+      const duration = (endTime - startTime) * 1000; // переводим в миллисекунды
+      fragmentTimeoutRef.current = setTimeout(() => {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          setIsPlayingFragment(false);
+        }
+      }, duration);
+    }
+  };
+
+  // Обработчик событий аудио для отслеживания окончания воспроизведения
+  useEffect(() => {
+    if (!audioRef.current) return;
+
+    const handlePause = () => {
+      setIsPlayingFragment(false);
+      if (fragmentTimeoutRef.current) {
+        clearTimeout(fragmentTimeoutRef.current);
+      }
+    };
+
+    const handleEnded = () => {
+      setIsPlayingFragment(false);
+      if (fragmentTimeoutRef.current) {
+        clearTimeout(fragmentTimeoutRef.current);
+      }
+    };
+
+    const audio = audioRef.current;
+    audio.addEventListener("pause", handlePause);
+    audio.addEventListener("ended", handleEnded);
+
+    return () => {
+      audio.removeEventListener("pause", handlePause);
+      audio.removeEventListener("ended", handleEnded);
+      if (fragmentTimeoutRef.current) {
+        clearTimeout(fragmentTimeoutRef.current);
+      }
+    };
+  }, [task]);
 
   const onBack = () => {
     // Возврат к конкурсам без отметки сыгранности
@@ -243,8 +306,45 @@ export const TaskPage = () => {
               ref={audioRef}
               controls
               src={q.music.link}
-              style={{ width: "100%" }}
+              style={{
+                width: "100%",
+                marginBottom:
+                  q.music.startTime !== undefined &&
+                  q.music.endTime !== undefined
+                    ? "16px"
+                    : "0",
+              }}
             />
+            {q.music.startTime !== undefined &&
+              q.music.endTime !== undefined && (
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    type="primary"
+                    size="small"
+                    icon={<PlayCircleOutlined />}
+                    onClick={playFragment}
+                    loading={isPlayingFragment}
+                    style={{
+                      background: "linear-gradient(135deg, #722ed1, #9254de)",
+                      borderColor: "#722ed1",
+                      fontSize: "12px",
+                    }}
+                  >
+                    {isPlayingFragment
+                      ? "Воспроизводится..."
+                      : "Слушать отрывок"}
+                  </Button>
+                  <div
+                    style={{
+                      marginTop: "8px",
+                      fontSize: "11px",
+                      color: "#B4B4CC",
+                    }}
+                  >
+                    {q.music.startTime}с - {q.music.endTime}с
+                  </div>
+                </div>
+              )}
           </div>
         )}
       </Card>

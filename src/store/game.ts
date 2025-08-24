@@ -4,6 +4,8 @@ import { contestsData } from "../data/contests";
 export type MusicInfo = {
   link: string;
   stops: number[] | null;
+  startTime?: number;
+  endTime?: number;
 };
 
 export type QAContent = {

@@ -5,8 +5,8 @@ export const contestsData: Contest[] = [
     id: "kinologiya",
     title: "Кинология",
     description:
-      "Включается мелодия, нужно назвать фильм/сериал/мультфильм/мультсериал, из которого эта песня",
-    points: 300,
+      "Назовите фильм/сериал/мультфильм/мультсериал, из которого песня",
+    points: 150,
     timeSec: null,
     tasks: [
       {
@@ -16,11 +16,11 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Кинология/Battle Without Honor Or Humanity — Tomoyasu Hotei.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
-          text: "Kill Bill",
+          text: "Убить Билла",
         },
       },
       {
@@ -30,7 +30,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Кинология/Danza Kuduro — Don Omar, Lucenzo.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
@@ -44,7 +44,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Кинология/Desperate Housewives Theme — Danny Elfman.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
@@ -58,7 +58,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Кинология/He's A Pirate — Klaus Badelt.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
@@ -72,11 +72,11 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Кинология/Knockin' On Heaven's Door — Bob Dylan.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
-          text: "Пэт Гарретт и Билли Кид",
+          text: "Достучаться до небес",
         },
       },
       {
@@ -86,7 +86,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Кинология/Main Title — Ramin Djawadi.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
@@ -100,7 +100,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Кинология/You're Dead — Norma Tanega.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
@@ -112,10 +112,9 @@ export const contestsData: Contest[] = [
   {
     id: "kovry",
     title: "Ковры",
-    description:
-      "Включается кавер. Есть 30 сек, чтобы назвать либо на какого исполнителя кавер, либо на какую песню",
-    points: 300,
-    timeSec: 30,
+    description: "Назовите, на какую песню кавер",
+    points: 150,
+    timeSec: null,
     tasks: [
       {
         id: "kovry-1",
@@ -124,7 +123,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Ковры/Enjoy The Silence — Lacuna Coil.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
@@ -138,7 +137,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Ковры/Livin' La Vida Loca — Autumn Kings.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
@@ -152,7 +151,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Ковры/Nothing Else Matters — William Joseph.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
@@ -166,11 +165,11 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Ковры/One of Us — Piano Covers Club from I'm In Records.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
-          text: "ABBA - One of Us",
+          text: "Joan Osborne - One of Us",
         },
       },
       {
@@ -180,11 +179,11 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Ковры/Timanttinen tähti — Laura Voutilainen.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
-          text: "Laura Voutilainen - Timanttinen tähti",
+          text: "Валерия - Часики",
         },
       },
       {
@@ -194,11 +193,11 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Ковры/סוכריה — Roni Duani.mp3",
-            stops: [30],
+            stops: [],
           },
         },
         answer: {
-          text: "Roni Duani - סוכריה",
+          text: "Катя Лель - Мой мармеладный",
         },
       },
     ],
@@ -206,9 +205,8 @@ export const contestsData: Contest[] = [
   {
     id: "leksika",
     title: "Лексика",
-    description:
-      "Ведущий называет слово, нужно называть песни, содержащие в тексте указанное слово. Можно использовать слово в разных числах, падежах, но так чтобы сама основа слова не менялась. Однокоренные нельзя. Все варианты записываются, затем проверяются. Игра заканчивается, если в течение 5 секунд никто не называет новое слово",
-    points: 100,
+    description: "Назовите песни, содержащие в тексте определенное слово",
+    points: 50,
     timeSec: null,
     tasks: [
       {
@@ -240,7 +238,7 @@ export const contestsData: Contest[] = [
         order: 4,
         played: false,
         question: {
-          text: "Система",
+          text: "Хуй (похуй, нахуй, хуй, хуй, хуй)",
         },
       },
       {
@@ -273,8 +271,8 @@ export const contestsData: Contest[] = [
     id: "skorostrel",
     title: "Скорострел",
     description:
-      "Здесь представлены довольно известные в мире и в России песни. Воспроизведение происходит максимум до первой фразы, дальше останавливается. Докажите, что знаете песню, пропев несколько фраз из нее (или скажите название и исполнителя)",
-    points: 200,
+      "Популярные песни. Песня включается до первой фразы. Можно либо назвать исполнителя и песню, либо пропеть несколько строчек из нее",
+    points: 150,
     timeSec: null,
     tasks: [
       {
@@ -284,7 +282,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Скорострел/1. Shallow — Lady Gaga, Bradley Cooper.mp3",
-            stops: [10],
+            stops: [18],
           },
         },
         answer: {
@@ -298,7 +296,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Скорострел/2. Мы с тобой — Лера Массква.mp3",
-            stops: [10],
+            stops: [16],
           },
         },
         answer: {
@@ -312,7 +310,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Скорострел/3. Чёрные глаза — Айдамир Мугу.mp3",
-            stops: [10],
+            stops: [57],
           },
         },
         answer: {
@@ -326,7 +324,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Скорострел/4. I Hate Everything About You — Three Days Grace.mp3",
-            stops: [10],
+            stops: [17],
           },
         },
         answer: {
@@ -340,7 +338,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Скорострел/5. Şımarık — Tarkan.mp3",
-            stops: [10],
+            stops: [31],
           },
         },
         answer: {
@@ -354,7 +352,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Скорострел/6. Я крокодил — Стас Экстаз.mp3",
-            stops: [10],
+            stops: [19],
           },
         },
         answer: {
@@ -368,7 +366,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Скорострел/7. Dance Monkey — Tones And I.mp3",
-            stops: [10],
+            stops: [13],
           },
         },
         answer: {
@@ -380,9 +378,8 @@ export const contestsData: Contest[] = [
   {
     id: "temshchiki",
     title: "Темщики",
-    description:
-      "Ведущий называет тему, нужно называть песни, содержащие в тексте слова из указанной темы. Все варианты записываются, затем проверяются. Игра заканчивается, если в течение 5 секунд никто не называет новое слово",
-    points: 100,
+    description: "Называйте песни, содержащие в тексте слова из указанной темы",
+    points: 50,
     timeSec: null,
     tasks: [
       {
@@ -448,8 +445,8 @@ export const contestsData: Contest[] = [
     title: "Узнали Согласны",
     description:
       "Воспроизводится песня, возможно не самая популярная у исполнителя. Нужно назвать исполнителя",
-    points: 300,
-    timeSec: 45,
+    points: 200,
+    timeSec: null,
     tasks: [
       {
         id: "uznali-1",
@@ -458,7 +455,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Узнали Согласны/1. Ева — Винтаж.mp3",
-            stops: [45],
+            stops: [],
           },
         },
         answer: {
@@ -472,7 +469,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Узнали Согласны/2. Higher Ground — Imagine Dragons.mp3",
-            stops: [45],
+            stops: [],
           },
         },
         answer: {
@@ -486,7 +483,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Узнали Согласны/3. Брод — Аквариум.mp3",
-            stops: [45],
+            stops: [],
           },
         },
         answer: {
@@ -500,7 +497,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Узнали Согласны/4. When You Know (Where You Come From) — Scorpions.mp3",
-            stops: [45],
+            stops: [],
           },
         },
         answer: {
@@ -514,7 +511,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Узнали Согласны/5. Я вас уничтожу — Bad Bit, Маэстро Понасенков.mp3",
-            stops: [45],
+            stops: [],
           },
         },
         answer: {
@@ -528,7 +525,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Узнали Согласны/6. Young And Beautiful — Lana Del Rey.mp3",
-            stops: [45],
+            stops: [],
           },
         },
         answer: {
@@ -542,7 +539,7 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Узнали Согласны/7. Последняя Любовь — MORGENSHTERN.mp3",
-            stops: [45],
+            stops: [],
           },
         },
         answer: {
@@ -555,9 +552,9 @@ export const contestsData: Contest[] = [
     id: "che-bubnit-to",
     title: "Че бубнить-то",
     description:
-      "Выбирается имя звезды. Нужно сказать от чего эта звезда погибла. За каждый неправильный ответ очки отнимаются",
-    points: 500,
-    timeSec: null,
+      "Угадайте, от чего погибла звезда. Версии пишем в телеграм. За каждый неправильный ответ -50 очков",
+    points: 300,
+    timeSec: 60,
     tasks: [
       {
         id: "che-bubnit-1",
@@ -642,8 +639,8 @@ export const contestsData: Contest[] = [
     id: "chego-tut-ishchesh",
     title: "Чего тут ищешь",
     description:
-      "Дается начало поискового запроса в яндексе. Есть минута времени на то, чтобы написать варианты продолжения и прислать мне в телеге или в Ватсапе. Далее смотрим, кто попал. Попаданием считается даже указание одного правильного следующего слова (за исключением предлогов). Далее мы смотрим все список реальных продолжений и считаем очки. За каждое попадание + баллы",
-    points: 100,
+      "Угадай продолжение поискового запроса. За каждое угаданное слово (кроме служебных частей речи) получаешь очки",
+    points: 150,
     timeSec: 60,
     tasks: [
       {
@@ -651,7 +648,7 @@ export const contestsData: Contest[] = [
         order: 1,
         played: false,
         question: {
-          text: "Поисковый запрос №1",
+          text: "Почему ранетки...",
         },
         answer: {
           photo: "/src/data/contests_data/Чего тут ищешь/1.png",
@@ -662,7 +659,7 @@ export const contestsData: Contest[] = [
         order: 2,
         played: false,
         question: {
-          text: "Поисковый запрос №2",
+          text: "Почему на концерте...",
         },
         answer: {
           photo: "/src/data/contests_data/Чего тут ищешь/2.png",
@@ -673,7 +670,7 @@ export const contestsData: Contest[] = [
         order: 3,
         played: false,
         question: {
-          text: "Поисковый запрос №3",
+          text: "Какой певец...",
         },
         answer: {
           photo: "/src/data/contests_data/Чего тут ищешь/3.png",
@@ -684,7 +681,7 @@ export const contestsData: Contest[] = [
         order: 4,
         played: false,
         question: {
-          text: "Поисковый запрос №4",
+          text: "Почему песня...",
         },
         answer: {
           photo: "/src/data/contests_data/Чего тут ищешь/4.png",
@@ -695,7 +692,7 @@ export const contestsData: Contest[] = [
         order: 5,
         played: false,
         question: {
-          text: "Поисковый запрос №5",
+          text: "Зачем петь...",
         },
         answer: {
           photo: "/src/data/contests_data/Чего тут ищешь/5.png",
@@ -706,7 +703,7 @@ export const contestsData: Contest[] = [
         order: 6,
         played: false,
         question: {
-          text: "Поисковый запрос №6",
+          text: "Песня...",
         },
         answer: {
           photo: "/src/data/contests_data/Чего тут ищешь/6.png",
@@ -717,10 +714,43 @@ export const contestsData: Contest[] = [
         order: 7,
         played: false,
         question: {
-          text: "Поисковый запрос №7",
+          text: "Любимая песня...",
         },
         answer: {
           photo: "/src/data/contests_data/Чего тут ищешь/7.png",
+        },
+      },
+      {
+        id: "chego-tut-8",
+        order: 8,
+        played: false,
+        question: {
+          text: "Почему Илья...",
+        },
+        answer: {
+          photo: "/src/data/contests_data/Чего тут ищешь/8.png",
+        },
+      },
+      {
+        id: "chego-tut-9",
+        order: 9,
+        played: false,
+        question: {
+          text: "Я пел...",
+        },
+        answer: {
+          photo: "/src/data/contests_data/Чего тут ищешь/9.png",
+        },
+      },
+      {
+        id: "chego-tut-10",
+        order: 10,
+        played: false,
+        question: {
+          text: "Что слушают...",
+        },
+        answer: {
+          photo: "/src/data/contests_data/Чего тут ищешь/10.png",
         },
       },
     ],
@@ -729,8 +759,8 @@ export const contestsData: Contest[] = [
     id: "chivo-blyat",
     title: "Чиво блять",
     description:
-      "Всем либо раздаются листочки, либо все пишут мне в личку. Нужно прослушать кусочек песни от определенной секунды до определенной секунды и написать его расшифровку словами. Кто указал больше всего правильных слов в отрывке, тот побеждает",
-    points: 200,
+      "Слушайте отрывок и угадайте как можно больше слов из него. Слова писать в телеграм. Отрывок воспроизводится максимум три раза",
+    points: 100,
     timeSec: null,
     tasks: [
       {
@@ -740,8 +770,20 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Чиво блять/Cadillac Retro Remix — MORGENSHTERN, Элджей.mp3",
-            stops: [15, 25],
+            stops: [],
+            startTime: 23,
+            endTime: 32,
           },
+        },
+        answer: {
+          text: `Ay, bitch, we got some пушки (пр-р, пау)
+Пау-пау, попал по тушке (ха)
+На мне ща две подушки (оу да)
+Bitch, я висю, как молодой Пушкин (у)
+Цепи висят на папе (е)
+Копаем кэш лопатой (е)
+Богатый, будто каппер (е)
+Как там твоя зарплата?`,
         },
       },
       {
@@ -751,8 +793,13 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Чиво блять/Come Along Now — Lola Marois.mp3",
-            stops: [15, 25],
+            stops: [],
+            startTime: 47,
+            endTime: 55,
           },
+        },
+        answer: {
+          text: `Come along now`,
         },
       },
       {
@@ -762,8 +809,16 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Чиво блять/cotton eye joe — Rednex.mp3",
-            stops: [15, 25],
+            stops: [],
+            startTime: 0,
+            endTime: 8,
           },
+        },
+        answer: {
+          text: `If it hadn't been for Cotton-Eye Joe
+I'd been married long time ago
+Where did you come from, where did you go?
+Where did you come from, Cotton-Eye Joe?`,
         },
       },
       {
@@ -773,8 +828,32 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Чиво блять/Godzilla — Eminem, Juice WRLD.mp3",
-            stops: [15, 25],
+            stops: [],
+            startTime: 176,
+            endTime: 208,
           },
+        },
+        answer: {
+          text: `Fill 'em with the venom and eliminate 'em, other words, I Minute Maid 'em
+I don't wanna hurt 'em, but I did, I'm in a fit of rage, I'm murderin' again, nobody will evade
+I'm finna kill 'em and dump all their fuckin' bodies in the lake
+Obliteratin' everythin', incinerate a renegade
+I'm here to make anybody who want it with the pen afraid
+But don't nobody want it, but they're gonna get it anyway
+'Cause I'm beginning to feel like I'm mentally ill
+I'm Attila, kill or be killed, I'm a killer bee, the vanilla gorilla
+You bringin' the killer within me outta me
+You don't wanna be the enemy of the demon who entered me
+And be on the receivin' end of me, what stupidity it'd be
+Every bit of me's the epitome of a spitter
+When I'm in the vicinity, motherfucker, you better duck
+Or you finna be dead the minute you run into me
+A hunnid percent of you is a fifth of a percent of me
+I'm 'bout to fuckin' finish you, bitch, I'm unfadable
+You wanna battle, I'm available, I'm blowin' up like an inflatable
+I'm undebatable, I'm unavoidable, I'm unevadable
+I'm on the toilet bowl, I got a trailer full of money
+And I'm paid in full, I'm not afraid to pull a-`,
         },
       },
       {
@@ -784,8 +863,13 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Чиво блять/Liar — Little Big.mp3",
-            stops: [15, 25],
+            stops: [],
+            startTime: 64,
+            endTime: 78,
           },
+        },
+        answer: {
+          text: "Only living to get rich\nBuy this, buy that—it's in each\nAll these things they're gonna make you\nInto their own little bitch\nBuy that shit it'll make you better\nWhile they're rich ones, they get fatter\nPut the money in their banks\nFor their children to say panks (Grah-ka!)",
         },
       },
       {
@@ -795,8 +879,13 @@ export const contestsData: Contest[] = [
         question: {
           music: {
             link: "/src/data/contests_data/Чиво блять/The Woodchuck Song — AronChupa, Little Sis Nora.mp3",
-            stops: [15, 25],
+            stops: [],
+            startTime: 0,
+            endTime: 9,
           },
+        },
+        answer: {
+          text: "How much wood would a woodchuck chuck\nIf a woodchuck could chuck wood?\nWoodchuck could chuck wood\nWoodchuck could chuck wood",
         },
       },
     ],
@@ -804,9 +893,8 @@ export const contestsData: Contest[] = [
   {
     id: "ya-lyubil-i-nenavidel",
     title: "Я любил и ненавидел",
-    description:
-      "Игроки заполняют анкету с вопросами. Затем выбирается один вопрос и воспроизводится песня если возможно, или просто озвучивается название песни. Все заполняют, кому принадлежит первая песня, кому вторая и так далее. Каждый игрок получает столько баллов, сколько он набрал правильных пересечений, исключая одно пересечение (так как в каждом вопросе есть вариант этого человека)",
-    points: 100,
+    description: "Задаются вопросы из анкеты, которую вы заполняли",
+    points: 1000,
     timeSec: null,
     tasks: [
       {
@@ -814,7 +902,79 @@ export const contestsData: Contest[] = [
         order: 1,
         played: false,
         question: {
-          text: "Анкетирование игроков",
+          text: "Какая песня тебе нравится и тебе за это немного стыдно?",
+        },
+      },
+      {
+        id: "ya-lyubil-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Какая песня идеально подходит для будильника?",
+        },
+      },
+      {
+        id: "ya-lyubil-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "Я терпеть не могу эту песню!",
+        },
+      },
+      {
+        id: "ya-lyubil-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "Если бы про твою жизнь снимали фильм, какая песня бы звучала в трейлере?",
+        },
+      },
+      {
+        id: "ya-lyubil-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "Самая кринжовая песня, которую ты когда-либо слышал/а?",
+        },
+      },
+      {
+        id: "ya-lyubil-6",
+        order: 6,
+        played: false,
+        question: {
+          text: "Под какого исполнителя коровы дают лучшее молоко?",
+        },
+      },
+      {
+        id: "ya-lyubil-7",
+        order: 7,
+        played: false,
+        question: {
+          text: "Отличная песня для секса с инопланетянами",
+        },
+      },
+      {
+        id: "ya-lyubil-8",
+        order: 8,
+        played: false,
+        question: {
+          text: "Дьявол включает эту песню самым отъявленным грешникам",
+        },
+      },
+      {
+        id: "ya-lyubil-9",
+        order: 9,
+        played: false,
+        question: {
+          text: "Если бы родители узнали, что мне в детстве нравилась эта песня, они бы сдали меня в детский дом",
+        },
+      },
+      {
+        id: "ya-lyubil-10",
+        order: 10,
+        played: false,
+        question: {
+          text: "Эту песню нужно сделать новым гимном России",
         },
       },
     ],
