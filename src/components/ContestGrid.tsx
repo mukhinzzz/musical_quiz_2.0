@@ -1,19 +1,56 @@
 import { Card, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useGameStore } from "../store/game";
+import { useState, useEffect } from "react";
 
 const { Text } = Typography;
 
-export const ContestGrid = () => {
+interface ContestGridProps {
+  presentationMode?: boolean;
+}
+
+export const ContestGrid = ({ presentationMode = false }: ContestGridProps) => {
   const navigate = useNavigate();
   const contests = useGameStore((s) => s.contests);
+  const presentationContestIndex = useGameStore(
+    (s) => s.presentationContestIndex
+  );
+  const nextPresentationContest = useGameStore(
+    (s) => s.nextPresentationContest
+  );
+
+  const [visibleContests, setVisibleContests] = useState<number>(
+    presentationMode ? 0 : contests.length
+  );
+
+  // В режиме презентации показываем карточки постепенно
+  useEffect(() => {
+    if (presentationMode) {
+      setVisibleContests(presentationContestIndex + 1);
+    } else {
+      setVisibleContests(contests.length);
+    }
+  }, [presentationMode, presentationContestIndex, contests.length]);
+
+  // Обработчик клика для презентации
+  const handlePresentationClick = () => {
+    if (presentationMode) {
+      console.log(
+        `Клик в режиме презентации. Текущий индекс: ${presentationContestIndex}, всего конкурсов: ${contests.length}`
+      );
+      nextPresentationContest();
+    }
+  };
 
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
+        minHeight: "400px",
+        alignItems: "center",
       }}
+      onClick={presentationMode ? handlePresentationClick : undefined}
     >
       <div
         className="grid-container"
@@ -27,7 +64,7 @@ export const ContestGrid = () => {
           width: "100%",
         }}
       >
-        {contests.map((c) => {
+        {contests.slice(0, visibleContests).map((c, index) => {
           const total = c.tasks.length;
           const played = c.tasks.filter((t) => t.played).length;
           const remaining = total - played;
@@ -42,19 +79,28 @@ export const ContestGrid = () => {
               }}
             >
               <Card
-                hoverable
-                onClick={() => navigate(`/contest/${c.id}`)}
+                hoverable={!presentationMode}
+                onClick={() => {
+                  if (!presentationMode) {
+                    navigate(`/contest/${c.id}`);
+                  }
+                  // В режиме презентации позволяем событию всплыть к родительскому контейнеру
+                }}
                 className={`contestCard grid-item contest ${
                   isCompleted ? "disabled" : ""
                 }`}
                 style={{
                   opacity: isCompleted ? 0.7 : 1,
                   position: "relative",
-                  cursor: "pointer",
+                  cursor: presentationMode ? "pointer" : "pointer",
                   width: "220px",
                   height: "100%",
                   display: "flex",
                   flexDirection: "column",
+                  animation:
+                    presentationMode && index === visibleContests - 1
+                      ? "slideInUp 1.2s ease-out"
+                      : undefined,
                 }}
                 styles={{
                   header: {

@@ -44,6 +44,10 @@ type GameState = {
   playersOrder: string[];
   playersBarCollapsed: boolean;
   playersBarVertical: boolean;
+  // Презентация конкурсов
+  presentationMode: boolean;
+  presentationStep: "title" | "round" | "intro" | "contests" | "finished";
+  presentationContestIndex: number;
   // Таймер
   timerVisible: boolean;
   timerSeconds: number;
@@ -61,6 +65,11 @@ type GameState = {
   reorderPlayersByScore: () => void;
   setPlayersBarCollapsed: (collapsed: boolean) => void;
   setPlayersBarVertical: (vertical: boolean) => void;
+  // Методы презентации
+  startPresentation: () => void;
+  nextPresentationStep: () => void;
+  nextPresentationContest: () => void;
+  endPresentation: () => void;
   // Методы таймера
   setTimerVisible: (visible: boolean) => void;
   setTimerSeconds: (seconds: number) => void;
@@ -119,6 +128,10 @@ export const useGameStore = create<GameState>((set, get) => ({
   playersOrder: [],
   playersBarCollapsed: false,
   playersBarVertical: false,
+  // Начальные значения презентации
+  presentationMode: false,
+  presentationStep: "title",
+  presentationContestIndex: 0,
   // Начальные значения таймера
   timerVisible: false,
   timerSeconds: 60,
@@ -207,6 +220,43 @@ export const useGameStore = create<GameState>((set, get) => ({
   setPlayersBarCollapsed: (collapsed) =>
     set({ playersBarCollapsed: collapsed }),
   setPlayersBarVertical: (vertical) => set({ playersBarVertical: vertical }),
+  // Методы презентации
+  startPresentation: () => {
+    set({
+      presentationMode: true,
+      presentationStep: "title",
+      presentationContestIndex: 0,
+    });
+  },
+  nextPresentationStep: () => {
+    set((state) => {
+      if (state.presentationStep === "title") {
+        return { presentationStep: "round" };
+      } else if (state.presentationStep === "round") {
+        return { presentationStep: "intro" };
+      } else if (state.presentationStep === "intro") {
+        return { presentationStep: "contests" };
+      }
+      return state;
+    });
+  },
+  nextPresentationContest: () => {
+    set((state) => {
+      const { contests, presentationContestIndex } = state;
+      if (presentationContestIndex < contests.length - 1) {
+        return { presentationContestIndex: presentationContestIndex + 1 };
+      } else {
+        return { presentationStep: "finished" };
+      }
+    });
+  },
+  endPresentation: () => {
+    set({
+      presentationMode: false,
+      presentationStep: "title",
+      presentationContestIndex: 0,
+    });
+  },
   // Методы таймера
   setTimerVisible: (visible) => set({ timerVisible: visible }),
   setTimerSeconds: (seconds) => set({ timerSeconds: seconds }),
@@ -255,6 +305,9 @@ export const useGameStore = create<GameState>((set, get) => ({
       deleteMode: false,
       playersBarCollapsed: false,
       playersBarVertical: false,
+      presentationMode: false,
+      presentationStep: "title",
+      presentationContestIndex: 0,
       timerVisible: false,
       timerSeconds: 60,
       timerRunning: false,

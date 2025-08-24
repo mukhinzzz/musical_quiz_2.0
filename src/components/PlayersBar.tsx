@@ -25,7 +25,7 @@ import {
   ReloadOutlined,
 } from "@ant-design/icons";
 import { AnimatePresence, motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useGameStore } from "../store/game";
 
 const { Text } = Typography;
@@ -82,6 +82,7 @@ const AnimatedScore = ({
 
 export const PlayersBar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const playersState = useGameStore((s) => s.players);
   const playersOrder = useGameStore((s) => s.playersOrder);
   const contests = useGameStore((s) => s.contests);
@@ -96,6 +97,7 @@ export const PlayersBar = () => {
   const setPlayersBarCollapsed = useGameStore((s) => s.setPlayersBarCollapsed);
   const setPlayersBarVertical = useGameStore((s) => s.setPlayersBarVertical);
   const resetGameState = useGameStore((s) => s.resetGameState);
+  const startPresentation = useGameStore((s) => s.startPresentation);
 
   const players = useMemo(() => {
     if (playersOrder.length === 0) return playersState;
@@ -131,7 +133,7 @@ export const PlayersBar = () => {
   // Используем хук для модальных окон
   const { modal } = App.useApp();
 
-  // Функция для сброса состояния игры
+  // Функция для сброса состояния игры и запуска презентации
   const handleResetGame = useCallback(() => {
     console.log("handleResetGame вызвана"); // Отладка
 
@@ -144,14 +146,18 @@ export const PlayersBar = () => {
       okType: "danger",
       centered: true,
       onOk: () => {
-        console.log("Подтверждение нажато, сбрасываем состояние"); // Отладка
+        console.log(
+          "Подтверждение нажато, сбрасываем состояние и запускаем презентацию"
+        ); // Отладка
         resetGameState();
+        startPresentation();
+        navigate("/");
       },
       onCancel: () => {
         console.log("Отмена нажата"); // Отладка
       },
     });
-  }, [resetGameState, modal]);
+  }, [resetGameState, modal, startPresentation, navigate]);
 
   const maxLen = 20;
 
