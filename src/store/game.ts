@@ -28,6 +28,7 @@ export type Contest = {
   description: string;
   points: number;
   timeSec: number | null;
+  contestType?: "bomb" | "standard";
   tasks: Task[];
 };
 
@@ -53,6 +54,12 @@ type GameState = {
   timerSeconds: number;
   timerRunning: boolean;
   timerInitialSeconds: number;
+  // Бомба-таймер
+  bombTimerVisible: boolean;
+  bombTimerSeconds: number;
+  bombTimerRunning: boolean;
+  bombTimerTargetSeconds: number;
+  bombTimerExploded: boolean;
   addPlayer: (name: string) => void;
   removePlayerById: (id: string) => void;
   setDeleteMode: (on: boolean) => void;
@@ -76,6 +83,14 @@ type GameState = {
   setTimerRunning: (running: boolean) => void;
   resetTimer: () => void;
   initTimer: (seconds: number) => void;
+  // Методы бомбы-таймера
+  setBombTimerVisible: (visible: boolean) => void;
+  setBombTimerSeconds: (seconds: number) => void;
+  setBombTimerRunning: (running: boolean) => void;
+  startBombTimer: () => void;
+  pauseBombTimer: () => void;
+  resetBombTimer: () => void;
+  setBombTimerExploded: (exploded: boolean) => void;
   // Методы localStorage
   saveGameState: () => void;
   loadGameState: () => void;
@@ -137,6 +152,12 @@ export const useGameStore = create<GameState>((set, get) => ({
   timerSeconds: 60,
   timerRunning: false,
   timerInitialSeconds: 60,
+  // Начальные значения бомбы-таймера
+  bombTimerVisible: false,
+  bombTimerSeconds: 0,
+  bombTimerRunning: false,
+  bombTimerTargetSeconds: 0,
+  bombTimerExploded: false,
   addPlayer: (name) => {
     set((state) => {
       const id = generateId();
@@ -276,6 +297,33 @@ export const useGameStore = create<GameState>((set, get) => ({
       timerVisible: true,
     });
   },
+  // Методы бомбы-таймера
+  setBombTimerVisible: (visible) => set({ bombTimerVisible: visible }),
+  setBombTimerSeconds: (seconds) => set({ bombTimerSeconds: seconds }),
+  setBombTimerRunning: (running) => set({ bombTimerRunning: running }),
+  startBombTimer: () => {
+    // Генерируем случайное время от 40 до 120 секунд
+    const randomTime = Math.floor(Math.random() * (120 - 40 + 1)) + 40;
+    set({
+      bombTimerSeconds: 0,
+      bombTimerTargetSeconds: randomTime,
+      bombTimerRunning: true,
+      bombTimerExploded: false,
+      bombTimerVisible: true,
+    });
+  },
+  pauseBombTimer: () => {
+    set({ bombTimerRunning: false });
+  },
+  resetBombTimer: () => {
+    set({
+      bombTimerSeconds: 0,
+      bombTimerRunning: false,
+      bombTimerExploded: false,
+      bombTimerTargetSeconds: 0,
+    });
+  },
+  setBombTimerExploded: (exploded) => set({ bombTimerExploded: exploded }),
   // Методы localStorage
   saveGameState: () => {
     const { players, playersOrder, contests } = get();
@@ -312,6 +360,11 @@ export const useGameStore = create<GameState>((set, get) => ({
       timerSeconds: 60,
       timerRunning: false,
       timerInitialSeconds: 60,
+      bombTimerVisible: false,
+      bombTimerSeconds: 0,
+      bombTimerRunning: false,
+      bombTimerTargetSeconds: 0,
+      bombTimerExploded: false,
     });
   },
 }));

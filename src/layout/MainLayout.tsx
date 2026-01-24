@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { PlayersBar } from "../components/PlayersBar";
 import { FloatingTimer } from "../components/FloatingTimer";
+import { BombTimer } from "../components/BombTimer";
 import { useGameStore } from "../store/game";
 
 export const MainLayout = () => {
@@ -56,6 +57,9 @@ export const MainLayout = () => {
 
       {/* Плавающий таймер */}
       <FloatingTimer />
+
+      {/* Таймер-бомба */}
+      <BombTimer />
     </div>
   );
 };

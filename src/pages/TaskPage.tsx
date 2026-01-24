@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, Space, Typography } from "antd";
-import { ClockCircleOutlined, PlayCircleOutlined } from "@ant-design/icons";
+import {
+  ClockCircleOutlined,
+  PlayCircleOutlined,
+  FireOutlined,
+} from "@ant-design/icons";
 import { useGameStore } from "../store/game";
 
 const { Title, Text, Paragraph } = Typography;
@@ -17,6 +21,9 @@ export const TaskPage = () => {
   const initTimer = useGameStore((s) => s.initTimer);
   const timerVisible = useGameStore((s) => s.timerVisible);
   const setTimerVisible = useGameStore((s) => s.setTimerVisible);
+  const bombTimerVisible = useGameStore((s) => s.bombTimerVisible);
+  const setBombTimerVisible = useGameStore((s) => s.setBombTimerVisible);
+  const startBombTimer = useGameStore((s) => s.startBombTimer);
 
   const [showAnswer, setShowAnswer] = useState(false);
   const [isPlayingFragment, setIsPlayingFragment] = useState(false);
@@ -227,29 +234,51 @@ export const TaskPage = () => {
             }}
           >
             <span>Вопрос</span>
-            {!timerVisible && (
-              <Button
-                type="text"
-                size="small"
-                icon={<ClockCircleOutlined />}
-                onClick={() => {
-                  if (contest?.timeSec) {
-                    initTimer(contest.timeSec);
-                  } else {
-                    setTimerVisible(true);
-                  }
-                }}
-                style={{
-                  color: "#EAEAFF",
-                  border: "none",
-                  padding: "4px 8px",
-                  height: "auto",
-                  fontSize: "12px",
-                }}
-              >
-                Показать таймер
-              </Button>
-            )}
+            <div style={{ display: "flex", gap: "8px" }}>
+              {contest.contestType === "bomb" && !bombTimerVisible && (
+                <Button
+                  type="text"
+                  size="small"
+                  icon={<FireOutlined />}
+                  onClick={() => {
+                    startBombTimer();
+                    setBombTimerVisible(true);
+                  }}
+                  style={{
+                    color: "#fb923c",
+                    border: "none",
+                    padding: "4px 8px",
+                    height: "auto",
+                    fontSize: "12px",
+                  }}
+                >
+                  Завести бомбу
+                </Button>
+              )}
+              {!timerVisible && (
+                <Button
+                  type="text"
+                  size="small"
+                  icon={<ClockCircleOutlined />}
+                  onClick={() => {
+                    if (contest?.timeSec) {
+                      initTimer(contest.timeSec);
+                    } else {
+                      setTimerVisible(true);
+                    }
+                  }}
+                  style={{
+                    color: "#EAEAFF",
+                    border: "none",
+                    padding: "4px 8px",
+                    height: "auto",
+                    fontSize: "12px",
+                  }}
+                >
+                  Показать таймер
+                </Button>
+              )}
+            </div>
           </div>
         }
         style={{

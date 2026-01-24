@@ -2,979 +2,916 @@ import type { Contest } from "../store/game";
 
 export const contestsData: Contest[] = [
   {
-    id: "kinologiya",
-    title: "Кинология",
+    id: "plokho-konchil",
+    title: "Плохо кончил",
     description:
-      "Назовите фильм/сериал/мультфильм/мультсериал, из которого песня",
-    points: 150,
-    timeSec: null,
-    tasks: [
-      {
-        id: "kinologiya-1",
-        order: 1,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Кинология/Battle Without Honor Or Humanity — Tomoyasu Hotei.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Убить Билла",
-        },
-      },
-      {
-        id: "kinologiya-2",
-        order: 2,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Кинология/Danza Kuduro — Don Omar, Lucenzo.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Форсаж 5",
-        },
-      },
-      {
-        id: "kinologiya-3",
-        order: 3,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Кинология/Desperate Housewives Theme — Danny Elfman.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Отчаянные домохозяйки",
-        },
-      },
-      {
-        id: "kinologiya-4",
-        order: 4,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Кинология/He's A Pirate — Klaus Badelt.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Пираты Карибского моря",
-        },
-      },
-      {
-        id: "kinologiya-5",
-        order: 5,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Кинология/Knockin' On Heaven's Door — Bob Dylan.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Достучаться до небес",
-        },
-      },
-      {
-        id: "kinologiya-6",
-        order: 6,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Кинология/Main Title — Ramin Djawadi.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Игра престолов",
-        },
-      },
-      {
-        id: "kinologiya-7",
-        order: 7,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Кинология/You're Dead — Norma Tanega.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Что мы делаем в тени",
-        },
-      },
-    ],
-  },
-  {
-    id: "kovry",
-    title: "Ковры",
-    description: "Назовите, на какую песню кавер",
-    points: 150,
-    timeSec: null,
-    tasks: [
-      {
-        id: "kovry-1",
-        order: 1,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Ковры/Enjoy The Silence — Lacuna Coil.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Depeche Mode - Enjoy The Silence",
-        },
-      },
-      {
-        id: "kovry-2",
-        order: 2,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Ковры/Livin' La Vida Loca — Autumn Kings.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Ricky Martin - Livin' La Vida Loca",
-        },
-      },
-      {
-        id: "kovry-3",
-        order: 3,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Ковры/Nothing Else Matters — William Joseph.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Metallica - Nothing Else Matters",
-        },
-      },
-      {
-        id: "kovry-4",
-        order: 4,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Ковры/One of Us — Piano Covers Club from I'm In Records.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Joan Osborne - One of Us",
-        },
-      },
-      {
-        id: "kovry-5",
-        order: 5,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Ковры/Timanttinen tähti — Laura Voutilainen.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Валерия - Часики",
-        },
-      },
-      {
-        id: "kovry-6",
-        order: 6,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Ковры/סוכריה — Roni Duani.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Катя Лель - Мой мармеладный",
-        },
-      },
-    ],
-  },
-  {
-    id: "leksika",
-    title: "Лексика",
-    description: "Назовите песни, содержащие в тексте определенное слово",
+      "Называйте слова по заданной теме и передавайте тотем. На ком взорвется бомба - тот лох",
     points: 50,
     timeSec: null,
+    contestType: "bomb",
     tasks: [
       {
-        id: "leksika-1",
+        id: "plokho-konchil-1",
         order: 1,
         played: false,
         question: {
-          text: "Женщина",
+          text: "Слова, начинающиеся на КОН (существительные, единственное число)",
         },
       },
       {
-        id: "leksika-2",
+        id: "plokho-konchil-2",
         order: 2,
         played: false,
         question: {
-          text: "Работа",
+          text: "Чисто новогодняя хуйня",
         },
       },
       {
-        id: "leksika-3",
+        id: "plokho-konchil-3",
         order: 3,
         played: false,
         question: {
-          text: "Сила",
+          text: "С высокой вероятностью вы найдете это в операционной",
         },
       },
       {
-        id: "leksika-4",
+        id: "plokho-konchil-4",
         order: 4,
         played: false,
         question: {
-          text: "Хуй (похуй, нахуй, хуй, хуй, хуй)",
+          text: "Русские женские имена",
         },
       },
       {
-        id: "leksika-5",
+        id: "plokho-konchil-5",
         order: 5,
         played: false,
         question: {
-          text: "Проблема",
+          text: "Предметы, явления и люди из мира Гарри Поттера",
         },
       },
       {
-        id: "leksika-6",
+        id: "plokho-konchil-6",
         order: 6,
         played: false,
         question: {
-          text: "Бог",
+          text: "Что можно найти у деда в коровнике?",
         },
       },
       {
-        id: "leksika-7",
+        id: "plokho-konchil-7",
         order: 7,
         played: false,
         question: {
-          text: "Место",
-        },
-      },
-    ],
-  },
-  {
-    id: "skorostrel",
-    title: "Скорострел",
-    description:
-      "Популярные песни. Песня включается до первой фразы. Можно либо назвать исполнителя и песню, либо пропеть несколько строчек из нее",
-    points: 150,
-    timeSec: null,
-    tasks: [
-      {
-        id: "skorostrel-1",
-        order: 1,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Скорострел/1. Shallow — Lady Gaga, Bradley Cooper.mp3",
-            stops: [18],
-          },
-        },
-        answer: {
-          text: "Lady Gaga, Bradley Cooper - Shallow",
+          text: "Все, что связано с наркоманией и наркоманами",
         },
       },
       {
-        id: "skorostrel-2",
-        order: 2,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Скорострел/2. Мы с тобой — Лера Массква.mp3",
-            stops: [16],
-          },
-        },
-        answer: {
-          text: "Лера Массква - Мы с тобой",
-        },
-      },
-      {
-        id: "skorostrel-3",
-        order: 3,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Скорострел/3. Чёрные глаза — Айдамир Мугу.mp3",
-            stops: [57],
-          },
-        },
-        answer: {
-          text: "Айдамир Мугу - Чёрные глаза",
-        },
-      },
-      {
-        id: "skorostrel-4",
-        order: 4,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Скорострел/4. I Hate Everything About You — Three Days Grace.mp3",
-            stops: [17],
-          },
-        },
-        answer: {
-          text: "Three Days Grace - I Hate Everything About You",
-        },
-      },
-      {
-        id: "skorostrel-5",
-        order: 5,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Скорострел/5. Şımarık — Tarkan.mp3",
-            stops: [31],
-          },
-        },
-        answer: {
-          text: "Tarkan - Şımarık",
-        },
-      },
-      {
-        id: "skorostrel-6",
-        order: 6,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Скорострел/6. Я крокодил — Стас Экстаз.mp3",
-            stops: [19],
-          },
-        },
-        answer: {
-          text: "Стас Экстаз - Я крокодил",
-        },
-      },
-      {
-        id: "skorostrel-7",
-        order: 7,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Скорострел/7. Dance Monkey — Tones And I.mp3",
-            stops: [13],
-          },
-        },
-        answer: {
-          text: "Tones And I - Dance Monkey",
-        },
-      },
-    ],
-  },
-  {
-    id: "temshchiki",
-    title: "Темщики",
-    description: "Называйте песни, содержащие в тексте слова из указанной темы",
-    points: 50,
-    timeSec: null,
-    tasks: [
-      {
-        id: "temshchiki-1",
-        order: 1,
-        played: false,
-        question: {
-          text: "Алкогольный напиток",
-        },
-      },
-      {
-        id: "temshchiki-2",
-        order: 2,
-        played: false,
-        question: {
-          text: "Цвет",
-        },
-      },
-      {
-        id: "temshchiki-3",
-        order: 3,
-        played: false,
-        question: {
-          text: "Страна",
-        },
-      },
-      {
-        id: "temshchiki-4",
-        order: 4,
-        played: false,
-        question: {
-          text: "Транспорт",
-        },
-      },
-      {
-        id: "temshchiki-5",
-        order: 5,
-        played: false,
-        question: {
-          text: "Сказочный персонаж",
-        },
-      },
-      {
-        id: "temshchiki-6",
-        order: 6,
-        played: false,
-        question: {
-          text: "Кухонная утварь",
-        },
-      },
-      {
-        id: "temshchiki-7",
-        order: 7,
-        played: false,
-        question: {
-          text: "Профессия",
-        },
-      },
-    ],
-  },
-  {
-    id: "uznali-soglasny",
-    title: "Узнали Согласны",
-    description:
-      "Воспроизводится песня, возможно не самая популярная у исполнителя. Нужно назвать исполнителя",
-    points: 200,
-    timeSec: null,
-    tasks: [
-      {
-        id: "uznali-1",
-        order: 1,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Узнали Согласны/1. Ева — Винтаж.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Винтаж",
-        },
-      },
-      {
-        id: "uznali-2",
-        order: 2,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Узнали Согласны/2. Higher Ground — Imagine Dragons.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Imagine Dragons",
-        },
-      },
-      {
-        id: "uznali-3",
-        order: 3,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Узнали Согласны/3. Брод — Аквариум.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Аквариум",
-        },
-      },
-      {
-        id: "uznali-4",
-        order: 4,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Узнали Согласны/4. When You Know (Where You Come From) — Scorpions.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Scorpions",
-        },
-      },
-      {
-        id: "uznali-5",
-        order: 5,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Узнали Согласны/5. Я вас уничтожу — Bad Bit, Маэстро Понасенков.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Bad Bit, Маэстро Понасенков",
-        },
-      },
-      {
-        id: "uznali-6",
-        order: 6,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Узнали Согласны/6. Young And Beautiful — Lana Del Rey.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "Lana Del Rey",
-        },
-      },
-      {
-        id: "uznali-7",
-        order: 7,
-        played: false,
-        question: {
-          music: {
-            link: "/src/data/contests_data/Узнали Согласны/7. Последняя Любовь — MORGENSHTERN.mp3",
-            stops: [],
-          },
-        },
-        answer: {
-          text: "MORGENSHTERN",
-        },
-      },
-    ],
-  },
-  {
-    id: "che-bubnit-to",
-    title: "Че бубнить-то",
-    description:
-      "Угадайте, от чего погибла звезда. Версии пишем в телеграм. За каждый неправильный ответ -50 очков",
-    points: 300,
-    timeSec: 60,
-    tasks: [
-      {
-        id: "che-bubnit-1",
-        order: 1,
-        played: false,
-        question: {
-          text: "Джон Леннон",
-        },
-        answer: {
-          text: "был застрелен фанатом",
-        },
-      },
-      {
-        id: "che-bubnit-2",
-        order: 2,
-        played: false,
-        question: {
-          text: "Курт Кобейн",
-        },
-        answer: {
-          text: "застрелился",
-        },
-      },
-      {
-        id: "che-bubnit-3",
-        order: 3,
-        played: false,
-        question: {
-          text: "Честер Беннингтон",
-        },
-        answer: {
-          text: "повесился",
-        },
-      },
-      {
-        id: "che-bubnit-4",
-        order: 4,
-        played: false,
-        question: {
-          text: "Горшок",
-        },
-        answer: {
-          text: "алкоголь + морфин",
-        },
-      },
-      {
-        id: "che-bubnit-5",
-        order: 5,
-        played: false,
-        question: {
-          text: "Боб Марли",
-        },
-        answer: {
-          text: "меланома",
-        },
-      },
-      {
-        id: "che-bubnit-6",
-        order: 6,
-        played: false,
-        question: {
-          text: "Майкл Джексон",
-        },
-        answer: {
-          text: "отравление пропофолом",
-        },
-      },
-      {
-        id: "che-bubnit-7",
-        order: 7,
-        played: false,
-        question: {
-          text: "Виктор Цой",
-        },
-        answer: {
-          text: "автокатастрофа",
-        },
-      },
-    ],
-  },
-  {
-    id: "chego-tut-ishchesh",
-    title: "Чего тут ищешь",
-    description:
-      "Угадай продолжение поискового запроса. За каждое угаданное слово (кроме служебных частей речи) получаешь очки",
-    points: 150,
-    timeSec: 60,
-    tasks: [
-      {
-        id: "chego-tut-1",
-        order: 1,
-        played: false,
-        question: {
-          text: "Почему ранетки...",
-        },
-        answer: {
-          photo: "/src/data/contests_data/Чего тут ищешь/1.png",
-        },
-      },
-      {
-        id: "chego-tut-2",
-        order: 2,
-        played: false,
-        question: {
-          text: "Почему на концерте...",
-        },
-        answer: {
-          photo: "/src/data/contests_data/Чего тут ищешь/2.png",
-        },
-      },
-      {
-        id: "chego-tut-3",
-        order: 3,
-        played: false,
-        question: {
-          text: "Какой певец...",
-        },
-        answer: {
-          photo: "/src/data/contests_data/Чего тут ищешь/3.png",
-        },
-      },
-      {
-        id: "chego-tut-4",
-        order: 4,
-        played: false,
-        question: {
-          text: "Почему песня...",
-        },
-        answer: {
-          photo: "/src/data/contests_data/Чего тут ищешь/4.png",
-        },
-      },
-      {
-        id: "chego-tut-5",
-        order: 5,
-        played: false,
-        question: {
-          text: "Зачем петь...",
-        },
-        answer: {
-          photo: "/src/data/contests_data/Чего тут ищешь/5.png",
-        },
-      },
-      {
-        id: "chego-tut-6",
-        order: 6,
-        played: false,
-        question: {
-          text: "Песня...",
-        },
-        answer: {
-          photo: "/src/data/contests_data/Чего тут ищешь/6.png",
-        },
-      },
-      {
-        id: "chego-tut-7",
-        order: 7,
-        played: false,
-        question: {
-          text: "Любимая песня...",
-        },
-        answer: {
-          photo: "/src/data/contests_data/Чего тут ищешь/7.png",
-        },
-      },
-      {
-        id: "chego-tut-8",
+        id: "plokho-konchil-8",
         order: 8,
         played: false,
         question: {
-          text: "Почему Илья...",
-        },
-        answer: {
-          photo: "/src/data/contests_data/Чего тут ищешь/8.png",
+          text: "Фильмы",
         },
       },
       {
-        id: "chego-tut-9",
+        id: "plokho-konchil-9",
         order: 9,
         played: false,
         question: {
-          text: "Я пел...",
-        },
-        answer: {
-          photo: "/src/data/contests_data/Чего тут ищешь/9.png",
-        },
-      },
-      {
-        id: "chego-tut-10",
-        order: 10,
-        played: false,
-        question: {
-          text: "Что слушают...",
-        },
-        answer: {
-          photo: "/src/data/contests_data/Чего тут ищешь/10.png",
+          text: "То, что существовало в Средневековье (а сейчас не имеет такого значения)",
         },
       },
     ],
   },
   {
-    id: "chivo-blyat",
-    title: "Чиво блять",
+    id: "ty-menya-plokho-znayesh",
+    title: "Ты меня плохо знаешь",
     description:
-      "Слушайте отрывок и угадайте как можно больше слов из него. Слова писать в телеграм. Отрывок воспроизводится максимум три раза",
-    points: 100,
-    timeSec: null,
+      "Вопросы про Сашу. За неправильные ответы баллы не списываются",
+    points: 500,
+    timeSec: 60,
     tasks: [
       {
-        id: "chivo-1",
+        id: "ty-menya-1",
         order: 1,
         played: false,
         question: {
-          music: {
-            link: "/src/data/contests_data/Чиво блять/Cadillac Retro Remix — MORGENSHTERN, Элджей.mp3",
-            stops: [],
-            startTime: 23,
-            endTime: 32,
-          },
+          text: "В этом фильме играют сразу два актера, которых Саша очень любит. В том числе ее самый любимый актер (назовите фильм и актеров). Один из актеров даже как-то заработал деньжат для меня",
         },
         answer: {
-          text: `Ay, bitch, we got some пушки (пр-р, пау)
-Пау-пау, попал по тушке (ха)
-На мне ща две подушки (оу да)
-Bitch, я висю, как молодой Пушкин (у)
-Цепи висят на папе (е)
-Копаем кэш лопатой (е)
-Богатый, будто каппер (е)
-Как там твоя зарплата?`,
+          text: "Пираты Карибского моря - Джонни Депп и Орландо Блум",
+          photo: "/src/data/contests_data/Ты меня плохо знаешь/pirates.png",
         },
       },
       {
-        id: "chivo-2",
+        id: "ty-menya-2",
         order: 2,
         played: false,
         question: {
-          music: {
-            link: "/src/data/contests_data/Чиво блять/Come Along Now — Lola Marois.mp3",
-            stops: [],
-            startTime: 47,
-            endTime: 55,
-          },
+          text: "Эта вкусная штука растет на природе, в саду, в огороде. В какой-то момент она изменила Сашину жизнь. Назовите что это",
         },
         answer: {
-          text: `Come along now`,
+          text: "Смородина",
+          photo: "/src/data/contests_data/Ты меня плохо знаешь/currant.jpg",
         },
       },
       {
-        id: "chivo-3",
+        id: "ty-menya-3",
         order: 3,
         played: false,
         question: {
-          music: {
-            link: "/src/data/contests_data/Чиво блять/cotton eye joe — Rednex.mp3",
-            stops: [],
-            startTime: 0,
-            endTime: 8,
-          },
+          text: "Эта зарубежная танцевальная песня была выпущена и стала очень популярной в 2010 году. Потом эта песня снова завирусилась в 2020 году из-за мема. Сейчас этой песней Саша извещает мир, что пора спать",
         },
         answer: {
-          text: `If it hadn't been for Cotton-Eye Joe
-I'd been married long time ago
-Where did you come from, where did you go?
-Where did you come from, Cotton-Eye Joe?`,
+          text: "Tony Igy - Astronomia",
+          photo: "/src/data/contests_data/Ты меня плохо знаешь/coffin.jpg",
         },
       },
       {
-        id: "chivo-4",
+        id: "ty-menya-4",
         order: 4,
         played: false,
         question: {
-          music: {
-            link: "/src/data/contests_data/Чиво блять/Godzilla — Eminem, Juice WRLD.mp3",
-            stops: [],
-            startTime: 176,
-            endTime: 208,
-          },
+          text: "Именно в этом месте Саша бы работала, если бы не пошла в медицину",
         },
         answer: {
-          text: `Fill 'em with the venom and eliminate 'em, other words, I Minute Maid 'em
-I don't wanna hurt 'em, but I did, I'm in a fit of rage, I'm murderin' again, nobody will evade
-I'm finna kill 'em and dump all their fuckin' bodies in the lake
-Obliteratin' everythin', incinerate a renegade
-I'm here to make anybody who want it with the pen afraid
-But don't nobody want it, but they're gonna get it anyway
-'Cause I'm beginning to feel like I'm mentally ill
-I'm Attila, kill or be killed, I'm a killer bee, the vanilla gorilla
-You bringin' the killer within me outta me
-You don't wanna be the enemy of the demon who entered me
-And be on the receivin' end of me, what stupidity it'd be
-Every bit of me's the epitome of a spitter
-When I'm in the vicinity, motherfucker, you better duck
-Or you finna be dead the minute you run into me
-A hunnid percent of you is a fifth of a percent of me
-I'm 'bout to fuckin' finish you, bitch, I'm unfadable
-You wanna battle, I'm available, I'm blowin' up like an inflatable
-I'm undebatable, I'm unavoidable, I'm unevadable
-I'm on the toilet bowl, I got a trailer full of money
-And I'm paid in full, I'm not afraid to pull a-`,
+          text: "IKEA",
+          photo: "/src/data/contests_data/Ты меня плохо знаешь/ikea.jpg",
         },
       },
       {
-        id: "chivo-5",
+        id: "ty-menya-5",
         order: 5,
         played: false,
         question: {
-          music: {
-            link: "/src/data/contests_data/Чиво блять/Liar — Little Big.mp3",
-            stops: [],
-            startTime: 64,
-            endTime: 78,
-          },
+          text: "Назовите любой предмет, который Саша продала на авито в прошлом году (правильность ответа проверяет Саша)",
         },
         answer: {
-          text: "Only living to get rich\nBuy this, buy that—it's in each\nAll these things they're gonna make you\nInto their own little bitch\nBuy that shit it'll make you better\nWhile they're rich ones, they get fatter\nPut the money in their banks\nFor their children to say panks (Grah-ka!)",
+          text: "АХХАХХХАХХАХХХАХХХАХАХАХ",
+          photo: "/src/data/contests_data/Ты меня плохо знаешь/ahahah.jpg",
         },
       },
       {
-        id: "chivo-6",
+        id: "ty-menya-6",
         order: 6,
         played: false,
         question: {
-          music: {
-            link: "/src/data/contests_data/Чиво блять/The Woodchuck Song — AronChupa, Little Sis Nora.mp3",
-            stops: [],
-            startTime: 0,
-            endTime: 9,
-          },
+          text: "Назовите любую компьютерную игру, в которую Саша играла за последние пять лет (дольше 10 минут)",
         },
         answer: {
-          text: "How much wood would a woodchuck chuck\nIf a woodchuck could chuck wood?\nWoodchuck could chuck wood\nWoodchuck could chuck wood",
-        },
-      },
-    ],
-  },
-  {
-    id: "ya-lyubil-i-nenavidel",
-    title: "Я любил и ненавидел",
-    description: "Задаются вопросы из анкеты, которую вы заполняли",
-    points: 1000,
-    timeSec: null,
-    tasks: [
-      {
-        id: "ya-lyubil-1",
-        order: 1,
-        played: false,
-        question: {
-          text: "Какая песня тебе нравится и тебе за это немного стыдно?",
+          text: "Кузя Жукодром, Hogwarts Legacy, Герои меча и магии",
+          photo: "/src/data/contests_data/Ты меня плохо знаешь/bukazoom.jpg",
         },
       },
       {
-        id: "ya-lyubil-2",
-        order: 2,
-        played: false,
-        question: {
-          text: "Какая песня идеально подходит для будильника?",
-        },
-      },
-      {
-        id: "ya-lyubil-3",
-        order: 3,
-        played: false,
-        question: {
-          text: "Я терпеть не могу эту песню!",
-        },
-      },
-      {
-        id: "ya-lyubil-4",
-        order: 4,
-        played: false,
-        question: {
-          text: "Если бы про твою жизнь снимали фильм, какая песня бы звучала в трейлере?",
-        },
-      },
-      {
-        id: "ya-lyubil-5",
-        order: 5,
-        played: false,
-        question: {
-          text: "Самая кринжовая песня, которую ты когда-либо слышал/а?",
-        },
-      },
-      {
-        id: "ya-lyubil-6",
-        order: 6,
-        played: false,
-        question: {
-          text: "Под какого исполнителя коровы дают лучшее молоко?",
-        },
-      },
-      {
-        id: "ya-lyubil-7",
+        id: "ty-menya-7",
         order: 7,
         played: false,
         question: {
-          text: "Отличная песня для секса с инопланетянами",
+          text: "Назовите спорт, которому Саша посвятила больше всего времени",
+        },
+        answer: {
+          text: "Плавание",
+          photo: "/src/data/contests_data/Ты меня плохо знаешь/swimming.jpg",
         },
       },
       {
-        id: "ya-lyubil-8",
+        id: "ty-menya-8",
         order: 8,
         played: false,
         question: {
-          text: "Дьявол включает эту песню самым отъявленным грешникам",
+          text: "Назовите продукт, который Саша разлюбила пару лет назад и которого теперь никогда нет на нашем столе (я его тоже не люблю)",
+        },
+        answer: {
+          text: "Болгарский перец",
+          photo: "/src/data/contests_data/Ты меня плохо знаешь/pepper.jpg",
         },
       },
       {
-        id: "ya-lyubil-9",
+        id: "ty-menya-9",
         order: 9,
         played: false,
         question: {
-          text: "Если бы родители узнали, что мне в детстве нравилась эта песня, они бы сдали меня в детский дом",
+          text: "Назовите голливудский фильм, который Саша наотрез отказывается пересматривать потому что фильм говно (он на 18-м месте в ТОП-250 Кинопоиска, а его режиссер снимал Крестного отца)",
+        },
+        answer: {
+          text: "Волк с Уолл-стрит",
+          photo: "/src/data/contests_data/Ты меня плохо знаешь/wolf.jpg",
         },
       },
       {
-        id: "ya-lyubil-10",
+        id: "ty-menya-10",
         order: 10,
         played: false,
         question: {
-          text: "Эту песню нужно сделать новым гимном России",
+          text: "Эту пиццу Саша любит больше всего, но с нее всегда все сыпется, льется и вообще ее невозможно есть нормально",
+        },
+        answer: {
+          text: "Страчателла с томатами",
+          photo: "/src/data/contests_data/Ты меня плохо знаешь/pizza.webp",
+        },
+      },
+    ],
+  },
+  {
+    id: "lichnosti-muzyka",
+    title: "Личности: Музыка",
+    description: "Угадайте личность или персонажа",
+    points: 500,
+    timeSec: 60,
+    tasks: [
+      {
+        id: "muzyka-1",
+        order: 1,
+        played: false,
+        question: {
+          text: "Очень высока вероятность, что вы слышали ее песню за прошлые 30 дней. Гораздо ниже вероятность, что вы услышите эту песню в следующие 30 дней. Это песня 1994 года и ее прослушивания до сих пор приносят исполнительнице примерно 2 500 000$ каждый год",
+        },
+        answer: {
+          text: "Марайя Керри",
+          photo: "/src/data/contests_data/Личности/Музыка/mariah_carey.jpg",
+        },
+      },
+      {
+        id: "muzyka-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Молодая певица с синдромом Туррета и отрешенным взглядом. На ее концерт однажды попал даже Вова Махровый",
+        },
+        answer: {
+          text: "Билли Айлиш",
+          photo: "/src/data/contests_data/Личности/Музыка/billie_eilish.png",
+        },
+      },
+      {
+        id: "muzyka-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "Один из нарядов этой поп-звезды резко не понравился зоозащитникам. До нее никто такого не надевал",
+        },
+        answer: {
+          text: "Леди Гага",
+          photo: "/src/data/contests_data/Личности/Музыка/lady_gaga.jpg",
+        },
+      },
+      {
+        id: "muzyka-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "Этот известный композитор упоминается в песнях группы Ленинград",
+        },
+        answer: {
+          text: "Глинка или Бах",
+          photo: "/src/data/contests_data/Личности/Музыка/glinka.jpg",
+        },
+      },
+      {
+        id: "muzyka-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "Был артистом российской эстрады, потом политиком, а потом стал человеком-мемом, который плотно ассоциируется с детскими пирамидками",
+        },
+        answer: {
+          text: "Иосиф Кобзон",
+          photo: "/src/data/contests_data/Личности/Музыка/kobzon.jpg",
+        },
+      },
+    ],
+  },
+  {
+    id: "lichnosti-kino",
+    title: "Личности: Кино",
+    description: "Угадайте личность или персонажа",
+    points: 500,
+    timeSec: 60,
+    tasks: [
+      {
+        id: "kino-1",
+        order: 1,
+        played: false,
+        question: {
+          text: "Создатель таких великих фильмов как \"Беременный\" (рейтинг 2.5), \"Защитники\" (рейтинг 2.9), \"Тот еще Карлсон!\" (рейтинг 2.6). Ненавидит фильмы Тарковского, так как считает это деградирующим кинематографом",
+        },
+        answer: {
+          text: "Сарик Андреасян",
+          photo: "/src/data/contests_data/Личности/Кино/sarik.jpg",
+        },
+      },
+      {
+        id: "kino-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Режиссер, не окончивший среднюю школу и по его словам \"ненавидящий насилие\". Несмотря на это снял много кровавых фильмов, в которых полно сцен жестокости. Почти в каждом его фильме присутствует сцена, снятая из багажника автомобиля",
+        },
+        answer: {
+          text: "Квентин Тарантино",
+          photo: "/src/data/contests_data/Личности/Кино/tarantino.jpg",
+        },
+      },
+      {
+        id: "kino-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "Отец этого режиссера был детским писателем (написал \"Дядю Степу\") и написал текст гимна Советского союза. Этот режиссер очень известен в России, но в последнее время гоняет бесов",
+        },
+        answer: {
+          text: "Никита Михалков",
+          photo: "/src/data/contests_data/Личности/Кино/mihalkov.jpeg",
+        },
+      },
+      {
+        id: "kino-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "Известный голливудский актер, британец. Участвовал в гонках на внедорожниках от Якутска до Оймякона, так как всегда хотел побывать в самом холодном месте мира. В одном из фильмов этот актер играет двух братьев-близнецов, один из которых психопат, а второй уравновешенный",
+        },
+        answer: {
+          text: "Том Харди",
+          photo: "/src/data/contests_data/Личности/Кино/hardy.jpg",
+        },
+      },
+      {
+        id: "kino-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "Актер ставший дико популярным из-за громкого сериала 2010х. Учит людей нестандартно срать. Мемом стала его фамилия, которую никто блять не в силах с первого раза произнести",
+        },
+        answer: {
+          text: "Бенедикт Камбербэтч",
+          photo: "/src/data/contests_data/Личности/Кино/cumberbatch.jpg",
+        },
+      },
+    ],
+  },
+  {
+    id: "lichnosti-igry",
+    title: "Личности: Игры",
+    description: "Угадайте личность или персонажа",
+    points: 500,
+    timeSec: 60,
+    tasks: [
+      {
+        id: "igry-1",
+        order: 1,
+        played: false,
+        question: {
+          text: "Самый известный мем с этим летсплеером родился, когда он попробовал чай с индийскими специями",
+        },
+        answer: {
+          text: "Дмитрий Куплинов",
+          photo: "/src/data/contests_data/Личности/Игры/kuplinov.jpg",
+        },
+      },
+      {
+        id: "igry-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Гений",
+        },
+        answer: {
+          text: "Кодзима",
+          photo: "/src/data/contests_data/Личности/Игры/kodzima.jpg",
+        },
+      },
+      {
+        id: "igry-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "Этот персонаж обрел огромную популярность, так как в игру с ним можно было поиграть дома на телевизоре, не имея приставки. В дальнейшем с ним было выпущено большое количество детских игр. Одна из фраз персонажа: \"Держи хвост пистолетом\"",
+        },
+        answer: {
+          text: "Кузя",
+          photo: "/src/data/contests_data/Личности/Игры/kuzya.jpg",
+        },
+      },
+      {
+        id: "igry-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "В играх и мультиках с этим персонажем вместо монет ты собираешь кольца. А главный друг этого персонажа - лиса с несколькими хвостами",
+        },
+        answer: {
+          text: "Соник",
+          photo: "/src/data/contests_data/Личности/Игры/sonic.png",
+        },
+      },
+      {
+        id: "igry-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "В русском переводе этого персонажа озвучивает тот же чел, что и \"Битву экстрасенсов\". Между битвой экстрасенсов и этой игрой и правда есть много общего... Одна из самых известных фраз этого персонажа: \"Ламберт, Ламберт, хер моржовый... Ламберт, Ламберт, вредный хуй\"",
+        },
+        answer: {
+          text: "Ведьмак",
+          photo: "/src/data/contests_data/Личности/Игры/witcher.jpg",
+        },
+      },
+    ],
+  },
+  {
+    id: "lichnosti-multiki",
+    title: "Личности: Мультики",
+    description: "Угадайте личность или персонажа",
+    points: 500,
+    timeSec: 60,
+    tasks: [
+      {
+        id: "multiki-1",
+        order: 1,
+        played: false,
+        question: {
+          text: "Один сосед этого персонажа экстремально токсичный, второй экстремально тупой, подруга этого персонажа дерется в стиле кунг-фу, а домашнее животное издает абсолютно нетипичные звуки",
+        },
+        answer: {
+          text: "Спанч Боб",
+          photo: "/src/data/contests_data/Личности/Мультики/spongebob.webp",
+        },
+      },
+      {
+        id: "multiki-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Он живет в какой-то круглой хуйне, появляется из нее только по вызову, а потом ебашит всех током",
+        },
+        answer: {
+          text: "Пикачу",
+          photo: "/src/data/contests_data/Личности/Мультики/pikachu.jpg",
+        },
+      },
+      {
+        id: "multiki-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "У него есть хозяйка, которая появляется очень редко и только чтобы вставить ему пизды. Никто никогда не видел ее лица, так как значительная часть хозяйки не помещается в кадр",
+        },
+        answer: {
+          text: "Том",
+          photo: "/src/data/contests_data/Личности/Мультики/tom.jpg",
+        },
+      },
+      {
+        id: "multiki-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "Добрый и пузатый персонаж, который не умеет говорить, но владеет силами природы и имеет домашнее животное, способное превращаться в автобус",
+        },
+        answer: {
+          text: "Тоторо",
+          photo: "/src/data/contests_data/Личности/Мультики/totoro.jpg",
+        },
+      },
+      {
+        id: "multiki-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "Самый быстрый работник департамента автотранспортных средств",
+        },
+        answer: {
+          text: "Блиц",
+          photo: "/src/data/contests_data/Личности/Мультики/blitz.jpg",
+        },
+      },
+    ],
+  },
+  {
+    id: "lichnosti-meditsina",
+    title: "Личности: Медицина",
+    description: "Угадайте личность или персонажа",
+    points: 500,
+    timeSec: 60,
+    tasks: [
+      {
+        id: "meditsina-1",
+        order: 1,
+        played: false,
+        question: {
+          text: "Если в следующей жизни этот человек станет десертом, то он будет вареньем, чтобы его можно было намазывать",
+        },
+        answer: {
+          text: "Вишневский",
+          photo: "/src/data/contests_data/Личности/Медицина/vishnevskiy.webp",
+        },
+      },
+      {
+        id: "meditsina-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Приятный дяденька с телевизора. После просмотра хочется мазаться чесноком и хлебнуть мочи",
+        },
+        answer: {
+          text: "Малахов",
+          photo: "/src/data/contests_data/Личности/Медицина/malakhov.jpg",
+        },
+      },
+      {
+        id: "meditsina-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "В Санкт-Петербурге есть целых две больницы, посвященных этому человеку. В одной из них умереть будет значительно проще",
+        },
+        answer: {
+          text: "Боткин",
+          photo: "/src/data/contests_data/Личности/Медицина/botkin.jpg",
+        },
+      },
+      {
+        id: "meditsina-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "Этот человек первым обнаружил причину холеры и способ ее передачи, остановив эпидемию в городе. Спустя столетия в \"Игре престолов\" появится персонаж, которого будут звать также. В сериале этот персонаж будет встречаться с девушкой, на которой он женат в реальной жизни",
+        },
+        answer: {
+          text: "Джон Сноу",
+          photo: "/src/data/contests_data/Личности/Медицина/snow.jpg",
+        },
+      },
+      {
+        id: "meditsina-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "У всех палки как палки, а у него пиздец какие живучие",
+        },
+        answer: {
+          text: "Кох",
+          photo: "/src/data/contests_data/Личности/Медицина/koch.jpg",
+        },
+      },
+    ],
+  },
+  {
+    id: "lichnosti-literatura",
+    title: "Личности: Литература",
+    description: "Угадайте личность или персонажа",
+    points: 500,
+    timeSec: 60,
+    tasks: [
+      {
+        id: "literatura-1",
+        order: 1,
+        played: false,
+        question: {
+          text: "Эта женщина обожает горячее дыхание мопсов и плодить макулатуру пачками",
+        },
+        answer: {
+          text: "Дарья Донцова",
+          photo: "/src/data/contests_data/Личности/Литература/dontsova.jpg",
+        },
+      },
+      {
+        id: "literatura-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Заработала кучу денег на книгах, а потом стала сраться в твиттере с любителями сраться в твиттере по теме повесточки",
+        },
+        answer: {
+          text: "Роулинг",
+          photo: "/src/data/contests_data/Личности/Литература/rowling.jpg",
+        },
+      },
+      {
+        id: "literatura-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "Создала персонажа, с которым хотела секас каждая вторая тринадцатилетняя девчонка. 15 лет назад фильмы по книгам этой писательницы смотрелись с серьезным вдохновленным ебалом, а сейчас весь фильм чисто мем",
+        },
+        answer: {
+          text: "Стефани Майер",
+          photo: "/src/data/contests_data/Личности/Литература/mayer.jpg",
+        },
+      },
+      {
+        id: "literatura-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "Бородач с девизом в последние десять лет: \"Да всё пацаны, я скоро всё допишу, просто мне лениво пиздец……………\"",
+        },
+        answer: {
+          text: "Джордж Мартин",
+          photo: "/src/data/contests_data/Личности/Литература/martin.jpg",
+        },
+      },
+      {
+        id: "literatura-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "Писал как романы, так и книги по истории России. Жестко ненавидит власть, и это взаимно. Настоящая фамилия звучит по-грузински. По одному его произведению сняли фильм - и место, где его снимали, стало очень популярным среди туристов, даже Саша хотела туда поехать",
+        },
+        answer: {
+          text: "Борис Акунин",
+          photo: "/src/data/contests_data/Личности/Литература/akunin.jpg",
+        },
+      },
+    ],
+  },
+  {
+    id: "lichnosti-nauka",
+    title: "Личности: Наука",
+    description: "Угадайте личность или персонажа",
+    points: 500,
+    timeSec: 60,
+    tasks: [
+      {
+        id: "nauka-1",
+        order: 1,
+        played: false,
+        question: {
+          text: "Этот известный человек был на острове Эпштейна, чем породил огромное количество мемов, так как его очень сложно представить участвующим в оргии",
+        },
+        answer: {
+          text: "Стивен Хокинг",
+          photo: "/src/data/contests_data/Личности/Наука/hawking.webp",
+        },
+      },
+      {
+        id: "nauka-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Этот популяризатор науки стал гораздо более известен, когда появились обои с ним",
+        },
+        answer: {
+          text: "Ян Топлес",
+          photo: "/src/data/contests_data/Личности/Наука/toples.jpg",
+        },
+      },
+      {
+        id: "nauka-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "Он изобрел то, что лежит у меня в морозилке и не замерзает",
+        },
+        answer: {
+          text: "Менделеев",
+          photo: "/src/data/contests_data/Личности/Наука/mendeleev.jpeg",
+        },
+      },
+      {
+        id: "nauka-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "Это герой мультсериала, который является безумным ученым, строит планы по захвату мира с помощью своих изобретений, но очень часто все рушится из-за дружка-дурачка. Герой является животным, которого люди считают вредителем",
+        },
+        answer: {
+          text: "Брейн",
+          photo: "/src/data/contests_data/Личности/Наука/brain.jpg",
+        },
+      },
+      {
+        id: "nauka-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "Герой одного из мини-сериалов, обычно предстает в очках, белом халате и шапочке. Почти не получает зарплату, но уверен, что ему за его разработки такую премию дадут...",
+        },
+        answer: {
+          text: "Инженер",
+          photo: "/src/data/contests_data/Личности/Наука/engineer.jpg",
+        },
+      },
+    ],
+  },
+  {
+    id: "lichnosti-politika",
+    title: "Личности: Политика",
+    description: "Угадайте личность или персонажа",
+    points: 500,
+    timeSec: 60,
+    tasks: [
+      {
+        id: "politika-1",
+        order: 1,
+        played: false,
+        question: {
+          text: "Этот политик снялся в фильме Один дома 2 в короткой роли в качестве самого себя",
+        },
+        answer: {
+          text: "Дональд Трамп",
+          photo: "/src/data/contests_data/Личности/Политика/tramp.jpg",
+        },
+      },
+      {
+        id: "politika-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Президент одной из стран, который в прошлом году под камерами отхватил пиздюлей от жены",
+        },
+        answer: {
+          text: "Эммануэль Макрон",
+          photo: "/src/data/contests_data/Личности/Политика/macron.webp",
+        },
+      },
+      {
+        id: "politika-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "Существует фото, где этот политик смотрит \"Рика и Морти\" сидя в самолете. Появлялся на публике в пиратской повязке",
+        },
+        answer: {
+          text: "Алексей Навальный",
+          photo: "/src/data/contests_data/Личности/Политика/navalny.webp",
+        },
+      },
+      {
+        id: "politika-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "На жизнь этого политика было совершено покушение более 600 раз, в итоге он умер в 90 лет по естественным причинам",
+        },
+        answer: {
+          text: "Фидель Кастро",
+          photo: "/src/data/contests_data/Личности/Политика/castro.jpg",
+        },
+      },
+      {
+        id: "politika-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "Врач-офтальмолог, случайно попавший в кресло президента. После своей незапланированной отставки стал по слухам большим любителем видеоигр, а по сюжетам мемов обычно доебывает Януковича в Ростове",
+        },
+        answer: {
+          text: "Башар Асад",
+          photo: "/src/data/contests_data/Личности/Политика/asad.webp",
+        },
+      },
+    ],
+  },
+  {
+    id: "lichnosti-biznes",
+    title: "Личности: Бизнес",
+    description: "Угадайте личность или персонажа",
+    points: 500,
+    timeSec: 60,
+    tasks: [
+      {
+        id: "biznes-1",
+        order: 1,
+        played: false,
+        question: {
+          text: "Он назвал своего сына так: X Æ A-12 и какое-то время был в отношениях с Эмбер Херд",
+        },
+        answer: {
+          text: "Илон Маск",
+          photo: "/src/data/contests_data/Личности/Бизнес/mask.jpg",
+        },
+      },
+      {
+        id: "biznes-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Делал пельмени, делал пиво, пережил рак крови и теперь капает капли в глаза каждые 15 минут",
+        },
+        answer: {
+          text: "Олег Тиньков",
+          photo: "/src/data/contests_data/Личности/Бизнес/tinkov.jpg",
+        },
+      },
+      {
+        id: "biznes-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "Пиздилась с мужем за процент от бизнеса, который скоро поглотит всю Россию. По вечерам слегка светится фиолетовым",
+        },
+        answer: {
+          text: "Светлана Бакальчук",
+          photo: "/src/data/contests_data/Личности/Бизнес/bakalchuk.jpg",
+        },
+      },
+      {
+        id: "biznes-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "Окончил филологический факультет СПБГУ, владелец двух стульев с пиками точеными и хуями дрочеными, когда-то кидался деньгами в людей",
+        },
+        answer: {
+          text: "Павел Дуров",
+          photo: "/src/data/contests_data/Личности/Бизнес/durov.jpeg",
+        },
+      },
+      {
+        id: "biznes-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "Бывший владелец футбольного клуба Челси, гражданин России, Израиля и Португалии, в начале войны был одним из посредников на переговорах России и Украины",
+        },
+        answer: {
+          text: "Роман Абрамович",
+          photo: "/src/data/contests_data/Личности/Бизнес/abramovich.webp",
+        },
+      },
+      {
+        id: "biznes-6",
+        order: 6,
+        played: false,
+        question: {
+          text: "Он продолжил дело египтян, а еще воскресил мамонтов по всему постсоветскому пространству",
+        },
+        answer: {
+          text: "Сергей Мавроди",
+          photo: "/src/data/contests_data/Личности/Бизнес/mavrodi.jpg",
+        },
+      },
+    ],
+  },
+  {
+    id: "lichnosti-shou-biznes",
+    title: "Личности: Шоу-бизнес",
+    description: "Угадайте личность или персонажа",
+    points: 500,
+    timeSec: 60,
+    tasks: [
+      {
+        id: "shou-1",
+        order: 1,
+        played: false,
+        question: {
+          text: "Человек-паук развел ее на огромную сумму денег, а потом был задержан у здания суда",
+        },
+        answer: {
+          text: "Лариса Долина",
+          photo: "/src/data/contests_data/Личности/Шоу-бизнес/dolina.jpg",
+        },
+      },
+      {
+        id: "shou-2",
+        order: 2,
+        played: false,
+        question: {
+          text: "Сосала микрофон на сцене, снимала порно, инсценировала свое ограбление, а сейчас главная защитница традиционных ценностей",
+        },
+        answer: {
+          text: "Инстасамка",
+          photo: "/src/data/contests_data/Личности/Шоу-бизнес/instasamka.jpg",
+        },
+      },
+      {
+        id: "shou-3",
+        order: 3,
+        played: false,
+        question: {
+          text: "После мощнейших пиздюлей со всех сторон продала свой Ламборджини и уехала вести передачу о жизни в деревне",
+        },
+        answer: {
+          text: "Ивлеева",
+          photo: "/src/data/contests_data/Личности/Шоу-бизнес/ivleeva.jpg",
+        },
+      },
+      {
+        id: "shou-4",
+        order: 4,
+        played: false,
+        question: {
+          text: "Певица, предпринимательница, актриса, писательница, телеведущая, радиоведущая, блогерша, криптобизнесменша, но не дай бог с ней встретиться...",
+        },
+        answer: {
+          text: "Бузова",
+          photo: "/src/data/contests_data/Личности/Шоу-бизнес/buzova.jpg",
+        },
+      },
+      {
+        id: "shou-5",
+        order: 5,
+        played: false,
+        question: {
+          text: "Такая спортивная устраивала марафоны и прибежала в тюрьму жесть...",
+        },
+        answer: {
+          text: "Блиновская",
+          photo: "/src/data/contests_data/Личности/Шоу-бизнес/blinovskaya.jpg",
         },
       },
     ],
