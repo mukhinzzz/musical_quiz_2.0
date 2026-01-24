@@ -32,6 +32,63 @@ export const TaskPage = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lastStopTimeRef = useRef<number>(-1);
   const fragmentTimeoutRef = useRef<number | null>(null);
+  const speechSynthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  // Функция для озвучивания текста
+  const speakText = (text: string) => {
+    // Останавливаем предыдущую озвучку, если она есть
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "ru-RU";
+    utterance.rate = 0.9; // Немного медленнее для четкости
+    utterance.pitch = 1;
+
+    // Пытаемся найти голос Максим (приоритет)
+    const voices = window.speechSynthesis.getVoices();
+
+    // Приоритет 1: Максим (мем про кожаных ублюдков)
+    let selectedVoice = voices.find(
+      (voice) =>
+        voice.name.toLowerCase().includes("maxim") ||
+        voice.name.toLowerCase().includes("maksim") ||
+        voice.name.toLowerCase().includes("максим")
+    );
+
+    // Приоритет 2: Другие мужские русские голоса
+    if (!selectedVoice) {
+      selectedVoice = voices.find(
+        (voice) =>
+          voice.lang.startsWith("ru") &&
+          (voice.name.toLowerCase().includes("male") ||
+            voice.name.toLowerCase().includes("мужской") ||
+            voice.name.toLowerCase().includes("yuri") ||
+            voice.name.toLowerCase().includes("pavel"))
+      );
+    }
+
+    // Приоритет 3: Любой русский голос
+    if (!selectedVoice) {
+      selectedVoice = voices.find((voice) => voice.lang.startsWith("ru"));
+    }
+
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+      console.log("Выбран голос:", selectedVoice.name);
+    }
+
+    speechSynthesisRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  // Функция для остановки озвучивания
+  const stopSpeaking = () => {
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+  };
 
   // Инициализация таймера при открытии задания
   useEffect(() => {
@@ -39,6 +96,28 @@ export const TaskPage = () => {
       initTimer(contest.timeSec);
     }
   }, [contest?.timeSec, initTimer]);
+
+  // Автоматическое озвучивание вопроса при открытии
+  useEffect(() => {
+    if (task?.question.text) {
+      // Небольшая задержка для загрузки голосов
+      const timer = setTimeout(() => {
+        // Убеждаемся, что голоса загружены
+        if (window.speechSynthesis.getVoices().length === 0) {
+          window.speechSynthesis.onvoiceschanged = () => {
+            speakText(task.question.text!);
+          };
+        } else {
+          speakText(task.question.text!);
+        }
+      }, 300);
+
+      return () => {
+        clearTimeout(timer);
+        stopSpeaking();
+      };
+    }
+  }, [task?.id]); // Запускаем при изменении задания
 
   // Управление воспроизведением с помощью пробела
   useEffect(() => {
