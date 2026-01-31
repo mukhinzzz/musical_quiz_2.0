@@ -28,7 +28,7 @@ export const HomePage = () => {
     let timeout: number;
 
     if (presentationStep === "title") {
-      setCurrentText("Музыкальный квиз");
+      setCurrentText("Квиз им. А.Р. Хафизовой");
       setShowText(true);
       // Для первого шага не запускаем автоматический переход - ждем клика
     } else if (presentationStep === "round") {
@@ -82,39 +82,39 @@ export const HomePage = () => {
         {(presentationStep === "title" ||
           presentationStep === "round" ||
           presentationStep === "intro") && (
-          <div
-            style={{
-              textAlign: "center",
-              opacity: showText ? 1 : 0,
-              transition: "opacity 0.8s ease-in-out",
-            }}
-          >
-            <Title
-              level={1}
+            <div
               style={{
-                margin: 0,
-                fontSize: "64px",
-                fontWeight: 700,
-                color: "#EAEAFF",
+                textAlign: "center",
+                opacity: showText ? 1 : 0,
+                transition: "opacity 0.8s ease-in-out",
               }}
             >
-              {currentText}
-            </Title>
-            {presentationStep === "title" && (
-              <div
+              <Title
+                level={1}
                 style={{
-                  marginTop: 30,
-                  color: "#B4B4CC",
-                  fontSize: "16px",
-                  opacity: showText ? 0.8 : 0,
-                  transition: "opacity 0.8s ease-in-out 1s",
+                  margin: 0,
+                  fontSize: "64px",
+                  fontWeight: 700,
+                  color: "#EAEAFF",
                 }}
               >
-                Нажмите в любом месте для продолжения
-              </div>
-            )}
-          </div>
-        )}
+                {currentText}
+              </Title>
+              {presentationStep === "title" && (
+                <div
+                  style={{
+                    marginTop: 30,
+                    color: "#B4B4CC",
+                    fontSize: "16px",
+                    opacity: showText ? 0.8 : 0,
+                    transition: "opacity 0.8s ease-in-out 1s",
+                  }}
+                >
+                  Нажмите в любом месте для продолжения
+                </div>
+              )}
+            </div>
+          )}
 
         {/* Показ конкурсов */}
         {presentationStep === "contests" && (

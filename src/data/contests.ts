@@ -86,7 +86,7 @@ export const contestsData: Contest[] = [
   },
   {
     id: "ty-menya-plokho-znayesh",
-    title: "Ты меня плохо знаешь",
+    title: "Ты меня не знаешь",
     description:
       "Вопросы про Сашу. За неправильные ответы баллы не списываются",
     points: 500,
